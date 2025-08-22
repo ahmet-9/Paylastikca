@@ -8,6 +8,10 @@ android {
     namespace = "com.paylastikca.app"
     compileSdk = 35
 
+    buildFeatures {
+        compose = true
+    }
+
     defaultConfig {
         applicationId = "com.paylastikca.app"
         minSdk = 24
@@ -57,6 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
