@@ -2,12 +2,31 @@ package com.paylastikca.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.paylastikca.app.R
 
-// Set of Material typography styles to start with
+
+
+
+
+
+// Kalam font ailesi
+val KalamFont = FontFamily(
+    Font(R.font.kalam_regular, weight = FontWeight.Normal),
+    Font(R.font.kalam_bold, weight = FontWeight.Bold),
+    Font(R.font.kalam_light, weight = FontWeight.Light)
+)
+
+// Varsayılan Typography düzeni
 val Typography = Typography(
+    headlineLarge = TextStyle(
+        fontFamily = KalamFont,
+        fontWeight = FontWeight.Normal,
+        fontSize = 28.sp
+    ),
     bodyLarge = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
@@ -15,20 +34,8 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
-    ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
-    )
-    */
 )
+
+
+
+
