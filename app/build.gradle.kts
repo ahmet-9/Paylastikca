@@ -78,6 +78,11 @@ dependencies {
         implementation("com.google.android.gms:play-services-maps:19.0.0")
     }
 
+    //cark
+    implementation("androidx.compose.material:material-icons-extended:1.7.0") // versiyonu kendi Compose versiyonuna göre ayarla
+    implementation(libs.spinwheel)
+
+
 
 }
 

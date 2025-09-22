@@ -8,8 +8,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.paylastikca.presentation.view.homepageScreen.WatchAdsScreen
+import com.paylastikca.presentation.view.homepageScreen.giftWheel.GiftWheelScreen
 import com.paylastikca.presentation.view.homepageScreen.giftWheel.congratulationsScreen
-import com.paylastikca.presentation.view.homepageScreen.giftWheel.giftwheelScreen
 import com.paylastikca.presentation.view.homepageScreen.homePageMAİNScreen
 import com.paylastikca.presentation.view.homepageScreen.shoppingCentreScreen
 import com.paylastikca.presentation.view.homepageScreen.tasksScreen
@@ -96,14 +96,14 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "homePageMAİNScreen",
+        startDestination = "giftwheelScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
 
         //homePageScreens
                 //giftwheel
                 composable("congratulationsScreen") { congratulationsScreen()  }
-                composable("giftwheelScreen") { giftwheelScreen()  }
+                composable("giftwheelScreen") { GiftWheelScreen()  }
                 //----
 
         composable("homePageMAİNScreen") { homePageMAİNScreen()  }
