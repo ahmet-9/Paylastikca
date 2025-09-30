@@ -34,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import com.paylastikca.app.R
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.animation.core.RepeatMode
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
@@ -57,6 +58,7 @@ private val CardGray          = Color(0xFFF3F3F3)
 @Composable
 fun homePageMAİNScreen() {
 
+    var showDialog by remember { mutableStateOf(false) } // Rİ
 
     Scaffold(
         containerColor = Color.White,
@@ -151,7 +153,7 @@ fun homePageMAİNScreen() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(459.dp)//485
+                    .height(459.dp)
                     .clip(RoundedCornerShape(16.dp))
                     .background(CardGray),
                 contentAlignment = Alignment.Center
@@ -187,7 +189,12 @@ fun homePageMAİNScreen() {
 
 
 
-                AdWatchButton(modifier = Modifier.weight(1f))
+                AdWatchButton(    //Ri
+                    modifier = Modifier.weight(1f),
+                    onClick = { showDialog = true }
+                )
+
+               // AdWatchButton(modifier = Modifier.weight(1f))  //old
                 GiftWheelButton(modifier = Modifier.weight(1f))
 
             }
@@ -210,6 +217,17 @@ fun homePageMAİNScreen() {
             Spacer(Modifier.height(12.dp))
         }
     }
+
+
+    //Rİ
+    WatchAdsScreen(
+        showDialog = showDialog,
+        onDismiss = { showDialog = false },
+        onWatchAd = {
+
+        }
+    )
+
 }
 
 
@@ -382,7 +400,10 @@ fun GiftWheelButton(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun AdWatchButton(modifier: Modifier = Modifier) {
+fun AdWatchButton(modifier: Modifier = Modifier,
+                  onClick: () -> Unit  //Rİ
+
+) {
     val infiniteTransition = rememberInfiniteTransition(label = "shimmer")
     val shimmerX by infiniteTransition.animateFloat(
         initialValue = -80f,
@@ -399,7 +420,8 @@ fun AdWatchButton(modifier: Modifier = Modifier) {
             .width(175.dp)
             .height(68.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(PaylastikcaOrange),
+            .background(PaylastikcaOrange)
+            .clickable { onClick() }, //Rİ
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -556,7 +578,10 @@ fun StoreButton(modifier: Modifier = Modifier) {
             )
         }
     }
+
+
 }
+
 
 
 
