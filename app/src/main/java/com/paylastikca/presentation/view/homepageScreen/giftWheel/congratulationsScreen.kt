@@ -21,10 +21,10 @@ import com.paylastikca.app.R
 
 @Composable
 fun congratulationsScreen(
-    prizeText: String = "1 çip",   // Dinamik alan
+    prizeText: String = "1 çip",   
     onDismiss: () -> Unit = {}
 ) {
-    val scaleFactor = 1.8f // 🔥 Bütün boyutları bu çarpanla büyütüyoruz
+    val scaleFactor = 1.8f 
 
     Scaffold(
         bottomBar = {
