@@ -32,6 +32,8 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.navigation.NavController
+import com.paylastikca.presentation.view.commonPageDesignPlugins.PageHeader
 import kotlinx.coroutines.delay
 import kotlin.math.sign
 import kotlin.random.Random
@@ -46,6 +48,9 @@ data class StarData(
 
 @Composable
 fun GiftWheelScreen() {
+
+
+
     val scope = rememberCoroutineScope()
 
     var wheelRotation by remember { mutableStateOf(0f) }

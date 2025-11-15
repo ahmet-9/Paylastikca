@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.paylastikca.presentation.view.commonPageDesignPlugins.PageHeader
 import com.paylastikca.presentation.view.homepageScreen.WatchAdsScreen
 import com.paylastikca.presentation.view.homepageScreen.giftWheel.GiftWheelScreen
 import com.paylastikca.presentation.view.homepageScreen.giftWheel.congratulationsScreen
@@ -96,9 +97,15 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "homePageMAİNScreen",
+        startDestination = "tasksScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
+
+
+
+
+
+
 
         //homePageScreens
                 //giftwheel
@@ -108,7 +115,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
         composable("homePageMAİNScreen") { homePageMAİNScreen()  }
         composable("shoppingCentreScreen") { shoppingCentreScreen()  }
-        composable("tasksScreen") { tasksScreen()  }
+        composable("tasksScreen") { tasksScreen(navController = navController)  }
 
 
 
