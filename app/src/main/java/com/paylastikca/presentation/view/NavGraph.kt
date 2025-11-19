@@ -97,7 +97,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "tasksScreen",
+        startDestination = "shoppingCentreScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -114,7 +114,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 //----
 
         composable("homePageMAİNScreen") { homePageMAİNScreen()  }
-        composable("shoppingCentreScreen") { shoppingCentreScreen()  }
+        composable("shoppingCentreScreen") { shoppingCentreScreen(navController = navController)  }
         composable("tasksScreen") { tasksScreen(navController = navController)  }
 
 
