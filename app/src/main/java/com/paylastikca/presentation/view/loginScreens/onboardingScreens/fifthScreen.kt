@@ -34,14 +34,14 @@ fun fifthScreen(navController: NavController){
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color(0xFFFF8E0D)
+            color = Color(0xFFFF7200)
         )
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFF8E0D)),
+            .background(Color(0xFFFF7200)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -54,7 +54,7 @@ fun fifthScreen(navController: NavController){
             modifier = Modifier
                 .fillMaxWidth(0.95f)
                 .padding(top = 180.dp)
-                .clip(RoundedCornerShape(40.dp))
+                .clip(RoundedCornerShape(30.dp))
         )
 
 

@@ -33,14 +33,14 @@ fun firstScreen(navController: NavController){
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color(0xFFEF8528)
+            color = Color(0xFFFF7200)
         )
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFEF8528)),
+            .background(Color(0xFFFF7200)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
