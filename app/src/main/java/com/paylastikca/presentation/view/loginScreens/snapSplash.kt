@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.CircularProgressIndicator
 
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
@@ -16,6 +17,15 @@ import androidx.compose.ui.unit.dp
 
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.app.R
+
+
+
+
+
+
+
+
+
 
 @Composable
 fun snapSplash(){
@@ -43,6 +53,19 @@ fun snapSplash(){
                 .padding(top = 230.dp)
         )
 
+        CircularProgressIndicator(
+            modifier = Modifier
+                .padding(bottom = 40.dp),
+            color = Color.White,
+            strokeWidth = 3.dp
+        )
+
+
+
     }
 
 }
+
+
+
+
