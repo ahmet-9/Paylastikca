@@ -97,7 +97,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "signUpScreen",
+        startDestination = "logInScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
 
