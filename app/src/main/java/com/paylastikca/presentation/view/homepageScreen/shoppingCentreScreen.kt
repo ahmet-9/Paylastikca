@@ -39,7 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.paylastikca.app.R
 
-import com.paylastikca.presentation.view.commonPageDesignPlugins.PageHeader
+import com.paylastikca.presentation.view.commonUI.components.PageHeader
 
 
 

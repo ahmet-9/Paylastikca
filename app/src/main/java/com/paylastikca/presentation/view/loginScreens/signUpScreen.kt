@@ -101,7 +101,21 @@ fun signUpScreen(
                     label = { Text("Ad Soyad") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(16.dp),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.usericon),
+                            contentDescription = null,
+                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            modifier = Modifier.size(27.dp)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
+                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
+                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
+                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -112,7 +126,21 @@ fun signUpScreen(
                     label = { Text("E-posta") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(16.dp)
+                    shape = RoundedCornerShape(16.dp),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.mailicon),
+                            contentDescription = null,
+                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            modifier = Modifier.size(27.dp)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
+                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
+                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
+                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -125,6 +153,20 @@ fun signUpScreen(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.lockicon),
+                            contentDescription = null,
+                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            modifier = Modifier.size(27.dp)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
+                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
+                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
+                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                    ),
                     visualTransformation = if (passwordVisible) {
                         VisualTransformation.None
                     } else {
@@ -168,6 +210,20 @@ fun signUpScreen(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.lockicon),
+                            contentDescription = null,
+                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            modifier = Modifier.size(27.dp)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
+                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
+                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
+                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                    ),
                     visualTransformation = if (passwordRepeatVisible) {
                         VisualTransformation.None
                     } else {
@@ -313,7 +369,7 @@ fun signUpScreen(
                     Text(text = "Zaten hesabın var mı? ", fontSize = 13.sp, color = Color.Gray)
                     Text(
                         text = "Giriş yap",
-                        fontSize = 13.sp,
+                        fontSize = 16.sp,
                         color = Color(0xFF1E63D5),
                         fontWeight = FontWeight.SemiBold,
                         textDecoration = TextDecoration.None,

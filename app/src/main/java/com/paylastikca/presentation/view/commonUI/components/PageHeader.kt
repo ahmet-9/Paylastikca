@@ -1,4 +1,4 @@
-package com.paylastikca.presentation.view.commonPageDesignPlugins
+package com.paylastikca.presentation.view.commonUI.components
 
 
 

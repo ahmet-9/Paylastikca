@@ -30,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -83,6 +84,7 @@ fun logInScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .offset(y = (-60).dp)
                     .padding(horizontal = 24.dp)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -121,6 +123,20 @@ fun logInScreen(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.mailicon),
+                            contentDescription = null,
+                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            modifier = Modifier.size(27.dp)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
+                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
+                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
+                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                    )
 
                 )
 
@@ -134,6 +150,21 @@ fun logInScreen(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(16.dp),
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.lockicon),
+                            contentDescription = null,
+                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            modifier = Modifier.size(27.dp)
+                        )
+                    },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
+                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
+                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
+                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                    ),
+
                     visualTransformation = if (passwordVisible) {
                         VisualTransformation.None
                     } else {
@@ -220,11 +251,12 @@ fun logInScreen(
                     )
                     Text(
                         text = "Üye ol",
-                        fontSize = 15.sp,
-                        color = Color.Gray,
+                        fontSize = 16.sp,
+                        color = Color(0xFF1E63D5),
+
                         fontWeight = FontWeight.SemiBold,
                         textDecoration = TextDecoration.None,
-                        modifier = Modifier.clickable { onSignInClick() }.padding(end = 30.dp)
+                        modifier = Modifier.clickable { onSignInClick() }.padding(end = 35.dp)
                     )
                 }
             }
