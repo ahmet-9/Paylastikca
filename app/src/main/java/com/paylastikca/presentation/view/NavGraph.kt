@@ -7,9 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+
 import com.paylastikca.presentation.view.homepageScreen.giftWheel.GiftWheelScreen
 import com.paylastikca.presentation.view.homepageScreen.giftWheel.congratulationsScreen
-import com.paylastikca.presentation.view.homepageScreen.homePageMAİNScreen
+import com.paylastikca.presentation.view.homepageScreen.homePageMainScreen
 import com.paylastikca.presentation.view.homepageScreen.shoppingCentreScreen
 import com.paylastikca.presentation.view.homepageScreen.tasksScreen
 import com.paylastikca.presentation.view.loginScreens.ForgotYourPasswordScreen
@@ -21,7 +22,7 @@ import com.paylastikca.presentation.view.loginScreens.onboardingScreens.secondSc
 import com.paylastikca.presentation.view.loginScreens.onboardingScreens.thirdScreen
 import com.paylastikca.presentation.view.loginScreens.signUpScreen
 import com.paylastikca.presentation.view.loginScreens.snapSplash
-import com.paylastikca.presentation.view.notificationsScreen.notificationMAİNScreen
+import com.paylastikca.presentation.view.notificationsScreen.notificationMainScreen
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.HelpandInformationMAİNScreens
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.aboutUs
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.contactUs
@@ -95,7 +96,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "ForgotYourPasswordScreen",
+        startDestination = "homePageMainScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -111,7 +112,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 composable("giftwheelScreen") { GiftWheelScreen()  }
                 //----
 
-        composable("homePageMAİNScreen") { homePageMAİNScreen()  }
+        composable("homePageMainScreen") { homePageMainScreen()  }
         composable("shoppingCentreScreen") { shoppingCentreScreen(navController = navController)  }
         composable("tasksScreen") { tasksScreen(navController = navController)  }
 
@@ -133,7 +134,9 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
         //notificationsScreen
 
-        composable("notificationMAİNScreen") { notificationMAİNScreen()  }
+       composable("notificationMainScreen") { notificationMainScreen()  }
+
+
 
         //profileScreen
                 //applicationPreferencesScreens
