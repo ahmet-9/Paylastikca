@@ -51,7 +51,7 @@ import com.paylastikca.presentation.view.profileScreen.contactInformationScreens
 import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.updateNumberVerificationCode
 import com.paylastikca.presentation.view.profileScreen.notificationSettingsScreen
 import com.paylastikca.presentation.view.profileScreen.profileEditScreen
-import com.paylastikca.presentation.view.profileScreen.profileMAİNScreen
+import com.paylastikca.presentation.view.profileScreen.profileMainScreen
 import com.paylastikca.presentation.view.sharingScreen.SharingMAİNScreen
 import com.paylastikca.presentation.view.sharingScreen.chat.DmBox
 import com.paylastikca.presentation.view.sharingScreen.chat.DmBoxChat
@@ -96,7 +96,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "homePageMainScreen",
+        startDestination = "profileMainScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -179,7 +179,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
         composable("badgesScreen") { badgesScreen()  }
         composable("notificationSettingsScreen") { notificationSettingsScreen()  }
         composable("profileEditScreen") { profileEditScreen()  }
-        composable("profileMAİNScreen") { profileMAİNScreen()  }
+        composable("profileMainScreen") { profileMainScreen()  }
 
 
         //sharingScreen
