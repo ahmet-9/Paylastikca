@@ -92,11 +92,12 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenNoResultsF
 import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenNoResultsFoundSwapMyListSwapDiscovery
 import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFound
 
+
 @Composable
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "profileMainScreen",
+        startDestination = "profileEditScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
 
