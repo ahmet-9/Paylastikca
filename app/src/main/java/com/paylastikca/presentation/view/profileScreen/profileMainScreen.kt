@@ -178,7 +178,7 @@ fun profileMainScreen() {
 
                         KpiChipRozet(
                             title = "Rozet",
-                            badgeText = "Yardımsever",
+                            badgeText = "İlk Adım",
                             modifier = Modifier.weight(1f)
                         )
 
@@ -298,7 +298,7 @@ private fun RowScope.KpiChipRozet(
 
 
         Image(
-            painter = painterResource(id = R.drawable.lvldeneme),
+            painter = painterResource(id = R.drawable.lvl_one),
             contentDescription = "rozet logo",
             modifier = Modifier
                 .align(Alignment.Center)

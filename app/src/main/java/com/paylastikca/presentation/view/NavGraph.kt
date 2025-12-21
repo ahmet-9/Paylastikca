@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -97,7 +98,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "profileEditScreen",
+        startDestination = "badgesScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -177,7 +178,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCodeCompleted") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCodeCompleted()  }
                 //-----
 
-        composable("badgesScreen") { badgesScreen()  }
+        composable("badgesScreen") { badgesScreen(navController )  }
         composable("notificationSettingsScreen") { notificationSettingsScreen()  }
         composable("profileEditScreen") { profileEditScreen()  }
         composable("profileMainScreen") { profileMainScreen()  }
