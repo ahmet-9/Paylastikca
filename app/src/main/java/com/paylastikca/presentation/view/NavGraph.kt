@@ -44,7 +44,7 @@ import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.tw
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.SelectLanguage
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.applicationPreferencesMAİN
 import com.paylastikca.presentation.view.profileScreen.badgesScreen
-import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.contactInformationMAİN
+import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.contactInformationMain
 import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.dateOfBirth
 import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.updateEmail
 import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.updateEmailVerificationCode
@@ -98,7 +98,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "badgesScreen",
+        startDestination = "contactInformationMain",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -147,10 +147,10 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                  //----
 
                 //contactInformationScreens
-                composable("contactInformationMAİN") { contactInformationMAİN()  }
+                composable("contactInformationMain") { contactInformationMain()  }
                 composable("dateOfBirth") { dateOfBirth()  }
-                composable("updateEmail") { updateEmail()  }
-                composable("updateEmailVerificationCode") { updateEmailVerificationCode()  }
+                //composable("updateEmail") { updateEmail()  }
+                //composable("updateEmailVerificationCode") { updateEmailVerificationCode()  }
                 composable("updateNumber") { updateNumber()  }
                 composable("updateNumberVerificationCode") { updateNumberVerificationCode()  }
                 //--
