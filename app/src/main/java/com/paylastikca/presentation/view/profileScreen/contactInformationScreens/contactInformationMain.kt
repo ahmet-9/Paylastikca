@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.paylastikca.presentation.view.commonUI.components.PageHeader
 import kotlinx.coroutines.delay
 
 private sealed interface ContactModal {
@@ -36,11 +37,10 @@ fun contactInformationMain(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("İletişim bilgileri") },
-                navigationIcon = {
-                    TextButton(onClick = onBack) { Text("←") }
-                }
+            PageHeader(
+                modifier = Modifier.padding(top = 25.dp, start = 7.dp),
+                title = "İletişim bilgileri",
+                onBackClick = onBack
             )
         }
     ) { padding ->
