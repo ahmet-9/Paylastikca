@@ -148,11 +148,11 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
                 //contactInformationScreens
                 composable("contactInformationMain") { contactInformationMain()  }
-                composable("dateOfBirth") { dateOfBirth()  }
+              //  composable("dateOfBirth") { dateOfBirth()  }
                 //composable("updateEmail") { updateEmail()  }
                 //composable("updateEmailVerificationCode") { updateEmailVerificationCode()  }
-                composable("updateNumber") { updateNumber()  }
-                composable("updateNumberVerificationCode") { updateNumberVerificationCode()  }
+//composable("updateNumber") { updateNumber()  }
+               // composable("updateNumberVerificationCode") { updateNumberVerificationCode()  }
                 //--
 
                 //HelpandInformationScreens
