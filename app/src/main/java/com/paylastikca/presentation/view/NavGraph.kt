@@ -30,7 +30,7 @@ import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.helpAndSSS
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.privacyPolicy
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.termsOfUse
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.PrivacySecurityMAİNScreen
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.PrivacySecurityMainScreen
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.changePassword
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.deleteAccount
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.deleteAccountVerificationCode
@@ -98,7 +98,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "contactInformationMain",
+        startDestination = "PrivacySecurityMainScreen",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -168,7 +168,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 composable("changePassword") { changePassword()  }
                 composable("deleteAccount") { deleteAccount()  }
                 composable("deleteAccountVerificationCode") { deleteAccountVerificationCode()  }
-                composable("PrivacySecurityMAİNScreen") { PrivacySecurityMAİNScreen()  }
+                composable("PrivacySecurityMainScreen") { PrivacySecurityMainScreen()  }
                 composable("twoStepVerificationActive") { twoStepVerificationActive()  }
                 composable("twoStepVerificationActiveRemove") { twoStepVerificationActiveRemove()  }
                 composable("twoStepVerificationNoActive") { twoStepVerificationNoActive()  }
