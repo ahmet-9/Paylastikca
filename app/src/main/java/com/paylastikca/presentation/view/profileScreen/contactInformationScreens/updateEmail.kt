@@ -21,10 +21,13 @@ fun updateEmail(
     onDismiss: () -> Unit,
     onSave: () -> Unit
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Dialog(onDismissRequest = onDismiss) {
         Card(
             shape = RoundedCornerShape(14.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
+            colors = CardDefaults.cardColors(containerColor = colors.surface),
             modifier = Modifier.fillMaxWidth(0.9f)
         ) {
             Column(Modifier.padding(16.dp),
@@ -32,7 +35,8 @@ fun updateEmail(
             ) {
                 Text("E-posta Güncelle", style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp
+                    fontSize = 22.sp,
+                    color = colors.onSurface
 
 
                 )
@@ -48,10 +52,10 @@ fun updateEmail(
                     modifier = Modifier.fillMaxWidth(),
 
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF969595),
-                        unfocusedBorderColor = Color(0xFFD0D0D0),
-                        cursorColor = Color(0xFFFF7200),
-                        focusedLabelColor = Color(0xFFFF7200)
+                        focusedBorderColor = colors.outline,
+                        unfocusedBorderColor = colors.outlineVariant,
+                        cursorColor = colors.primary,
+                        focusedLabelColor = colors.primary
                     )
                 )
 
@@ -59,7 +63,7 @@ fun updateEmail(
                 Text(
                     "Kaydet'e bastıktan sonra hesabınızın güvenliği için doğrulama e-postası gönderilecek.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
+                    color = colors.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 )
 
@@ -70,13 +74,13 @@ fun updateEmail(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = Color(0xFFFF7200),
+                            containerColor = colors.surface,
+                            contentColor = colors.primary,
 
                         ),
                         border = BorderStroke(
                             width = 1.dp,
-                            color = Color(0xFFFF7200)
+                            color = colors.primary
                         )
 
                     ) { Text("İptal") }
@@ -85,8 +89,8 @@ fun updateEmail(
                         onClick = onSave,
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFFF7200),
-                            contentColor = Color.White,
+                            containerColor = colors.primary,
+                            contentColor = colors.onPrimary,
 
                             )
 

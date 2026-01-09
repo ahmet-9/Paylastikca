@@ -25,6 +25,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -53,6 +54,7 @@ import com.paylastikca.app.R
 
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.ui.text.style.TextAlign
+import com.paylastikca.ui.theme.authBlue
 
 
 @Composable
@@ -64,16 +66,17 @@ fun ForgotYourPasswordScreen(
 
 
 ){
+    val colors = MaterialTheme.colorScheme
     var email by remember { mutableStateOf("") }
 
     Scaffold(
-        containerColor = Color.White
+        containerColor = colors.background
     ) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(Color.White)
+                .background(colors.background)
         ) {
             Column(
                 modifier = Modifier
@@ -86,7 +89,7 @@ fun ForgotYourPasswordScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // ÜSTTEKİ LOGO
+
                 Image(
                     painter = painterResource(id = R.drawable.signuploginpasswordscreenimage),
                     contentDescription = null,
@@ -101,17 +104,18 @@ fun ForgotYourPasswordScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // BAŞLIK
+
                 Text(
                     text = "Şifreni Sıfırla",
                     fontSize = 28.sp,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(bottom = 15.dp)
+                    modifier = Modifier.padding(bottom = 15.dp),
+                    color = colors.onBackground
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // GÖLGELİ E-POSTA ALANI
+
                 OutlinedTextField(
                     value = email,
                     onValueChange = { email = it },
@@ -124,22 +128,22 @@ fun ForgotYourPasswordScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.mailicon),
                             contentDescription = null,
-                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            tint = colors.onSurfaceVariant,
                             modifier = Modifier.size(27.dp)
                         )
                     },
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
-                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
-                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
-                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                        focusedBorderColor = colors.outline,
+                        unfocusedBorderColor = colors.outlineVariant,
+                        cursorColor = colors.primary,
+                        focusedLabelColor = colors.primary
                     )
 
                     )
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // ORTADAKİ ZARF GÖRSELİ
+
                 Image(
                     painter = painterResource(id = R.drawable.forgotyourpasswordscreenimage),
                     contentDescription = null,
@@ -151,44 +155,45 @@ fun ForgotYourPasswordScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // TURUNCU BUTON
+
                 Button(
-                    onClick = { /* doğrulama kodu gönder */ },
+                    onClick = {  },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
                     shape = RoundedCornerShape(24.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFF7200)
+                        containerColor = colors.primary,
+                        contentColor = colors.onPrimary
                     )
                 ) {
                     Text(
                         text = "Doğrulama kodu gönder",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = Color.White
+                        color = colors.onPrimary
                     )
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // AÇIKLAMA METNİ
+
                 Text(
                     text = "E-posta adresini girdikten sonra, hesabını doğrulaman için sana bir kod göndereceğiz.",
                     fontSize = 12.sp,
-                    color = Color.Gray,
+                    color = colors.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(horizontal = 8.dp)
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // GİRİŞE DÖN LİNKİ
+
                 Text(
                     text = "Girişe dön",
                     fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color(0xFF1E63D5),
+                    color = authBlue,
                     modifier = Modifier.clickable { onBackToLoginClick() }
                 )
 

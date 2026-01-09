@@ -9,28 +9,39 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Handshake
-import androidx.compose.material.icons.filled.Home
+
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Person
+
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
+
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 // ---------- SCREEN ----------
 @Composable
 fun notificationMainScreen() {
     val notifications = fakeNotifications(30)
+    val colors = MaterialTheme.colorScheme
+
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = colors.surfaceVariant
+        )
+    }
+
 
     Scaffold(
-        containerColor = Color(0xFFF6F6F6),
+        containerColor = colors.surfaceVariant,
         bottomBar = {
-            com.paylastikca.presentation.view.commonUI.components.BottomBar()
+            com.paylastikca.presentation.view.commonUI.components.BottomBar(colors.surfaceVariant)
         }
     ) { padding ->
 
@@ -62,6 +73,9 @@ fun notificationMainScreen() {
 // ---------- TOP BAR ----------
 @Composable
 private fun NotificationsTopBar() {
+
+    val colors = MaterialTheme.colorScheme
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -72,7 +86,7 @@ private fun NotificationsTopBar() {
         Text(
             text = "Bildirimler",
             style = MaterialTheme.typography.titleLarge,
-            color = Color.Black
+            color = colors.onBackground
         )
 
         Spacer(Modifier.height(10.dp))
@@ -80,9 +94,11 @@ private fun NotificationsTopBar() {
         Box(
             modifier = Modifier
                 .width(190.dp)
-                .height(4.dp)
-                .background(Color(0xFF6B6B6B), RoundedCornerShape(100))
+                .height(3.dp)
+                .background(colors.outline, RoundedCornerShape(100))
         )
+
+
     }
 }
 
@@ -92,8 +108,9 @@ private fun NotificationCard(
     item: UiNotification,
     onClick: () -> Unit
 ) {
-    val orange = Color(0xFFFF8A00)
-    val timeGreen = Color(0xFF2E7D32)
+
+    val colors = MaterialTheme.colorScheme
+
     val shape = RoundedCornerShape(16.dp)
 
     Surface(
@@ -102,7 +119,7 @@ private fun NotificationCard(
             .shadow(10.dp, shape)
             .clickable(onClick = onClick),
         shape = shape,
-        color = Color.White
+        color = colors.surface
     ) {
         Row(
             modifier = Modifier
@@ -114,13 +131,13 @@ private fun NotificationCard(
             Box(
                 modifier = Modifier
                     .size(46.dp)
-                    .background(orange, CircleShape),
+                    .background(colors.primary, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = Icons.Filled.Notifications,
                     contentDescription = null,
-                    tint = Color.White,
+                    tint = colors.onPrimary,
                     modifier = Modifier.size(22.dp)
                 )
             }
@@ -131,7 +148,7 @@ private fun NotificationCard(
                 Text(
                     text = item.title,
                     style = MaterialTheme.typography.titleMedium,
-                    color = Color.Black,
+                    color = colors.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -139,7 +156,7 @@ private fun NotificationCard(
                 Text(
                     text = item.body,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF4A4A4A),
+                    color = colors.onSurfaceVariant,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -150,33 +167,13 @@ private fun NotificationCard(
             Text(
                 text = item.timeText,
                 style = MaterialTheme.typography.bodyMedium,
-                color = timeGreen
+                color = colors.tertiary
             )
         }
     }
 }
 
-// ---------- BOTTOM BAR ----------
-private enum class BottomTab { Home, Share, Notifications, Profile }
 
-
-
-@Composable
-private fun BottomIcon(
-    icon: androidx.compose.ui.graphics.vector.ImageVector,
-    isSelected: Boolean,
-    orange: Color,
-    onClick: () -> Unit
-) {
-    Icon(
-        imageVector = icon,
-        contentDescription = null,
-        tint = if (isSelected) orange else orange.copy(alpha = 0.75f),
-        modifier = Modifier
-            .size(34.dp)
-            .clickable(onClick = onClick)
-    )
-}
 
 // ---------- MODEL + SAMPLE DATA ----------
 private data class UiNotification(

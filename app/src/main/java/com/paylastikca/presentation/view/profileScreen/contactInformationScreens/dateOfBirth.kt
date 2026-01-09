@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
@@ -18,6 +19,9 @@ fun dateOfBirth(
     onDismiss: () -> Unit,
     onSave: (formattedDate: String) -> Unit
 ) {
+
+
+    val colors = MaterialTheme.colorScheme
     val nowYear = Calendar.getInstance().get(Calendar.YEAR)
 
 
@@ -51,11 +55,17 @@ fun dateOfBirth(
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = MaterialTheme.shapes.large,
-            tonalElevation = 2.dp
+            tonalElevation = 2.dp,
+            color = colors.surface,
+            contentColor = colors.onSurface,
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
 
-                Text("Doğum Tarihi", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    "Doğum Tarihi",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = colors.onSurface
+                )
 
                 Spacer(Modifier.height(12.dp))
 
@@ -69,7 +79,8 @@ fun dateOfBirth(
                         range = 1..daysInMonth(month, year),
                         formatter = { it.toString() },
                         onValueChange = { day = it },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        textColor = colors.onSurface
                     )
 
 
@@ -82,7 +93,8 @@ fun dateOfBirth(
                         range = 1..12,
                         formatter = { months[it - 1] },
                         onValueChange = { month = it },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        textColor = colors.onSurface,
                     )
 
 
@@ -91,7 +103,8 @@ fun dateOfBirth(
                         range = 1920..nowYear,
                         formatter = { it.toString() },
                         onValueChange = { year = it },
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        textColor = colors.onSurface,
                     )
                 }
 
@@ -105,9 +118,9 @@ fun dateOfBirth(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = Color(0xFFFF7200)
+                            contentColor = colors.primary
                         ),
-                        border = BorderStroke(1.dp, Color(0xFFFF7200))
+                        border = BorderStroke(1.dp, colors.primary)
                     ) {
                         Text("İptal")
                     }
@@ -121,8 +134,8 @@ fun dateOfBirth(
                         },
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFFF7200),
-                            contentColor = Color.White
+                            containerColor = colors.primary,
+                            contentColor = colors.onPrimary
                         )
                     ) {
                         Text("Kaydet")
@@ -140,7 +153,8 @@ private fun AndroidNumberPicker(
     range: IntRange,
     formatter: (Int) -> String,
     onValueChange: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    textColor : Color
 ) {
     AndroidView(
         modifier = modifier.height(140.dp),
@@ -152,6 +166,15 @@ private fun AndroidNumberPicker(
                 setFormatter { v -> formatter(v) }
                 this.value = value
                 setOnValueChangedListener { _, _, newVal -> onValueChange(newVal) }
+
+                (0 until childCount).forEach { i ->
+                    val child = getChildAt(i)
+                    if (child is android.widget.EditText) {
+                        child.setTextColor(textColor.toArgb())
+                        child.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                    }
+                }
+
             }
         },
         update = { picker ->
@@ -161,9 +184,22 @@ private fun AndroidNumberPicker(
 
             val clamped = value.coerceIn(range.first, range.last)
             if (picker.value != clamped) picker.value = clamped
+
+            (0 until picker.childCount).forEach { i ->
+                val child = picker.getChildAt(i)
+                if (child is android.widget.EditText) {
+                    child.setTextColor(textColor.toArgb())
+                    child.setBackgroundColor(android.graphics.Color.TRANSPARENT)
+                }
+            }
+
         }
     )
 }
+
+
+
+
 
 private fun parseBirthDateDdMmYyyy(s: String): Triple<Int, Int, Int>? {
     val parts = s.trim().split("/", "-", ".", " ").filter { it.isNotBlank() }

@@ -23,10 +23,14 @@ fun updateNumber(
     onDismiss: () -> Unit,
     onSave: () -> Unit
 ) {
+
+
+    val colors = MaterialTheme.colorScheme
+
     Dialog(onDismissRequest = onDismiss) {
         Card(
             shape = RoundedCornerShape(14.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
+            colors = CardDefaults.cardColors(containerColor = colors.surface),
             modifier = Modifier.fillMaxWidth(0.9f)
         ) {
             Column(
@@ -37,7 +41,8 @@ fun updateNumber(
                     "Telefon Güncelle",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    fontSize = 22.sp
+                    fontSize = 22.sp,
+                    color = colors.onSurface
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -45,8 +50,9 @@ fun updateNumber(
                 Text(
                     text = "Mevcut: $currentPhone",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
-                    textAlign = TextAlign.Center
+                    color = colors.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+
                 )
 
                 Spacer(Modifier.height(12.dp))
@@ -63,17 +69,17 @@ fun updateNumber(
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF969595),
-                        unfocusedBorderColor = Color(0xFFD0D0D0),
-                        cursorColor = Color(0xFFFF7200),
-                        focusedLabelColor = Color(0xFFFF7200)
+                        focusedBorderColor = colors.outline,
+                        unfocusedBorderColor = colors.outlineVariant,
+                        cursorColor = colors.primary,
+                        focusedLabelColor = colors.primary
                     )
                 )
 
                 if (!errorMessage.isNullOrBlank()) {
                     Spacer(Modifier.height(10.dp))
                     Surface(
-                        color = Color(0xFFE53935),
+                        color = colors.error,
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -85,7 +91,7 @@ fun updateNumber(
                         ) {
                             Text(
                                 text = errorMessage,
-                                color = Color.White,
+                                color = colors.onError,
                                 style = MaterialTheme.typography.bodySmall,
                                 textAlign = TextAlign.Center
                             )
@@ -99,7 +105,7 @@ fun updateNumber(
                 Text(
                     "Kaydet'e bastıktan sonra doğrulama kodu SMS olarak gönderilecektir.",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
+                    color = colors.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 )
 
@@ -113,18 +119,18 @@ fun updateNumber(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White,
-                            contentColor = Color(0xFFFF7200),
+                            containerColor = colors.onPrimary,
+                            contentColor = colors.primary,
                         ),
-                        border = BorderStroke(1.dp, Color(0xFFFF7200))
+                        border = BorderStroke(1.dp, colors.primary)
                     ) { Text("İptal") }
 
                     Button(
                         onClick = onSave,
                         modifier = Modifier.weight(1f),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFFF7200),
-                            contentColor = Color.White,
+                            containerColor = colors.primary,
+                            contentColor = colors.onPrimary,
                         )
                     ) { Text("Kaydet") }
                 }

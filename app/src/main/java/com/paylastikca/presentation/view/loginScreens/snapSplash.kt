@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
@@ -17,30 +18,24 @@ import androidx.compose.ui.unit.dp
 
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.app.R
-
-
-
-
-
-
-
-
+import com.paylastikca.ui.theme.BRİGHTOrange
 
 
 @Composable
 fun snapSplash(){
 
+    val colors = MaterialTheme.colorScheme
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color(0xFFFF7200)
+            color = BRİGHTOrange
         )
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFF7200)),
+            .background(BRİGHTOrange),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -56,7 +51,7 @@ fun snapSplash(){
         CircularProgressIndicator(
             modifier = Modifier
                 .padding(bottom = 40.dp),
-            color = Color.White,
+            color = colors.onPrimary,
             strokeWidth = 3.dp
         )
 

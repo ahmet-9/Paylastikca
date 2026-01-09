@@ -24,10 +24,16 @@ fun congratulationsScreen(
     prizeText: String = "1 çip",   
     onDismiss: () -> Unit = {}
 ) {
-    val scaleFactor = 1.8f 
+    val scaleFactor = 1.8f
+    val colors = MaterialTheme.colorScheme
 
     Scaffold(
+
+        containerColor = colors.background,
+
         bottomBar = {
+
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -56,7 +62,8 @@ fun congratulationsScreen(
             Text(
                 text = "TEBRİKLER",
                 fontSize = (22 * scaleFactor).sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = colors.onBackground
             )
 
             Spacer(modifier = Modifier.height((8 * scaleFactor).dp))
@@ -66,7 +73,8 @@ fun congratulationsScreen(
                 fontSize = 25.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth(),
-                maxLines = 2 // 2 satıra izin ver
+                maxLines = 2, // 2 satıra izin ver
+                color = colors.onBackground
             )
 
 
@@ -74,20 +82,12 @@ fun congratulationsScreen(
             Spacer(modifier = Modifier.height((24 * scaleFactor).dp))
 
             // Mor çip simgesi (yuvarlak + P harfi)
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.shoppingcentrescreen_coinbadge), // 👈 kendi drawable'ını koy
+                contentDescription = "Chip",
                 modifier = Modifier
-                    .size((72 * scaleFactor).dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.secondary),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "P",
-                    color = MaterialTheme.colorScheme.onSecondary,
-                    fontSize = (28 * scaleFactor).sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+                    .size((92 * scaleFactor).dp) // ✅ aynı boyut
+            )
 
             Spacer(modifier = Modifier.height((24 * scaleFactor).dp))
 
@@ -97,7 +97,7 @@ fun congratulationsScreen(
                 modifier = Modifier.fillMaxWidth(0.8f)
                     .height(63.dp),
                 shape = RoundedCornerShape(50),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE67E00))
+                colors = ButtonDefaults.buttonColors(containerColor = colors.primary, contentColor = colors.onPrimary)
             ) {
                 Text(
                     "TAMAM",

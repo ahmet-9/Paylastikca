@@ -34,11 +34,12 @@ import com.paylastikca.presentation.view.commonUI.components.PageHeader
 fun tasksScreen(navController: NavController) {
 
     val scrollState = rememberScrollState()
+    val colors = MaterialTheme.colorScheme
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(colors.background)
             .verticalScroll(scrollState)
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -60,7 +61,7 @@ fun tasksScreen(navController: NavController) {
 
 
         Divider(
-            color = Color(0xFFBDBDBD),
+            color = colors.outlineVariant,
             thickness = 1.dp,
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,7 +73,7 @@ fun tasksScreen(navController: NavController) {
 
 
         Divider(
-            color = Color(0xFFBDBDBD),
+            color = colors.outlineVariant,
             thickness = 1.dp,
             modifier = Modifier
                 .fillMaxWidth()
@@ -84,7 +85,7 @@ fun tasksScreen(navController: NavController) {
 
 
         Divider(
-            color = Color(0xFFBDBDBD),
+            color = colors.outlineVariant,
             thickness = 1.dp,
             modifier = Modifier
                 .fillMaxWidth()
@@ -108,10 +109,13 @@ fun tasksScreen(navController: NavController) {
 
 @Composable
 fun InviteFriendCard() {
+
+    val colors = MaterialTheme.colorScheme
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(colors.surface)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -120,7 +124,7 @@ fun InviteFriendCard() {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White)
+                .background(colors.surface)
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -151,13 +155,13 @@ fun InviteFriendCard() {
                 text = "Arkadaşını Davet Et",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
-                color = Color.Black
+                color = colors.onSurface
             )
             Text(
                 text = "50 çip kazan !",
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = colors.onSurface
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -169,8 +173,7 @@ fun InviteFriendCard() {
                     .offset(x = 20.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                val orange = Color(0xFFE67E00)
-                val cream = Color(0xFFFFF7ED)
+
 
 
 
@@ -180,18 +183,18 @@ fun InviteFriendCard() {
                         .height(40.dp)
                         .border(
                             width = 1.dp,
-                            color = orange,
+                            color = colors.primary,
                             shape = RoundedCornerShape(20.dp)
                         )
                         .clip(RoundedCornerShape(50.dp))
-                        .background(cream),
+                        .background(colors.primaryContainer),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
                     Text(
                         text = "https://www.paylastik",
                         fontSize = 14.sp,
-                        color = Color.Black,
+                        color = colors.onPrimaryContainer,
                         modifier = Modifier
                             .weight(1f)
                             .padding(start = 16.dp, end = 12.dp),
@@ -201,7 +204,9 @@ fun InviteFriendCard() {
 
                     Button(
                         onClick = {  },
-                        colors = ButtonDefaults.buttonColors(containerColor = orange),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colors.primary, contentColor = colors.onPrimary
+                        ),
                         shape = RoundedCornerShape(
                             topStart = 0.dp, bottomStart = 0.dp,
                             topEnd = 50.dp, bottomEnd = 50.dp
@@ -213,7 +218,7 @@ fun InviteFriendCard() {
                             text = "Kopyala",
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = colors.onPrimary
                         )
                     }
 
@@ -231,7 +236,7 @@ fun InviteFriendCard() {
                     Icon(
                         painter = painterResource(id = R.drawable.paylasicon),
                         contentDescription = "Paylaş",
-                        tint = orange,
+                        tint = colors.primary,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -249,9 +254,16 @@ fun InviteFriendCard() {
 
 @Composable
 fun SevenDayLoginCard() {
-    val orange = Color(0xFFE67E00)
-    val green = Color(0xFF4CAF50)
-    val lightBg = Color.White
+
+    val colors = MaterialTheme.colorScheme
+
+    val orange = colors.primary
+
+
+    val green = colors.tertiary
+
+
+    val lightBg = colors.surface
 
     Column(
         modifier = Modifier
@@ -275,13 +287,13 @@ fun SevenDayLoginCard() {
             text = "Uygulamaya 7 gün boyunca giriş yap",
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
-            color = Color.Black
+            color = colors.onSurface
         )
         Text(
             text = "50 çip kazan !",
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = colors.onSurface
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -333,6 +345,9 @@ fun DayCircle(
     orange: Color,
     green: Color
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Box(
         modifier = Modifier
             .width(60.dp)
@@ -344,7 +359,7 @@ fun DayCircle(
             modifier = Modifier
                 .size(55.dp)
                 .clip(CircleShape)
-                .background(if (isCompleted) orange else Color.White)
+                .background(if (isCompleted) orange else colors.surface)
                 .border(2.dp, orange, CircleShape),
             contentAlignment = Alignment.Center
         ) {
@@ -352,7 +367,7 @@ fun DayCircle(
                 text = "$dayNumber",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = if (isCompleted) Color.White else Color.Black
+                color = if (isCompleted) colors.onPrimary else colors.onSurface
             )
         }
 
@@ -373,11 +388,12 @@ fun DayCircle(
 
 @Composable
 fun BadgeUpgradeCard() {
-    val orange = Color(0xFFE67E00)
-    val black = Color(0xFF000000)
-    val fluorange = Color(0xFFFFCD90)
 
-    val lightBg = Color.White
+    val colors = MaterialTheme.colorScheme
+    val orange = colors.primary
+    val black = colors.onSurface
+    val fluorange = colors.primaryContainer
+    val lightBg = colors.surface
 
     Column(
         modifier = Modifier
@@ -401,13 +417,13 @@ fun BadgeUpgradeCard() {
             text = "Rozet atla",
             fontSize = 17.sp,
             fontWeight = FontWeight.Medium,
-            color = Color.Black
+            color = colors.onSurface
         )
         Text(
             text = "50 çip kazan !",
             fontSize = 17.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = colors.onSurface
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -445,9 +461,9 @@ fun BadgeUpgradeCard() {
 
         OutlinedButton(
             onClick = {  },
-            border = BorderStroke(1.dp, fluorange),
+            border = BorderStroke(1.dp, orange),
             shape = RoundedCornerShape(50.dp),
-            colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White),
+            colors = ButtonDefaults.outlinedButtonColors(containerColor = fluorange ),
             contentPadding = PaddingValues(horizontal = 18.dp, vertical = 6.dp)
         ) {
            Icon(
@@ -471,15 +487,13 @@ fun BadgeUpgradeCard() {
 
 @Composable
 fun HelpTaskCard() {
-    val orange = Color(0xFFE67E00)
-    val green = Color(0xFF4CAF50)
-    val gray = Color(0xFFE0E0E0)
-    val lightGrayText = Color(0xFF9E9E9E)
+
+    val colors = MaterialTheme.colorScheme
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(colors.surface)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -667,14 +681,18 @@ progressText: String,
 isActive: Boolean,
 isCompleted: Boolean
 ) {
-val orange = Color(0xFFE67E00)
-val green = Color(0xFF4CAF50)
-val lightGray = Color(0xFFE0E0E0)
-val grayText = Color(0xFFBDBDBD)
+
+    val colors = MaterialTheme.colorScheme
+    val orange = colors.primary
+    val green = colors.tertiary
+    val lightGray = colors.surfaceVariant
+    val grayText = colors.onSurfaceVariant
 
 
-val textColor = if (isActive) Color.Black else grayText
-val rewardColor = if (isActive) Color.Black else grayText
+
+
+val textColor = if (isActive) colors.onSurface else grayText
+val rewardColor = if (isActive) colors.onSurface else grayText
 val barColor = if (isActive) orange else lightGray
 val alphaValue = if (isActive) 1f else 0.5f
 
@@ -717,7 +735,7 @@ Row(
            .weight(1f)
            .height(12.dp)
            .clip(RoundedCornerShape(50.dp))
-           .background(Color(0xFFE0E0E0))
+           .background(colors.surfaceVariant)
    ) {
 
        Box(
@@ -758,7 +776,7 @@ if (isActive && isCompleted) {
        onClick = {  },
        colors = ButtonDefaults.buttonColors(
            containerColor = green,
-           contentColor = Color.White
+           contentColor = colors.onTertiary
        ),
        shape = RoundedCornerShape(50.dp),
        modifier = Modifier
@@ -769,7 +787,7 @@ if (isActive && isCompleted) {
            text = "Ödülü Al",
            fontSize = 16.sp,
            fontWeight = FontWeight.Bold,
-           color = Color.White
+           color = colors.onTertiary
        )
    }
 }
@@ -783,6 +801,9 @@ fun SectionLabel(
     text: String = "YARDIM",
     size: Float = 32f
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -794,7 +815,7 @@ fun SectionLabel(
             text = text,
             fontSize = size.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFFBDBDBD),
+            color = colors.onSurfaceVariant,
             maxLines = 1
         )
     }
@@ -804,6 +825,9 @@ fun SectionLabel(
 
 @Composable
 fun BubblesPathDividerVertical() {
+
+    val colors = MaterialTheme.colorScheme
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -816,9 +840,9 @@ fun BubblesPathDividerVertical() {
                     .clip(CircleShape)
                     .background(
                         if (index % 2 == 0)
-                            Color(0xFF000000).copy(alpha = 0.9f)
+                            colors.onSurfaceVariant.copy(alpha = 0.9f)
                         else
-                            Color(0xFFD9D9D9)
+                            colors.surfaceVariant
                     )
             )
             if (index != 6) Spacer(modifier = Modifier.height(6.dp))
@@ -827,24 +851,7 @@ fun BubblesPathDividerVertical() {
 }
 
 
-@Composable
-fun SectionLabel(text: String = "YARDIM") {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 12.dp),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = text,
-            color = Color(0xFF9E9E9E),
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Medium,
-            textAlign = TextAlign.Center
-        )
-    }
-}
+
 
 
 

@@ -46,11 +46,10 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.delay
 import com.google.maps.android.compose.*
+import com.paylastikca.ui.theme.Gray
 
 
 
-private val PaylastikcaOrange = Color(0xFFE67E00)
-private val CardGray          = Color(0xFFF3F3F3)
 
 
 
@@ -61,7 +60,7 @@ fun homePageMainScreen() {
     var showDialog by remember { mutableStateOf(false) } // Rİ
 
     Scaffold(
-        containerColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.background,
        // bottomBar = { BottomBar() }
         bottomBar = {
             com.paylastikca.presentation.view.commonUI.components.BottomBar()
@@ -108,10 +107,10 @@ fun homePageMainScreen() {
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
                         disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Gray,
-                        unfocusedIndicatorColor = Color.LightGray,
-                        disabledIndicatorColor = Color.LightGray,
-                        cursorColor = Color.Black
+                        focusedIndicatorColor = Gray,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
+                        disabledIndicatorColor = MaterialTheme.colorScheme.outlineVariant,
+                        cursorColor = MaterialTheme.colorScheme.primary
                     ),
                     textStyle = LocalTextStyle.current.copy(
                         fontWeight = FontWeight.Bold,
@@ -158,7 +157,7 @@ fun homePageMainScreen() {
                     .fillMaxWidth()
                     .height(459.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(CardGray),
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentAlignment = Alignment.Center
             ) {
                 val cameraPositionState = rememberCameraPositionState {
@@ -251,7 +250,7 @@ fun CoinBadge() {
         )
         Text(
             text = "13",
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onSurface,
             fontSize = 11.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.offset(x = 12.dp, y = 1.dp)
@@ -328,7 +327,7 @@ fun IconTextButton(
         Text(
             text = text,
             fontSize = 14.sp,
-            color = Color.Black,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Normal
         )
     }
@@ -378,12 +377,12 @@ fun GiftWheelButton(modifier: Modifier = Modifier) {
                 .matchParentSize()
                 .clip(RoundedCornerShape(12.dp))
 
-                .background(Color(0xFF3A683B)),
+                .background(MaterialTheme.colorScheme.tertiary),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Hediye\nçarkı",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onTertiary,
                 fontWeight = FontWeight.Black,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
@@ -423,7 +422,7 @@ fun AdWatchButton(modifier: Modifier = Modifier,
             .width(175.dp)
             .height(68.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(PaylastikcaOrange)
+            .background(MaterialTheme.colorScheme.primary)
             .clickable { onClick() }, //Rİ
         contentAlignment = Alignment.Center
     ) {
@@ -472,7 +471,7 @@ fun AdWatchButton(modifier: Modifier = Modifier,
 
             Text(
                 text = "Reklam izle\nkazan",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontWeight = FontWeight.Black,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center
@@ -491,7 +490,7 @@ fun TasksButton(modifier: Modifier = Modifier) {
             .width(175.dp)
             .height(68.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(Color.Black),
+            .background(MaterialTheme.colorScheme.inverseSurface),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -513,7 +512,7 @@ fun TasksButton(modifier: Modifier = Modifier) {
 
             Text(
                 text = "Görevler",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.inverseOnSurface,
                 fontWeight = FontWeight.Black,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center
@@ -544,7 +543,7 @@ fun StoreButton(modifier: Modifier = Modifier) {
             .width(175.dp)
             .height(68.dp)
             .clip(RoundedCornerShape(12.dp))
-            .background(Color.Black),
+            .background(MaterialTheme.colorScheme.inverseSurface),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -573,7 +572,7 @@ fun StoreButton(modifier: Modifier = Modifier) {
             Text(
                 text = "Mağaza",
 
-                color = Color.White,
+                color = MaterialTheme.colorScheme.inverseOnSurface,
                 fontWeight = FontWeight.Black,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,

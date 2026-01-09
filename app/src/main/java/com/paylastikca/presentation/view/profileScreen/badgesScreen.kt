@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,10 +46,12 @@ fun badgesScreen(
 navController : NavController
 ) {
 
+    val colors = MaterialTheme.colorScheme
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(colors.background)
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -70,15 +73,15 @@ navController : NavController
 
 @Composable
 fun HelpBadgesCard() {
-    val orange = Color(0xFFE67E00)
-    val green = Color(0xFF4CAF50)
-    val gray = Color(0xFFE0E0E0)
-    val lightGrayText = Color(0xFF9E9E9E)
+
+    val colors = MaterialTheme.colorScheme
+
+
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(colors.surface)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -347,12 +350,18 @@ fun BadgesCardState(
     badgeIconSize: Int = 92,
     badgeIconOffsetY: Int = 0
 ) {
-    val orange = Color(0xFFE67E00)
-    val lightGray = Color(0xFFE0E0E0)
-    val grayText = Color(0xFFBDBDBD)
 
-    val textColor = if (isActive) Color.Black else grayText
-    val rewardColor = if (isActive) Color.Black else grayText
+    val colors = MaterialTheme.colorScheme
+
+
+    val orange = colors.primary
+    val lightGray = colors.outlineVariant
+    val disabledText = colors.onSurfaceVariant
+
+    val titleColor = if (isActive) colors.onSurface else disabledText
+    val rewardColor = if (isActive) colors.onSurface else disabledText
+
+
     val barColor = if (isActive) orange else lightGray
     val alphaValue = if (isActive) 1f else 0.5f
 
@@ -373,7 +382,7 @@ fun BadgesCardState(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(22.dp))
-                .background(Color.White)
+                .background(colors.surface)
                 .padding(
                     top = if (badgeIconRes != null) iconRadius + 12.dp else 18.dp,
                     start = 16.dp,
@@ -387,7 +396,7 @@ fun BadgesCardState(
                 text = title,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Black,
-                color = textColor
+                color = titleColor
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -423,7 +432,7 @@ fun BadgesCardState(
                         .weight(1f)
                         .height(12.dp)
                         .clip(RoundedCornerShape(50.dp))
-                        .background(Color(0xFFE0E0E0))
+                        .background(lightGray)
                 ) {
                     Box(
                         modifier = Modifier
@@ -451,7 +460,7 @@ fun BadgesCardState(
             Text(
                 text = progressText,
                 fontSize = 13.sp,
-                color = textColor
+                color = titleColor
             )
         }
 
@@ -472,7 +481,7 @@ fun BadgesCardState(
 fun BadgeDotsDividerVertical(
     modifier: Modifier = Modifier,
     dotSize: Dp = 9.dp,
-    dotColor: Color = Color(0xFF9E9E9E),
+    dotColor: Color = MaterialTheme.colorScheme.outline,
     dotCount: Int = 4,
     spacing: Dp = 30.dp
 ) {

@@ -30,6 +30,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.alpha
@@ -41,30 +42,32 @@ import com.paylastikca.app.R
 
 import com.paylastikca.presentation.view.commonUI.components.PageHeader
 
-
+private val ShopAccentPurpleBorder = Color(0xFF5D4FFF)
 
 @Composable
 fun shoppingCentreScreen(navController: NavController) {
 
     val systemUiController = rememberSystemUiController()
+    val colors = MaterialTheme.colorScheme
+
 
 
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color(0xFF282828),
+            color = colors.inverseSurface,
             darkIcons = false
         )
     }
 
     Scaffold(
-        containerColor = Color(0xFF282828)
+        containerColor = colors.inverseSurface
     ) { innerPadding ->
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .background(Color(0xFF282828))
+                .background(colors.inverseSurface)
         ) {
             ShoppingCentreHeader(onBackClick = { navController.popBackStack() })
             Column(
@@ -86,10 +89,13 @@ fun shoppingCentreScreen(navController: NavController) {
 
 @Composable
 fun ShoppingCentreHeader(onBackClick: () -> Unit) {
+
+    val colors = MaterialTheme.colorScheme
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFF282828))
+            .background(colors.inverseSurface)
             .padding(top = 8.dp)
     ) {
 
@@ -103,7 +109,7 @@ fun ShoppingCentreHeader(onBackClick: () -> Unit) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
             contentDescription = "Geri",
-            tint = Color.White,
+            tint = colors.inverseOnSurface,
             modifier = Modifier
                 .align(Alignment.CenterStart)
                 .padding(start = 16.dp)
@@ -114,6 +120,10 @@ fun ShoppingCentreHeader(onBackClick: () -> Unit) {
 
 @Composable
 fun StoreHeader(balance: Int) {
+
+    val colors = MaterialTheme.colorScheme
+
+
 
     Box(
         modifier = Modifier
@@ -162,7 +172,7 @@ fun StoreHeader(balance: Int) {
 
             Text(
                 text = "Mağaza",
-                color = Color.White,
+                color = colors.inverseOnSurface,
                 fontSize = 40.sp,
                 fontWeight = FontWeight.ExtraBold
             )
@@ -172,10 +182,10 @@ fun StoreHeader(balance: Int) {
 
             Row(
                 modifier = Modifier
-                    .background(Color(0xFF1D1A29), RoundedCornerShape(14.dp))
+                    .background(colors.inverseSurface, RoundedCornerShape(14.dp))
                     .border(
                         width = 2.dp,
-                        color = Color(0xFF5D4FFF),
+                        color = ShopAccentPurpleBorder,
                         shape = RoundedCornerShape(14.dp)
                     )
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -192,7 +202,7 @@ fun StoreHeader(balance: Int) {
 
                 Text(
                     text = balance.toString(),
-                    color = Color.White,
+                    color = colors.inverseOnSurface,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -210,6 +220,9 @@ fun CoinPackCard(
     pBadgeRes: Int,
     modifier: Modifier = Modifier
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Box(
         modifier = modifier
             .height(230.dp)
@@ -220,10 +233,10 @@ fun CoinPackCard(
             modifier = Modifier
                 .matchParentSize()
                 .clip(RoundedCornerShape(18.dp))
-                .background(Color(0xFF3A2F6E))
+                .background(colors.inverseSurface)
                 .border(
                     width = 2.dp,
-                    color = Color(0xFF6F5CFF),
+                    color = ShopAccentPurpleBorder,
                     shape = RoundedCornerShape(18.dp)
                 )
         ) {
@@ -246,7 +259,7 @@ fun CoinPackCard(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color.Black)
+                    .background(colors.onSurface)
                     .padding(horizontal = 12.dp, vertical = 8.dp)
             ) {
                 Row(
@@ -256,7 +269,7 @@ fun CoinPackCard(
                 ) {
                     Text(
                         text = amount.toString(),
-                        color = Color.White,
+                        color = colors.inverseOnSurface,
                         fontSize = 32.sp,
                         fontWeight = FontWeight.ExtraBold
                     )
@@ -276,13 +289,13 @@ fun CoinPackCard(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .clip(RoundedCornerShape(50))
-                        .background(Color(0xFFFF9800))
+                        .background(colors.primary)
                         .padding(horizontal = 18.dp, vertical = 6.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = priceText,
-                        color = Color.White,
+                        color = colors.onPrimary,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -296,13 +309,13 @@ fun CoinPackCard(
                 .align(Alignment.TopCenter)
                 .offset(y = (-10).dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(Color(0xFFFF3D3D))
+                .background(colors.error)
                 .padding(horizontal = 20.dp, vertical = 4.dp),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Satın Al",
-                color = Color.White,
+                color = colors.onError,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold
             )

@@ -1,5 +1,6 @@
 package com.paylastikca.presentation.view.profileScreen.contactInformationScreens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -42,10 +43,13 @@ fun updateEmailVerificationCode(
     onConfirm: () -> Unit,
     onResend: () -> Unit
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Dialog(onDismissRequest = onDismiss) {
         Card(
             shape = RoundedCornerShape(14.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
+            colors = CardDefaults.cardColors(containerColor = colors.surface),
             modifier = Modifier.fillMaxWidth(0.9f)
         ) {
             Column(
@@ -53,7 +57,8 @@ fun updateEmailVerificationCode(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("E-posta Doğrulaması\nBekleniyor", style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center,
-                fontSize = 22.sp
+                fontSize = 22.sp,
+                    color = colors.onSurface
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -68,14 +73,15 @@ fun updateEmailVerificationCode(
                         append(" adresine e-postanı doğrulamak için gerekli kod gönderildi. Lütfen kodu giriniz.")
                     },
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
+                    color = colors.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 )
 
                 if (!errorMessage.isNullOrBlank()) {
                     Spacer(Modifier.height(10.dp))
                     Surface(
-                        color = Color(0xFFE53935),
+                        color = colors.error,
+                        contentColor = colors.onError,
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -87,7 +93,7 @@ fun updateEmailVerificationCode(
                         ) {
                             Text(
                                 text = errorMessage,
-                                color = Color.White,
+                                color = colors.onError,
                                 style = MaterialTheme.typography.bodySmall,
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
@@ -102,20 +108,21 @@ fun updateEmailVerificationCode(
                 OtpInput(
                     value = code,
                     length = 6,
-                    onValueChange = { onCodeChange(it) }
+                    onValueChange = { onCodeChange(it) },
+                    borderColor = colors.primary
                 )
 
 
 
 
                 Spacer(Modifier.height(12.dp))
-                Text(secondsLeft.toString(), style = MaterialTheme.typography.headlineMedium)
+                Text(secondsLeft.toString(), style = MaterialTheme.typography.headlineMedium, color = colors.onSurface)
 
                 Spacer(Modifier.height(8.dp))
                 Button(onClick = onConfirm,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFF7200),
-                        contentColor = Color.White,
+                        containerColor = colors.primary,
+                        contentColor = colors.onPrimary,
 
                         )
 
@@ -129,7 +136,7 @@ fun updateEmailVerificationCode(
 
                     enabled = secondsLeft == 0,
                     colors = ButtonDefaults.textButtonColors(
-                        contentColor = if (secondsLeft == 0) Color.Black else Color.Gray
+                        contentColor = if (secondsLeft == 0) colors.onSurface else colors.onSurfaceVariant
                     )
                 ) {
                     Text("kodu tekrar gönder")
@@ -145,8 +152,9 @@ fun OtpInput(
     value: String,
     length: Int = 6,
     onValueChange: (String) -> Unit,
-    borderColor: Color = Color(0xFFFF7200),
+    borderColor: Color,
 ) {
+    val colors = MaterialTheme.colorScheme
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
 
@@ -162,13 +170,15 @@ fun OtpInput(
                 Box(
                     modifier = Modifier
                         .size(width = 34.dp, height = 44.dp)
-                        .border(1.5.dp, borderColor, RoundedCornerShape(10.dp)),
+                        .border(1.5.dp, borderColor, RoundedCornerShape(10.dp))
+                    .background(colors.surface, RoundedCornerShape(10.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = char,
                         style = MaterialTheme.typography.titleMedium,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        color = colors.onSurface
                     )
                 }
             }

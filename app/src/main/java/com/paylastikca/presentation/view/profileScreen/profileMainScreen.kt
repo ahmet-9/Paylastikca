@@ -39,9 +39,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -52,23 +54,40 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.app.R
 import com.paylastikca.presentation.view.commonUI.components.BottomBar
+import com.paylastikca.ui.theme.BRİGHTOrange
 
-private val AppOrange = Color(0xFFE67E00)
-private val ScreenBg = Color(0xFFF6F6F6)
-private val CardBg = Color.White
-private val Muted = Color(0xFF8F8F8F)
-private val Border = Color(0xFFEAEAEA)
+
 
 
 private val KPI_HEIGHT = 92.dp
 
 @Composable
 fun profileMainScreen() {
+
+    val colors = MaterialTheme.colorScheme
+
+    val appOrange = colors.primary
+    val screenBg = colors.surfaceVariant
+    val cardBg = colors.surface
+    val muted = colors.onSurfaceVariant
+    val border = colors.outlineVariant
+
+
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = screenBg
+        )
+    }
+
+
+
     Scaffold(
-        containerColor = ScreenBg,
-        bottomBar = { BottomBar() },
+        containerColor = colors.surfaceVariant,
+        bottomBar = { BottomBar(colors.surfaceVariant) },
         contentWindowInsets = WindowInsets(0)
     ) { padding ->
 
@@ -84,7 +103,7 @@ fun profileMainScreen() {
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(18.dp),
-                colors = CardDefaults.cardColors(containerColor = CardBg),
+                colors = CardDefaults.cardColors(containerColor = cardBg),
                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
             ) {
                 Column(
@@ -101,13 +120,13 @@ fun profileMainScreen() {
                             modifier = Modifier
                                 .size(96.dp)
                                 .clip(CircleShape)
-                                .background(Color(0xFFFFF2E5)),
+                                .background(colors.primaryContainer),
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Filled.Person,
                                 contentDescription = null,
-                                tint = AppOrange,
+                                tint = appOrange,
                                 modifier = Modifier.size(70.dp)
                             )
                         }
@@ -119,7 +138,7 @@ fun profileMainScreen() {
                                 text = "isim soyisim",
                                 fontSize = 21.sp,
                                 fontWeight = FontWeight.SemiBold,
-                                color = Color(0xFF1A1A1A),
+                                color = colors.onSurface,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -127,7 +146,7 @@ fun profileMainScreen() {
                             Text(
                                 text = "öğrenci",
                                 fontSize = 17.sp,
-                                color = Muted,
+                                color = muted,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
@@ -136,7 +155,7 @@ fun profileMainScreen() {
                         Row(
                             modifier = Modifier
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(Color(0xFFF7F7F7))
+                                .background(colors.surfaceVariant)
                                 .clickable { }
                                 .padding(horizontal = 10.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
@@ -144,14 +163,14 @@ fun profileMainScreen() {
                             Icon(
                                 imageVector = Icons.Filled.Edit,
                                 contentDescription = "edit",
-                                tint = Color(0xFF333333),
+                                tint = colors.onSurface,
                                 modifier = Modifier.size(16.dp)
                             )
                             Spacer(Modifier.width(6.dp))
                             Text(
                                 text = "Düzenle",
                                 fontSize = 12.sp,
-                                color = Color(0xFF333333),
+                                color = colors.onSurface,
                                 fontWeight = FontWeight.Medium
                             )
                         }
@@ -162,7 +181,7 @@ fun profileMainScreen() {
 
 
                     Spacer(Modifier.height(14.dp))
-                    Divider(color = Border, thickness = 1.dp)
+                    Divider(color = border, thickness = 1.dp)
                     Spacer(Modifier.height(12.dp))
 
                     Row(
@@ -173,7 +192,8 @@ fun profileMainScreen() {
                             title = "Puan",
                             value = "4.2/5",
                             rating = 4.2f,
-                            modifier = Modifier.weight(1f)
+                            modifier = Modifier.weight(1f),
+
                         )
 
                         KpiChipRozet(
@@ -197,9 +217,9 @@ fun profileMainScreen() {
             SectionTitle("Hesap")
             SectionCard {
                 ProfileRowItem(Icons.Filled.WorkspacePremium, "Rozetler") { }
-                Divider(color = Border)
+                Divider(color = border)
                 ProfileRowItem(Icons.Filled.Lock, "Gizlilik ve güvenlik") { }
-                Divider(color = Border)
+                Divider(color = border)
                 ProfileRowItem(Icons.Filled.Phone, "İletişim bilgileri") { }
             }
 
@@ -208,7 +228,7 @@ fun profileMainScreen() {
             SectionTitle("Uygulama")
             SectionCard {
                 ProfileRowItem(Icons.Filled.Notifications, "Bildirimler") { }
-                Divider(color = Border)
+                Divider(color = border)
                 ProfileRowItem(Icons.Filled.Settings, "Uygulama Tercihleri") { }
             }
 
@@ -231,15 +251,18 @@ private fun RowScope.KpiChipPuan(
     rating: Float,
     modifier: Modifier = Modifier
 ) {
+
+    val colors =MaterialTheme.colorScheme
+
     Column(
         modifier = modifier
             .height(KPI_HEIGHT)
             .clip(RoundedCornerShape(14.dp))
-            .background(Color(0xFFF7F7F7))
+            .background(colors.surfaceVariant)
             .padding(horizontal = 12.dp, vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = title, fontSize = 11.sp, color = Muted)
+        Text(text = title, fontSize = 11.sp, color = colors.onSurfaceVariant)
 
         Spacer(Modifier.height(6.dp))
 
@@ -247,7 +270,7 @@ private fun RowScope.KpiChipPuan(
             text = value,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF1A1A1A),
+            color = colors.onSurface,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
@@ -265,11 +288,14 @@ private fun RowScope.KpiChipRozet(
     badgeText: String,
     modifier: Modifier = Modifier
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Box(
         modifier = modifier
             .height(KPI_HEIGHT)
             .clip(RoundedCornerShape(14.dp))
-            .background(Color(0xFFF7F7F7))
+            .background(colors.surfaceVariant)
             .padding(horizontal = 12.dp, vertical = 10.dp)
     ) {
 
@@ -281,7 +307,7 @@ private fun RowScope.KpiChipRozet(
             Text(
                 text = title,
                 fontSize = 11.sp,
-                color = Muted
+                color = colors.onSurfaceVariant
             )
 
             Spacer(Modifier.weight(1f))
@@ -290,7 +316,7 @@ private fun RowScope.KpiChipRozet(
                 text = badgeText,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF1A1A1A),
+                color = colors.onSurface,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -316,15 +342,18 @@ private fun RowScope.KpiChipPaylasim(
     subtitle: String,
     modifier: Modifier = Modifier
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Column(
         modifier = modifier
             .height(KPI_HEIGHT)
             .clip(RoundedCornerShape(14.dp))
-            .background(Color(0xFFF7F7F7))
+            .background(colors.surfaceVariant)
             .padding(horizontal = 12.dp, vertical = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = title, fontSize = 11.sp, color = Muted)
+        Text(text = title, fontSize = 11.sp, color = colors.onSurfaceVariant)
 
         Spacer(Modifier.height(6.dp))
 
@@ -332,7 +361,7 @@ private fun RowScope.KpiChipPaylasim(
             text = count,
             fontSize = 16.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF1A1A1A)
+            color = colors.onSurface
         )
 
 
@@ -341,7 +370,7 @@ private fun RowScope.KpiChipPaylasim(
         Text(
             text = subtitle,
             fontSize = 11.sp,
-            color = Muted,
+            color = colors.onSurfaceVariant,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier.fillMaxWidth(),
@@ -353,6 +382,8 @@ private fun RowScope.KpiChipPaylasim(
 
 @Composable
 private fun RatingStarsSmall(rating: Float) {
+
+    val colors = MaterialTheme.colorScheme
     val r = rating.coerceIn(0f, 5f)
 
     Row(
@@ -369,7 +400,7 @@ private fun RatingStarsSmall(rating: Float) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = Color(0xFF444444),
+                tint = colors.onSurface,
                 modifier = Modifier.size(14.dp)
             )
             if (i != 5) Spacer(Modifier.width(2.dp))
@@ -381,10 +412,13 @@ private fun RatingStarsSmall(rating: Float) {
 
 @Composable
 private fun SectionTitle(text: String) {
+
+    val colors = MaterialTheme.colorScheme
+
     Text(
         text = text,
         fontSize = 12.sp,
-        color = Color(0xFF8C8C8C),
+        color = colors.onSurfaceVariant,
         fontWeight = FontWeight.SemiBold,
         modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
     )
@@ -392,10 +426,12 @@ private fun SectionTitle(text: String) {
 
 @Composable
 private fun SectionCard(content: @Composable ColumnScope.() -> Unit) {
+    val colors = MaterialTheme.colorScheme
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(18.dp),
-        colors = CardDefaults.cardColors(containerColor = CardBg),
+        colors = CardDefaults.cardColors(containerColor = colors.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
     ) {
         Column(modifier = Modifier.fillMaxWidth(), content = content)
@@ -408,6 +444,9 @@ private fun ProfileRowItem(
     title: String,
     onClick: () -> Unit
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -419,10 +458,10 @@ private fun ProfileRowItem(
             modifier = Modifier
                 .size(36.dp)
                 .clip(CircleShape)
-                .background(Color(0xFFFFF2E5)),
+                .background(colors.primaryContainer),
             contentAlignment = Alignment.Center
         ) {
-            Icon(icon, contentDescription = null, tint = AppOrange, modifier = Modifier.size(18.dp))
+            Icon(icon, contentDescription = null, tint = colors.primary, modifier = Modifier.size(18.dp))
         }
 
         Spacer(Modifier.width(12.dp))
@@ -431,7 +470,7 @@ private fun ProfileRowItem(
             text = title,
             fontSize = 14.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color(0xFF1A1A1A),
+            color = colors.onSurface,
             modifier = Modifier.weight(1f),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
@@ -440,7 +479,7 @@ private fun ProfileRowItem(
         Icon(
             imageVector = Icons.Filled.ChevronRight,
             contentDescription = null,
-            tint = Color(0xFFBDBDBD),
+            tint = colors.onSurfaceVariant,
             modifier = Modifier.size(22.dp)
         )
     }

@@ -52,6 +52,9 @@ fun contactInformationMain(
     onBack: () -> Unit = {}
 ) {
 
+    val colors = MaterialTheme.colorScheme
+
+
     val email = remember { mutableStateOf("ornek@example.com") }
     val phone = remember { mutableStateOf("+90 555 123 45 67") }
     val birthDate = remember { mutableStateOf("15 Mart 1990") }
@@ -59,6 +62,11 @@ fun contactInformationMain(
     var modal by remember { mutableStateOf<ContactModal>(ContactModal.None) }
 
     Scaffold(
+
+
+        containerColor = colors.background,
+        contentColor = colors.onBackground,
+
         topBar = {
 
                 PageHeader(
@@ -86,7 +94,7 @@ fun contactInformationMain(
                 onAction = { modal = ContactModal.UpdateEmail(currentEmail = email.value) }
             )
 
-            Divider()
+            Divider(color = colors.outlineVariant)
 
             InfoRow(
                 title = "Telefon Numarası",
@@ -301,18 +309,21 @@ private fun InfoRow(
     actionText: String,
     onAction: () -> Unit
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
-            Text(title, style = MaterialTheme.typography.labelLarge)
+            Text(title, style = MaterialTheme.typography.labelLarge,color = colors.onSurface)
             Spacer(Modifier.height(4.dp))
-            Text(value, style = MaterialTheme.typography.bodyMedium)
+            Text(value, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
         }
         Text(
             text = actionText,
-            color = MaterialTheme.colorScheme.primary,
+            color = colors.primary,
             modifier = Modifier.clickable(onClick = onAction)
         )
     }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -28,14 +27,16 @@ fun WatchAdsScreen(
 
 ){
 
+    val colors = MaterialTheme.colorScheme
+
     if (showDialog) {
         Dialog(onDismissRequest = { onDismiss() }) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth(0.9f)
                     .wrapContentHeight()
-                    .background(Color(0xFFFFF8F0), shape = RoundedCornerShape(16.dp))
-                    .border(2.dp, Color(0xFFE67E00), RoundedCornerShape(16.dp))
+                    .background(colors.primaryContainer, shape = RoundedCornerShape(16.dp))
+                    .border(2.dp, colors.primary, RoundedCornerShape(16.dp))
                     .padding(24.dp)
             ) {
                 Column(
@@ -46,9 +47,9 @@ fun WatchAdsScreen(
 
                     Text(
                         text = "Günlük hakkınız",
-                        fontSize = 18.sp,
+                        fontSize = 19.sp,
                         fontWeight = FontWeight.Normal,
-                        color = Color.Black
+                        color = colors.onSurfaceVariant
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -59,7 +60,7 @@ fun WatchAdsScreen(
                         text = "$watchedCount Reklam",
                         fontSize = 40.sp,
                         fontWeight = FontWeight.ExtraBold,
-                        color = Color.Black
+                        color = colors.onSurface
                     )
 
 
@@ -70,7 +71,7 @@ fun WatchAdsScreen(
                         text = "İzle, Kazan!\nHer reklamda +1P çip senin olsun",
                         fontSize = 15.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = Color.Black,
+                        color = colors.onSurfaceVariant,
                         textAlign = TextAlign.Center
                     )
 
@@ -82,7 +83,10 @@ fun WatchAdsScreen(
                             onWatchAd()
                             onDismiss()
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE67E00)),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colors.primary,
+                            contentColor = colors.onPrimary
+                        ),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -95,7 +99,7 @@ fun WatchAdsScreen(
                             Icon(
                                 painter = painterResource(id = R.drawable.videoicon),
                                 contentDescription = "Reklam",
-                                tint = Color.Black,
+                                tint = colors.onPrimaryContainer,
                                 modifier = Modifier.size(28.dp)
                             )
                             Spacer(modifier = Modifier.width(12.dp))
@@ -103,7 +107,7 @@ fun WatchAdsScreen(
                                 text = "Reklamı Başlat",
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = colors.onPrimary
                             )
                         }
                     }

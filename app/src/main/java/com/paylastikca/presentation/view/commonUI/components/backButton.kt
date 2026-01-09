@@ -22,14 +22,14 @@ fun PageHeader(
 ) {
     Row(
         modifier = modifier
-            .fillMaxWidth(),   // ❗ sadece genişlik, padding yok
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = onBackClick) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Geri",
-                tint = Color.Black
+                tint = MaterialTheme.colorScheme.onSurface
             )
         }
 
@@ -39,7 +39,7 @@ fun PageHeader(
             text = title,
             fontSize = 22.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color.Black
+            color = MaterialTheme.colorScheme.onSurface
         )
     }
 }

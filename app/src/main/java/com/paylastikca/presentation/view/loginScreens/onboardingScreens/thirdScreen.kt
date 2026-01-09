@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -27,21 +28,24 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.app.R
+import com.paylastikca.ui.theme.BRİGHTOrange
 
 @Composable
 fun thirdScreen(navController: NavController){
 
+    val colors = MaterialTheme.colorScheme
+
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = Color(0xFFFF7200)
+            color = BRİGHTOrange
         )
     }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFFF7200)),
+            .background(BRİGHTOrange),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -50,7 +54,7 @@ fun thirdScreen(navController: NavController){
             text = "Fazla eşyanı paylaş",
             fontSize = 36.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = colors.onPrimary,
             textAlign = TextAlign.Center,
             lineHeight = 44.sp,
             modifier = Modifier.padding(top = 130.dp)
@@ -61,7 +65,7 @@ fun thirdScreen(navController: NavController){
             text = "İhtiyacın olmayan eşyaları paylaş,\n" +
                     "topluluğa katkı sağla.",
             fontSize = 22.sp,
-            color = Color.White,
+            color = colors.onPrimary,
             textAlign = TextAlign.Center,
             lineHeight = 24.sp,
             modifier = Modifier.padding(top = 20.dp, bottom = 40.dp)
@@ -92,7 +96,7 @@ fun thirdScreen(navController: NavController){
         Button(
             onClick = { navController.navigate("fourthScreen") },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White
+                containerColor = colors.onPrimary
             ),
             shape = RoundedCornerShape(30.dp),
             modifier = Modifier
@@ -102,7 +106,7 @@ fun thirdScreen(navController: NavController){
         ) {
             Text(
                 text = "Geç",
-                color = Color.Black,
+                color = colors.onPrimaryContainer,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )

@@ -27,10 +27,13 @@ fun updateNumberVerificationCode(
     onConfirm: () -> Unit,
     onResend: () -> Unit
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Dialog(onDismissRequest = onDismiss) {
         Card(
             shape = RoundedCornerShape(14.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
+            colors = CardDefaults.cardColors(containerColor = colors.surface),
             modifier = Modifier.fillMaxWidth(0.9f)
         ) {
             Column(
@@ -41,7 +44,8 @@ fun updateNumberVerificationCode(
                     "Telefon Doğrulaması\nBekleniyor",
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
-                    fontSize = 22.sp
+                    fontSize = 22.sp,
+                    color = colors.onSurface
                 )
 
                 Spacer(Modifier.height(8.dp))
@@ -57,14 +61,15 @@ fun updateNumberVerificationCode(
                         append(" numarasına doğrulama kodu SMS olarak gönderildi. Lütfen kodu giriniz.")
                     },
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
-                    textAlign = TextAlign.Center
+                    color = colors.onSurfaceVariant,
+                    textAlign = TextAlign.Center,
+
                 )
 
                 if (!errorMessage.isNullOrBlank()) {
                     Spacer(Modifier.height(10.dp))
                     Surface(
-                        color = Color(0xFFE53935),
+                        color = colors.error,
                         shape = RoundedCornerShape(10.dp),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -73,7 +78,7 @@ fun updateNumberVerificationCode(
                         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                             Text(
                                 text = errorMessage,
-                                color = Color.White,
+                                color = colors.onError,
                                 style = MaterialTheme.typography.bodySmall,
                                 textAlign = TextAlign.Center,
                                 maxLines = 1,
@@ -89,20 +94,21 @@ fun updateNumberVerificationCode(
                 OtpInput(
                     value = code,
                     length = 6,
-                    onValueChange = onCodeChange
+                    onValueChange = onCodeChange,
+                    borderColor = colors.primary
                 )
 
                 Spacer(Modifier.height(12.dp))
 
-                Text(secondsLeft.toString(), style = MaterialTheme.typography.headlineMedium)
+                Text(secondsLeft.toString(), style = MaterialTheme.typography.headlineMedium,   color = colors.onSurface)
 
                 Spacer(Modifier.height(8.dp))
 
                 Button(
                     onClick = onConfirm,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFFF7200),
-                        contentColor = Color.White,
+                        containerColor = colors.primary,
+                        contentColor = colors.onPrimary,
                     )
                 ) { Text("onayla") }
 
@@ -112,7 +118,7 @@ fun updateNumberVerificationCode(
                     onClick = onResend,
                     enabled = secondsLeft == 0,
                     colors = ButtonDefaults.textButtonColors(
-                        contentColor = if (secondsLeft == 0) Color.Black else Color.Gray
+                        contentColor = if (secondsLeft == 0) colors.onSurface else colors.onSurfaceVariant
                     )
                 ) {
                     Text("kodu tekrar gönder")

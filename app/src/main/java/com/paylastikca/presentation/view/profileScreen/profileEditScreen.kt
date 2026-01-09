@@ -8,7 +8,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
@@ -23,8 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
-private val AppOrange = Color(0xFFE67E00)
-private val ScreenBg = Color(0xFFF6F6F6)
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,10 +32,24 @@ fun profileEditScreen(
     onSave: (name: String, surname: String, status: String) -> Unit = { _, _, _ -> }
 ) {
 
+    val colors = MaterialTheme.colorScheme
+
+    val appOrange = colors.primary
+
+    val cardBg = colors.surface
+    val border = colors.outlineVariant
+    val fieldContainer = colors.surface
+    val fieldLabel = colors.onSurfaceVariant
+   
+    val headerText = colors.onPrimary
+    val avatarBg = colors.primaryContainer
+    val avatarIcon = colors.primary
+    val caption = colors.onSurfaceVariant
+
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setStatusBarColor(
-            color = AppOrange,
+            color = appOrange,
             darkIcons = false
         )
     }
@@ -45,9 +57,9 @@ fun profileEditScreen(
 
     var name by remember { mutableStateOf("") }
     var surname by remember { mutableStateOf("") }
-    var status by remember { mutableStateOf("Öğrenci") }
+    val status by remember { mutableStateOf("Öğrenci") }
 
-    val scope = rememberCoroutineScope()
+
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showSheet by remember { mutableStateOf(false) }
 
@@ -60,7 +72,7 @@ fun profileEditScreen(
         ModalBottomSheet(
             onDismissRequest = { showSheet = false },
             sheetState = sheetState,
-            containerColor = Color.White
+            containerColor = cardBg
         ) {
 
             //DEVELOPMENT OPTİON
@@ -116,7 +128,7 @@ fun profileEditScreen(
     }
 
     Scaffold(
-        containerColor = ScreenBg,
+        containerColor = colors.background,
         contentWindowInsets = WindowInsets(0)
     ) { padding ->
 
@@ -130,14 +142,14 @@ fun profileEditScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(58.dp)
-                    .background(AppOrange),
+                    .background(appOrange),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = "Profili Düzenle",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.Black
+                    color = headerText
                 )
             }
 
@@ -156,13 +168,13 @@ fun profileEditScreen(
                         modifier = Modifier
                             .size(110.dp)
                             .clip(CircleShape)
-                            .background(Color(0xFFFFF2E5)),
+                            .background(avatarBg),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Person,
                             contentDescription = null,
-                            tint = AppOrange,
+                            tint = avatarIcon,
                             modifier = Modifier.size(64.dp)
                         )
                     }
@@ -173,14 +185,14 @@ fun profileEditScreen(
                             .align(Alignment.BottomEnd)
                             .offset(x = (-6).dp, y = (-6).dp)
                             .clip(CircleShape)
-                            .background(AppOrange)
+                            .background(appOrange)
                             .clickable { onPickPhoto() },
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Edit,
                             contentDescription = "edit photo",
-                            tint = Color.White,
+                            tint = colors.onPrimary,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -191,7 +203,7 @@ fun profileEditScreen(
                 Text(
                     text = "Fotoğrafı değiştir",
                     fontSize = 12.sp,
-                    color = Color(0xFF9A9A9A),
+                    color =caption,
                     modifier = Modifier.clickable { onPickPhoto() }
                 )
 
@@ -201,7 +213,15 @@ fun profileEditScreen(
                 PrettyOutlinedField(
                     value = name,
                     onValueChange = { name = it },
-                    label = "Ad"
+                    label = "Ad",
+
+                    appOrange = appOrange,
+                    border = border,
+                    container = fieldContainer,
+                    labelColor = fieldLabel,
+                    textColor = colors.onSurface,
+                    focusLabelColor = colors.primary
+
                 )
 
                 Spacer(Modifier.height(12.dp))
@@ -209,7 +229,14 @@ fun profileEditScreen(
                 PrettyOutlinedField(
                     value = surname,
                     onValueChange = { surname = it },
-                    label = "Soyad"
+                    label = "Soyad",
+
+                    appOrange = appOrange,
+                    border = border,
+                    container = fieldContainer,
+                    labelColor = fieldLabel,
+                    textColor = colors.onSurface,
+                    focusLabelColor = colors.primary
                 )
 
                 Spacer(Modifier.height(16.dp))
@@ -242,9 +269,9 @@ fun profileEditScreen(
                             .weight(1f)
                             .height(48.dp),
                         shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.outlinedButtonColors(contentColor = AppOrange),
+                        colors = ButtonDefaults.outlinedButtonColors(contentColor = appOrange),
                         border = ButtonDefaults.outlinedButtonBorder.copy(
-                            brush = androidx.compose.ui.graphics.SolidColor(AppOrange)
+                            brush = androidx.compose.ui.graphics.SolidColor(appOrange)
                         )
                     ) {
                         Text("İptal", fontSize = 14.sp, fontWeight = FontWeight.Medium)
@@ -257,8 +284,8 @@ fun profileEditScreen(
                             .height(48.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = AppOrange,
-                            contentColor = Color.White
+                            containerColor = appOrange,
+                            contentColor = colors.onPrimary
                         )
                     ) {
                         Text("Kaydet", fontSize = 14.sp, fontWeight = FontWeight.Medium)
@@ -273,8 +300,18 @@ fun profileEditScreen(
 private fun PrettyOutlinedField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String
+    label: String,
+
+    appOrange: Color,
+    border: Color,
+    container: Color,
+    labelColor: Color,
+    textColor: Color,
+    focusLabelColor: Color
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
@@ -283,46 +320,18 @@ private fun PrettyOutlinedField(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Color(0xFFE0E0E0),
-            unfocusedBorderColor = Color(0xFFE0E0E0),
-            focusedContainerColor = Color.White,
-            unfocusedContainerColor = Color.White,
-            focusedLabelColor = Color(0xFF6F6F6F),
-            unfocusedLabelColor = Color(0xFF8A8A8A),
-            cursorColor = AppOrange
+            focusedBorderColor = colors.outline,
+            unfocusedBorderColor = border,
+            focusedContainerColor = container,
+            unfocusedContainerColor = container,
+            focusedLabelColor = focusLabelColor,
+            unfocusedLabelColor =labelColor,
+            cursorColor = appOrange,
+            focusedTextColor = textColor,
+            unfocusedTextColor = textColor
         )
     )
 }
 
-@Composable
-private fun PrettyPickerField(
-    label: String,
-    text: String,
-    onClick: () -> Unit
-) {
-    OutlinedTextField(
-        value = text,
-        onValueChange = {},
-        readOnly = true,
-        enabled = false,
-        label = { Text(label) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() },
-        shape = RoundedCornerShape(16.dp),
-        trailingIcon = {
-            Icon(
-                imageVector = Icons.Filled.ChevronRight,
-                contentDescription = null,
-                tint = Color(0xFF8A8A8A)
-            )
-        },
-        colors = OutlinedTextFieldDefaults.colors(
-            disabledBorderColor = Color(0xFFE0E0E0),
-            disabledContainerColor = Color.White,
-            disabledTextColor = Color(0xFF1A1A1A),
-            disabledLabelColor = Color(0xFF8A8A8A)
-        )
-    )
-}
+
 

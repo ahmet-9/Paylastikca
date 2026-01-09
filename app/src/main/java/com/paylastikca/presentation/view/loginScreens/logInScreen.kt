@@ -28,6 +28,7 @@ import androidx.compose.material3.ButtonDefaults
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -52,6 +53,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.paylastikca.app.R
+import com.paylastikca.ui.theme.authBlue
+import com.paylastikca.ui.theme.authBlueDisabled
 
 @Composable
 fun logInScreen(
@@ -60,6 +63,8 @@ fun logInScreen(
     onSignInClick: () -> Unit = {},
     onGoogleClick: () -> Unit = {}
 ){
+
+    val colors = MaterialTheme.colorScheme
 
 
     var email by remember { mutableStateOf("") }
@@ -73,13 +78,13 @@ fun logInScreen(
 
 
     Scaffold(
-        containerColor = Color.White
+        containerColor = colors.background
     ) { padding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(Color.White)
+                .background(colors.background)
         ) {
             Column(
                 modifier = Modifier
@@ -105,7 +110,8 @@ fun logInScreen(
                     text = "Paylaştıkça",
                     fontSize = 34.sp,
                     fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(top = 5.dp)
+                    modifier = Modifier.padding(top = 5.dp),
+                    color = colors.onBackground
                 )
 
 
@@ -127,15 +133,15 @@ fun logInScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.mailicon),
                             contentDescription = null,
-                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            tint = colors.onSurfaceVariant,
                             modifier = Modifier.size(27.dp)
                         )
                     },
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
-                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
-                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
-                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                        focusedBorderColor = colors.outline,
+                        unfocusedBorderColor = colors.outlineVariant,
+                        cursorColor = colors.primary,
+                        focusedLabelColor = colors.primary
                     )
 
                 )
@@ -154,15 +160,15 @@ fun logInScreen(
                         Icon(
                             painter = painterResource(id = R.drawable.lockicon),
                             contentDescription = null,
-                            tint = Color.Gray,      // ikon rengi (istersen değişebilirsin)
+                            tint = colors.onSurfaceVariant,
                             modifier = Modifier.size(27.dp)
                         )
                     },
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = Color(0xFF969595),   // 🔥 Tıklayınca çerçeve turuncu
-                        unfocusedBorderColor = Color(0xFFD0D0D0), // 🔥 Normalde açık gri
-                        cursorColor = Color(0xFFFF7200),          // 🟧 İmleç turuncu
-                        focusedLabelColor = Color(0xFFFF7200)     // 🟧 Label (yukarı kayma) turuncu
+                        focusedBorderColor = colors.outline,
+                        unfocusedBorderColor = colors.outlineVariant,
+                        cursorColor = colors.primary,
+                        focusedLabelColor = colors.primary
                     ),
 
                     visualTransformation = if (passwordVisible) {
@@ -174,7 +180,8 @@ fun logInScreen(
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
                                 imageVector = if (passwordVisible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                                contentDescription = null
+                                contentDescription = null,
+                                tint = colors.onSurfaceVariant
                             )
                         }
                     }
@@ -193,8 +200,9 @@ fun logInScreen(
                         .height(48.dp),
                     shape = RoundedCornerShape(12.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF1E63D5),
-                        disabledContainerColor = Color(0xFF9BB7EB)
+                        containerColor = authBlue,
+                        disabledContainerColor = authBlueDisabled,
+                        contentColor = colors.onPrimary
                     )
                 ) {
                     Text(text = "Giriş yap", fontSize = 16.sp)
@@ -218,7 +226,7 @@ fun logInScreen(
                         modifier = Modifier
                             .size(24.dp)
                             .clip(CircleShape)
-                            .background(Color.White)
+                            .background(colors.surface)
                             .shadow(1.dp, CircleShape),
                         contentAlignment = Alignment.Center
                     ) {
@@ -229,7 +237,7 @@ fun logInScreen(
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "Google ile devam et", fontSize = 15.sp)
+                    Text(text = "Google ile devam et", fontSize = 15.sp, color = colors.onSurface)
                 }
 
 
@@ -244,7 +252,7 @@ fun logInScreen(
                     Text(
                         text = "Şifreni mi unuttun?",
                         fontSize = 15.sp,
-                        color = Color.Gray,
+                        color = colors.onSurfaceVariant,
                         fontWeight = FontWeight.SemiBold,
                         textDecoration = TextDecoration.None,
                         modifier = Modifier.clickable { onSignInClick() }.padding(start = 30.dp)
@@ -252,7 +260,7 @@ fun logInScreen(
                     Text(
                         text = "Üye ol",
                         fontSize = 16.sp,
-                        color = Color(0xFF1E63D5),
+                        color = authBlue,
 
                         fontWeight = FontWeight.SemiBold,
                         textDecoration = TextDecoration.None,

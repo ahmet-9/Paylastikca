@@ -9,35 +9,82 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
+
+
+/*buttons, bottomBar, emphasis */
+   primary = BrandOrange,
+   onPrimary = Color.White ,
+    primaryContainer = BrandOrangeLight ,
+    onPrimaryContainer = Color.Black,
+
+
+
+  //  secondary = ,
+  //  onSecondary = ,
+  //  secondaryContainer = ,
+  //  onSecondaryContainer = ,
+
+
+
+    tertiary = rewardGreen,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+  //  tertiaryContainer = ,
+  //  onTertiaryContainer = ,
+
+
+    /* general background, text */
+   background = Color.White,
+    onBackground = Color.Black ,
+    surface = Color.White ,
+    onSurface = Color.Black,
+
+
+    /* card,  backgrounds */
+    surfaceVariant = lighterLightGray,
+    onSurfaceVariant = Gray,
+
+
+
+    /* black background*/
+    inverseSurface = blackCard,
+    inverseOnSurface = Color.White,
+
+
+
+/* border , frame, line */
+    outline = lightGray,
+    outlineVariant =  lighterLightGray ,
+
+    error = errorBoxRed ,
+    onError = Color.White,
+   // errorContainer = ,
+ //   onErrorContainer = ,
+
+  //  inverseSurface = ,
+  //  inverseOnSurface = ,
+  //  inversePrimary = ,
+
+ //   scrim = ,
+  //  surfaceTint = ,
+
+
+
 )
 
 @Composable
 fun PaylastikcaTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean =  isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
