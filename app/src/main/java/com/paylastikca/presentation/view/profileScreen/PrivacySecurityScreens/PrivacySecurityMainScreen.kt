@@ -11,7 +11,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.presentation.view.commonUI.components.PageHeader
+import com.paylastikca.ui.theme.BRİGHTOrange
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -22,10 +24,23 @@ fun PrivacySecurityMainScreen(
     onDeleteAccountClick: () -> Unit = {},
     onLocationShareChanged: (Boolean) -> Unit = {}
 ) {
+
+
+
+
     var locationShareEnabled by remember { mutableStateOf(false) }
+    val colors = MaterialTheme.colorScheme
+
+
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = colors.outlineVariant
+        )
+    }
 
     Scaffold(
-        containerColor = Color(0xFFF6F6F6),
+        containerColor = colors.surfaceVariant,
         topBar = {
             PageHeader(
                 modifier = Modifier.padding(top = 25.dp, start = 7.dp),
@@ -81,19 +96,25 @@ fun PrivacySecurityMainScreen(
 
 @Composable
 private fun SectionLabel(text: String) {
+
+    val colors = MaterialTheme.colorScheme
+
     Text(
         text = text,
         style = MaterialTheme.typography.labelLarge,
-        color = Color(0xFFB0B0B0),
+        color = colors.onSurfaceVariant,
         modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
     )
 }
 
 @Composable
 private fun RoundedContainer(content: @Composable ColumnScope.() -> Unit) {
+
+    val colors = MaterialTheme.colorScheme
+
     Surface(
         shape = RoundedCornerShape(12.dp),
-        color = Color.White,
+        color = colors.surface,
         tonalElevation = 0.dp,
         shadowElevation = 0.dp,
         modifier = Modifier.fillMaxWidth()
@@ -108,6 +129,9 @@ private fun SwitchRow(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -119,16 +143,18 @@ private fun SwitchRow(
             text = title,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
-            color = Color(0xFF111111)
+            color = colors.onSurface
         )
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color(0xFFFF7200),
-                checkedTrackColor = Color(0xFFFFB74D),
-                uncheckedThumbColor = Color(0xFFBDBDBD),
-                uncheckedTrackColor = Color(0xFFE0E0E0)
+                checkedThumbColor = colors.onPrimary,
+                checkedTrackColor = colors.primary,
+                uncheckedThumbColor = colors.outline,
+                uncheckedTrackColor = colors.surfaceVariant,
+                checkedBorderColor = colors.primary,
+                uncheckedBorderColor = colors.outline
             )
         )
     }
@@ -139,6 +165,9 @@ private fun NavigationRow(
     title: String,
     onClick: () -> Unit
 ) {
+
+    val colors = MaterialTheme.colorScheme
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -151,12 +180,12 @@ private fun NavigationRow(
             text = title,
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.weight(1f),
-            color = Color(0xFF111111)
+            color = colors.onSurface
         )
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
             contentDescription = null,
-            tint = Color(0xFFB0B0B0)
+            tint = colors.onSurfaceVariant
         )
     }
 }
@@ -164,7 +193,7 @@ private fun NavigationRow(
 @Composable
 private fun DividerLine() {
     Divider(
-        color = Color(0xFFEDEDED),
+        color = MaterialTheme.colorScheme.outlineVariant,
         thickness = 1.dp,
         modifier = Modifier.padding(start = 16.dp)
     )
