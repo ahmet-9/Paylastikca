@@ -1,9 +1,5 @@
 package com.paylastikca.presentation.view.profileScreen.contactInformationScreens
 
-
-import androidx.compose.material3.ExperimentalMaterial3Api
-
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -11,11 +7,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.paylastikca.presentation.view.commonUI.components.PageHeader
-import kotlinx.coroutines.delay
+import com.paylastikca.presentation.view.commonUI.components.verification.core.CountdownEffect
 
 private sealed interface ContactModal {
     data object None : ContactModal
+
     data class UpdateEmail(val currentEmail: String, val newEmail: String = "") : ContactModal
+
     data class VerifyEmail(
         val email: String,
         val code: String = "",
@@ -36,24 +34,19 @@ private sealed interface ContactModal {
         val errorMessage: String? = null
     ) : ContactModal
 
-
     data class UpdateBirthDate(
         val currentBirthDate: String,
         val newBirthDate: String = "",
         val errorMessage: String? = null
     ) : ContactModal
-
-
-
 }
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun contactInformationMain(
     onBack: () -> Unit = {}
 ) {
-
     val colors = MaterialTheme.colorScheme
-
 
     val email = remember { mutableStateOf("ornek@example.com") }
     val phone = remember { mutableStateOf("+90 555 123 45 67") }
@@ -61,24 +54,52 @@ fun contactInformationMain(
 
     var modal by remember { mutableStateOf<ContactModal>(ContactModal.None) }
 
-    Scaffold(
 
+    val isVerifyActive = modal is ContactModal.VerifyEmail || modal is ContactModal.VerifyPhone
+    val secondsLeft = when (val m = modal) {
+        is ContactModal.VerifyEmail -> m.secondsLeft
+        is ContactModal.VerifyPhone -> m.secondsLeft
+        else -> 0
+    }
 
-        containerColor = colors.background,
-        contentColor = colors.onBackground,
+    CountdownEffect(
+        isActive = isVerifyActive,
+        secondsLeft = secondsLeft,
+        onTick = { newS ->
+            modal = when (val m = modal) {
+                is ContactModal.VerifyEmail -> m.copy(secondsLeft = newS)
+                is ContactModal.VerifyPhone -> m.copy(secondsLeft = newS)
+                else -> m
+            }
+        },
+        onTimeout = {
+            modal = when (val m = modal) {
+                is ContactModal.VerifyEmail ->
+                    if (m.code.length < 6 && m.errorMessage.isNullOrBlank())
+                        m.copy(errorMessage = "Tanımlanan sürede kodu girmediniz.")
+                    else m
 
-        topBar = {
+                is ContactModal.VerifyPhone ->
+                    if (m.code.length < 6 && m.errorMessage.isNullOrBlank())
+                        m.copy(errorMessage = "Tanımlanan sürede kodu girmediniz.")
+                    else m
 
-                PageHeader(
-                    modifier = Modifier.padding(top = 25.dp, start = 7.dp),
-                    title = "İletişim bilgileri",
-                    onBackClick = onBack
-                )
-
-
+                else -> m
+            }
         }
     )
-    { padding ->
+
+    Scaffold(
+        containerColor = colors.background,
+        contentColor = colors.onBackground,
+        topBar = {
+            PageHeader(
+                modifier = Modifier.padding(top = 25.dp, start = 7.dp),
+                title = "İletişim bilgileri",
+                onBackClick = onBack
+            )
+        }
+    ) { padding ->
 
         Column(
             modifier = Modifier
@@ -109,79 +130,9 @@ fun contactInformationMain(
                 title = "Doğum Tarihi",
                 value = birthDate.value,
                 actionText = "Düzenle",
-                onAction = {    modal = ContactModal.UpdateBirthDate(currentBirthDate = birthDate.value)
-                 }
+                onAction = { modal = ContactModal.UpdateBirthDate(currentBirthDate = birthDate.value) }
             )
         }
-
-
-        LaunchedEffect(modal) {
-            val m = modal
-            if (m is ContactModal.VerifyEmail) {
-                while (true) {
-                    val current = modal
-                    if (current !is ContactModal.VerifyEmail) break
-
-                    if (current.secondsLeft <= 0) {
-                        if (current.code.length < 6 && current.errorMessage.isNullOrBlank()) {
-                            modal = current.copy(errorMessage = "Tanımlanan sürede kodu girmediniz.")
-                        }
-                        break
-                    }
-
-                    delay(1000)
-                    modal = current.copy(secondsLeft = current.secondsLeft - 1)
-                }
-            }
-        }
-
-        LaunchedEffect(modal) {
-            while (true) {
-                val current = modal
-
-                val secondsLeft = when (current) {
-                    is ContactModal.VerifyEmail -> current.secondsLeft
-                    is ContactModal.VerifyPhone -> current.secondsLeft
-                    else -> break
-                }
-
-                if (secondsLeft <= 0) {
-                    when (current) {
-                        is ContactModal.VerifyEmail -> {
-                            if (current.code.length < 6 && current.errorMessage.isNullOrBlank()) {
-                                modal = current.copy(
-                                    errorMessage = "Tanımlanan sürede kodu girmediniz."
-                                )
-                            }
-                        }
-                        is ContactModal.VerifyPhone -> {
-                            if (current.code.length < 6 && current.errorMessage.isNullOrBlank()) {
-                                modal = current.copy(
-                                    errorMessage = "Tanımlanan sürede kodu girmediniz."
-                                )
-                            }
-                        }
-                        else -> Unit
-                    }
-                    break
-                }
-
-                delay(1000)
-
-                modal = when (current) {
-                    is ContactModal.VerifyEmail ->
-                        current.copy(secondsLeft = current.secondsLeft - 1)
-
-                    is ContactModal.VerifyPhone ->
-                        current.copy(secondsLeft = current.secondsLeft - 1)
-
-                    else -> break
-                }
-            }
-        }
-
-
-
 
         when (val m = modal) {
             ContactModal.None -> Unit
@@ -192,7 +143,6 @@ fun contactInformationMain(
                     onNewEmailChange = { modal = m.copy(newEmail = it) },
                     onDismiss = { modal = ContactModal.None },
                     onSave = {
-
                         val trimmed = m.newEmail.trim()
                         if (trimmed.isBlank()) return@updateEmail
                         modal = ContactModal.VerifyEmail(email = trimmed, secondsLeft = 59)
@@ -206,11 +156,12 @@ fun contactInformationMain(
                     code = m.code,
                     secondsLeft = m.secondsLeft,
                     errorMessage = m.errorMessage,
-                    onCodeChange = { input ->  val filtered = input.filter(Char::isDigit).take(6)
-                        modal = m.copy(code = filtered, errorMessage = null) },
+                    onCodeChange = { input ->
+                        val filtered = input.filter(Char::isDigit).take(6)
+                        modal = m.copy(code = filtered, errorMessage = null)
+                    },
                     onDismiss = { modal = ContactModal.None },
                     onConfirm = {
-
                         if (m.code != "123456") {
                             modal = m.copy(errorMessage = "Hatalı kod. Lütfen yeniden deneyin.")
                         } else {
@@ -219,7 +170,6 @@ fun contactInformationMain(
                         }
                     },
                     onResend = {
-
                         modal = m.copy(errorMessage = null, secondsLeft = 59, code = "")
                     }
                 )
@@ -231,25 +181,22 @@ fun contactInformationMain(
                     newPhone = m.newPhone,
                     errorMessage = m.errorMessage,
                     onNewPhoneChange = { input ->
-
-                        modal = m.copy(newPhone = input, errorMessage = null) },
+                        modal = m.copy(newPhone = input, errorMessage = null)
+                    },
                     onDismiss = { modal = ContactModal.None },
                     onSave = {
                         val raw = m.newPhone.trim()
-
 
                         if (raw.isBlank()) {
                             modal = m.copy(errorMessage = "Telefon numarası boş olamaz.")
                             return@updateNumber
                         }
 
-
                         val normalized = normalizeTrPhone(raw)
                         if (normalized == null) {
                             modal = m.copy(errorMessage = "Geçersiz numara.")
                             return@updateNumber
                         }
-
 
                         modal = ContactModal.VerifyPhone(phone = normalized, secondsLeft = 59)
                     }
@@ -268,7 +215,6 @@ fun contactInformationMain(
                     },
                     onDismiss = { modal = ContactModal.None },
                     onConfirm = {
-
                         if (m.code != "123456") {
                             modal = m.copy(errorMessage = "Hatalı kod. Lütfen yeniden deneyin.")
                         } else {
@@ -277,7 +223,6 @@ fun contactInformationMain(
                         }
                     },
                     onResend = {
-
                         modal = m.copy(errorMessage = null, secondsLeft = 59, code = "")
                     }
                 )
@@ -293,11 +238,6 @@ fun contactInformationMain(
                     }
                 )
             }
-
-
-
-
-
         }
     }
 }
@@ -309,7 +249,6 @@ private fun InfoRow(
     actionText: String,
     onAction: () -> Unit
 ) {
-
     val colors = MaterialTheme.colorScheme
 
     Row(
@@ -317,7 +256,7 @@ private fun InfoRow(
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Column {
-            Text(title, style = MaterialTheme.typography.labelLarge,color = colors.onSurface)
+            Text(title, style = MaterialTheme.typography.labelLarge, color = colors.onSurface)
             Spacer(Modifier.height(4.dp))
             Text(value, style = MaterialTheme.typography.bodyMedium, color = colors.onSurfaceVariant)
         }
@@ -329,11 +268,8 @@ private fun InfoRow(
     }
 }
 
-
 private fun normalizeTrPhone(input: String): String? {
     val digits = input.filter(Char::isDigit)
-
-
 
     return when {
         digits.length == 11 && digits.startsWith("05") -> "+90" + digits.drop(1)
@@ -344,8 +280,7 @@ private fun normalizeTrPhone(input: String): String? {
     }
 }
 
- fun formatTrPhonePretty(normalized: String): String {
-
+fun formatTrPhonePretty(normalized: String): String {
     val d = normalized.filter(Char::isDigit)
     if (d.length < 12) return normalized
 

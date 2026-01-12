@@ -37,18 +37,13 @@ import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.tw
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationActiveRemove
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationNoActive
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationNoActiveChooseMethod
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationNoActiveChooseMethodMailSend
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationNoActiveChooseMethodMailSendVerificationCode
+
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationNoActiveChooseMethodMailSendVerificationCodeCompleted
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.SelectLanguage
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.applicationPreferencesMAİN
 import com.paylastikca.presentation.view.profileScreen.badgesScreen
 import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.contactInformationMain
-import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.dateOfBirth
-import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.updateEmail
-import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.updateEmailVerificationCode
-import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.updateNumber
-import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.updateNumberVerificationCode
+
 import com.paylastikca.presentation.view.profileScreen.notificationSettingsScreen
 import com.paylastikca.presentation.view.profileScreen.profileEditScreen
 import com.paylastikca.presentation.view.profileScreen.profileMainScreen
@@ -97,7 +92,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "twoStepVerificationNoActive",
+        startDestination = "twoStepVerificationNoActiveChooseMethod",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -172,8 +167,8 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 composable("twoStepVerificationActiveRemove") { twoStepVerificationActiveRemove()  }
                 composable("twoStepVerificationNoActive") { twoStepVerificationNoActive()  }
                 composable("twoStepVerificationNoActiveChooseMethod") { twoStepVerificationNoActiveChooseMethod()  }
-                composable("twoStepVerificationNoActiveChooseMethodMailSend") { twoStepVerificationNoActiveChooseMethodMailSend()  }
-                composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCode") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCode()  }
+               // composable("twoStepVerificationNoActiveChooseMethodMailSend") { twoStepVerificationNoActiveChooseMethodMailSend()  }
+              //  composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCode") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCode()  }
                 composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCodeCompleted") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCodeCompleted()  }
                 //-----
 
