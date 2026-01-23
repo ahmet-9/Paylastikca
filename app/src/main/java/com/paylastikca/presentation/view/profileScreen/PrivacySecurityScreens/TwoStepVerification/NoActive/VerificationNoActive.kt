@@ -1,4 +1,4 @@
-package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens
+package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -20,7 +20,7 @@ import com.paylastikca.ui.theme.authBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun twoStepVerificationNoActive(
+fun VerificationNoActive(
     onBack: () -> Unit = {},
     onActivateClick: () -> Unit = {}
 ) {

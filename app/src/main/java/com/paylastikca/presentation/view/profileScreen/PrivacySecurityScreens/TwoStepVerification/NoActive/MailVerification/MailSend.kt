@@ -1,4 +1,4 @@
-package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens
+package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.MailVerification
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
@@ -14,10 +14,10 @@ import androidx.compose.ui.window.Dialog
 import com.paylastikca.presentation.view.commonUI.components.verification.core.ErrorBanner
 
 @Composable
-fun twoStepVerificationNoActiveChooseMethodNumberSend(
-    phone: String,
+fun MailSend(
+    email: String,
     errorMessage: String?,
-    onPhoneChange: (String) -> Unit,
+    onEmailChange: (String) -> Unit,
     onDismiss: () -> Unit,
     onSend: () -> Unit
 ) {
@@ -34,7 +34,7 @@ fun twoStepVerificationNoActiveChooseMethodNumberSend(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "SMS ile Doğrulama",
+                    text = "E-mail ile Doğrulama",
                     fontSize = 20.sp,
                     color = colors.onSurface
                 )
@@ -42,12 +42,9 @@ fun twoStepVerificationNoActiveChooseMethodNumberSend(
                 Spacer(Modifier.height(12.dp))
 
                 OutlinedTextField(
-                    value = phone,
-                    onValueChange = { input ->
-                        val filtered = input.filter { it.isDigit() || it == '+' }
-                        onPhoneChange(filtered)
-                    },
-                    label = { Text("Telefon numarası") },
+                    value = email,
+                    onValueChange = onEmailChange,
+                    label = { Text("E-posta adresi") },
                     singleLine = true,
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth(),
@@ -67,7 +64,7 @@ fun twoStepVerificationNoActiveChooseMethodNumberSend(
                 Spacer(Modifier.height(10.dp))
 
                 Text(
-                    text = "Devam'a bastıktan sonra doğrulama kodu SMS olarak gönderilecektir.",
+                    text = "Devam'a bastıktan sonra doğrulama kodu e-posta adresinize gönderilecektir.",
                     style = MaterialTheme.typography.bodySmall,
                     color = colors.onSurfaceVariant,
                     textAlign = TextAlign.Center

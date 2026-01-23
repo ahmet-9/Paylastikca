@@ -1,4 +1,4 @@
-package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens
+package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -20,6 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.paylastikca.presentation.view.commonUI.components.PageHeader
 import com.paylastikca.presentation.view.commonUI.components.verification.core.CountdownEffect
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.MailVerification.MailSend
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.MailVerification.MailVerificationCode
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.NumberVerification.NumberSend
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.NumberVerification.NumberVerificationCode
 
 private enum class TwoStepMethod { SMS, EMAIL }
 
@@ -54,7 +58,7 @@ private sealed interface TwoStepModal {
 }
 
 @Composable
-fun twoStepVerificationNoActiveChooseMethod(
+fun VerificationChooseMethod(
     onBack: () -> Unit = {},
 
     onVerifiedSuccess: () -> Unit = {}
@@ -209,7 +213,7 @@ fun twoStepVerificationNoActiveChooseMethod(
 
             // EMAIL
             is TwoStepModal.MailSend -> {
-                twoStepVerificationNoActiveChooseMethodMailSend(
+                MailSend(
                     email = m.email,
                     errorMessage = m.errorMessage,
                     onEmailChange = { modal = m.copy(email = it, errorMessage = null) },
@@ -218,11 +222,11 @@ fun twoStepVerificationNoActiveChooseMethod(
                         val trimmed = m.email.trim()
                         if (trimmed.isBlank()) {
                             modal = m.copy(errorMessage = "E-posta boş olamaz.")
-                            return@twoStepVerificationNoActiveChooseMethodMailSend
+                            return@MailSend
                         }
                         if (!trimmed.contains("@") || !trimmed.contains(".")) {
                             modal = m.copy(errorMessage = "Geçersiz e-posta.")
-                            return@twoStepVerificationNoActiveChooseMethodMailSend
+                            return@MailSend
                         }
                         modal = TwoStepModal.MailVerify(email = trimmed, secondsLeft = 59)
                     }
@@ -230,7 +234,7 @@ fun twoStepVerificationNoActiveChooseMethod(
             }
 
             is TwoStepModal.MailVerify -> {
-                twoStepVerificationNoActiveChooseMethodMailSendVerificationCode(
+                MailVerificationCode(
                     email = m.email,
                     code = m.code,
                     secondsLeft = m.secondsLeft,
@@ -256,7 +260,7 @@ fun twoStepVerificationNoActiveChooseMethod(
 
             // SMS
             is TwoStepModal.NumberSend -> {
-                twoStepVerificationNoActiveChooseMethodNumberSend(
+                NumberSend(
                     phone = m.phone,
                     errorMessage = m.errorMessage,
                     onPhoneChange = { modal = m.copy(phone = it, errorMessage = null) },
@@ -265,14 +269,14 @@ fun twoStepVerificationNoActiveChooseMethod(
                         val raw = m.phone.trim()
                         if (raw.isBlank()) {
                             modal = m.copy(errorMessage = "Telefon numarası boş olamaz.")
-                            return@twoStepVerificationNoActiveChooseMethodNumberSend
+                            return@NumberSend
                         }
 
 
                         val normalized = normalizeTrPhone(raw)
                         if (normalized == null) {
                             modal = m.copy(errorMessage = "Geçersiz numara.")
-                            return@twoStepVerificationNoActiveChooseMethodNumberSend
+                            return@NumberSend
                         }
 
                         modal = TwoStepModal.NumberVerify(phone = normalized, secondsLeft = 59)
@@ -281,7 +285,7 @@ fun twoStepVerificationNoActiveChooseMethod(
             }
 
             is TwoStepModal.NumberVerify -> {
-                twoStepVerificationNoActiveChooseMethodNumberSendVerificationCode(
+                NumberVerificationCode(
                     phone = m.phone,
                     code = m.code,
                     secondsLeft = m.secondsLeft,

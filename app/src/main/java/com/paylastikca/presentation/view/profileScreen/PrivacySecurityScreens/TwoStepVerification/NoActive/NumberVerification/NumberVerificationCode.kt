@@ -1,10 +1,10 @@
-package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens
+package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.NumberVerification
 
 import androidx.compose.runtime.Composable
 import com.paylastikca.presentation.view.commonUI.components.verification.core.VerificationCodeDialog
 
 @Composable
-fun twoStepVerificationNoActiveChooseMethodNumberSendVerificationCode(
+fun NumberVerificationCode(
     phone: String,
     code: String,
     secondsLeft: Int,

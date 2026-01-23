@@ -33,12 +33,12 @@ import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.Pr
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.changePassword
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.deleteAccount
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.deleteAccountVerificationCode
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationActive
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationActiveRemove
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationNoActive
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationNoActiveChooseMethod
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.Active.VerificationActive
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.Active.VerificationActiveRemove
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationNoActive
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationChooseMethod
 
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.twoStepVerificationNoActiveChooseMethodMailSendVerificationCodeCompleted
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.VerificationCompleted
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.SelectLanguage
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.applicationPreferencesMAİN
 import com.paylastikca.presentation.view.profileScreen.badgesScreen
@@ -92,7 +92,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "twoStepVerificationNoActiveChooseMethod",
+        startDestination = "VerificationCompleted",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -163,13 +163,13 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 composable("deleteAccount") { deleteAccount()  }
                 composable("deleteAccountVerificationCode") { deleteAccountVerificationCode()  }
                 composable("PrivacySecurityMainScreen") { PrivacySecurityMainScreen()  }
-                composable("twoStepVerificationActive") { twoStepVerificationActive()  }
-                composable("twoStepVerificationActiveRemove") { twoStepVerificationActiveRemove()  }
-                composable("twoStepVerificationNoActive") { twoStepVerificationNoActive()  }
-                composable("twoStepVerificationNoActiveChooseMethod") { twoStepVerificationNoActiveChooseMethod()  }
+                composable("VerificationActive") { VerificationActive()  }
+                composable("VerificationActiveRemove") { VerificationActiveRemove()  }
+                composable("VerificationNoActive") { VerificationNoActive()  }
+                composable("VerificationChooseMethod") { VerificationChooseMethod()  }
                // composable("twoStepVerificationNoActiveChooseMethodMailSend") { twoStepVerificationNoActiveChooseMethodMailSend()  }
               //  composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCode") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCode()  }
-                composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCodeCompleted") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCodeCompleted()  }
+                composable("VerificationCompleted") { VerificationCompleted()  }
                 //-----
 
         composable("badgesScreen") { badgesScreen(navController )  }
