@@ -11,7 +11,7 @@ fun CountdownEffect(
     onTick: (Int) -> Unit,
     onTimeout: () -> Unit
 ) {
-    LaunchedEffect(isActive) {
+    LaunchedEffect(isActive, secondsLeft) {
         if (!isActive) return@LaunchedEffect
 
         var s = secondsLeft
@@ -23,3 +23,4 @@ fun CountdownEffect(
         onTimeout()
     }
 }
+

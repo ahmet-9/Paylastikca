@@ -9,11 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.paylastikca.presentation.view.commonUI.components.PageHeader
-import com.paylastikca.ui.theme.BRİGHTOrange
+import com.paylastikca.presentation.view.commonUI.components.navigation.PageHeader
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,17 +23,14 @@ fun PrivacySecurityMainScreen(
     onLocationShareChanged: (Boolean) -> Unit = {}
 ) {
 
-
-
-
     var locationShareEnabled by remember { mutableStateOf(false) }
-    val colors = MaterialTheme.colorScheme
 
+    val colors = MaterialTheme.colorScheme
 
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = colors.outlineVariant
+            color = colors.surfaceVariant
         )
     }
 
@@ -44,7 +39,7 @@ fun PrivacySecurityMainScreen(
         topBar = {
             PageHeader(
                 modifier = Modifier.padding(top = 25.dp, start = 7.dp),
-                title = "gizlilik & güvenlik",
+                title = "Gizlilik & Güvenlik",
                 onBackClick = onBack
             )
         }
@@ -96,9 +91,7 @@ fun PrivacySecurityMainScreen(
 
 @Composable
 private fun SectionLabel(text: String) {
-
     val colors = MaterialTheme.colorScheme
-
     Text(
         text = text,
         style = MaterialTheme.typography.labelLarge,
@@ -109,9 +102,7 @@ private fun SectionLabel(text: String) {
 
 @Composable
 private fun RoundedContainer(content: @Composable ColumnScope.() -> Unit) {
-
     val colors = MaterialTheme.colorScheme
-
     Surface(
         shape = RoundedCornerShape(12.dp),
         color = colors.surface,
@@ -129,7 +120,6 @@ private fun SwitchRow(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit
 ) {
-
     val colors = MaterialTheme.colorScheme
 
     Row(
@@ -165,7 +155,6 @@ private fun NavigationRow(
     title: String,
     onClick: () -> Unit
 ) {
-
     val colors = MaterialTheme.colorScheme
 
     Row(

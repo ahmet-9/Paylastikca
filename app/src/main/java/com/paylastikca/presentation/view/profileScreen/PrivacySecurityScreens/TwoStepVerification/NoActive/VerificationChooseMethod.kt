@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.paylastikca.presentation.view.commonUI.components.PageHeader
+import com.paylastikca.presentation.view.commonUI.components.navigation.PageHeader
 import com.paylastikca.presentation.view.commonUI.components.verification.core.CountdownEffect
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.MailVerification.MailSend
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.MailVerification.MailVerificationCode
@@ -30,7 +30,6 @@ private enum class TwoStepMethod { SMS, EMAIL }
 private sealed interface TwoStepModal {
     data object None : TwoStepModal
 
-    // EMAIL
     data class MailSend(
         val email: String = "",
         val errorMessage: String? = null
@@ -43,7 +42,6 @@ private sealed interface TwoStepModal {
         val errorMessage: String? = null
     ) : TwoStepModal
 
-    // SMS
     data class NumberSend(
         val phone: String = "",
         val errorMessage: String? = null
@@ -57,10 +55,10 @@ private sealed interface TwoStepModal {
     ) : TwoStepModal
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VerificationChooseMethod(
     onBack: () -> Unit = {},
-
     onVerifiedSuccess: () -> Unit = {}
 ) {
     val colors = MaterialTheme.colorScheme
@@ -68,15 +66,12 @@ fun VerificationChooseMethod(
     var selected by remember { mutableStateOf(TwoStepMethod.SMS) }
     var modal by remember { mutableStateOf<TwoStepModal>(TwoStepModal.None) }
 
-
     val isVerifyActive = modal is TwoStepModal.MailVerify || modal is TwoStepModal.NumberVerify
     val secondsLeft = when (val m = modal) {
         is TwoStepModal.MailVerify -> m.secondsLeft
         is TwoStepModal.NumberVerify -> m.secondsLeft
         else -> 0
     }
-
-
 
     CountdownEffect(
         isActive = isVerifyActive,
@@ -105,9 +100,18 @@ fun VerificationChooseMethod(
         }
     )
 
+
     Scaffold(
         containerColor = colors.background,
-        contentColor = colors.onBackground
+        contentColor = colors.onBackground,
+        topBar = {
+            PageHeader(
+
+                modifier = Modifier.padding(start = 7.dp, end = 7.dp),
+                title = "İki adımlı doğrulama",
+                onBackClick = onBack
+            )
+        }
     ) { padding ->
 
         Column(
@@ -116,20 +120,12 @@ fun VerificationChooseMethod(
                 .padding(padding)
         ) {
 
-            PageHeader(
-                modifier = Modifier.padding(top = 2.dp, start = 7.dp, end = 7.dp, bottom = 20.dp),
-                title = "İki adımlı doğrulama",
-                onBackClick = onBack
-            )
-
-
-            Spacer(Modifier.height(22.dp))
+            Spacer(Modifier.height(18.dp))
 
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Surface(
                     modifier = Modifier.size(40.dp),
                     shape = CircleShape,
@@ -139,7 +135,6 @@ fun VerificationChooseMethod(
                     Box(contentAlignment = Alignment.Center) {
                         Text(
                             text = "i",
-
                             fontSize = 28.sp,
                             color = MaterialTheme.colorScheme.outline
                         )
@@ -148,17 +143,16 @@ fun VerificationChooseMethod(
 
                 Spacer(Modifier.height(6.dp))
 
-
                 Text(
                     text = "Hesap güvenliğiniz için doğrulama gereklidir.\n" +
-                            "Dilerseniz SMS veya e-posta yoluyla doğrulama\n"+" yapabilirsiniz.",
+                            "Dilerseniz SMS veya e-posta yoluyla doğrulama\n" +
+                            "yapabilirsiniz.",
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
                     fontSize = 14.sp
                 )
             }
-
 
             Spacer(Modifier.height(22.dp))
 
@@ -211,7 +205,6 @@ fun VerificationChooseMethod(
         when (val m = modal) {
             TwoStepModal.None -> Unit
 
-            // EMAIL
             is TwoStepModal.MailSend -> {
                 MailSend(
                     email = m.email,
@@ -258,7 +251,6 @@ fun VerificationChooseMethod(
                 )
             }
 
-            // SMS
             is TwoStepModal.NumberSend -> {
                 NumberSend(
                     phone = m.phone,
@@ -271,7 +263,6 @@ fun VerificationChooseMethod(
                             modal = m.copy(errorMessage = "Telefon numarası boş olamaz.")
                             return@NumberSend
                         }
-
 
                         val normalized = normalizeTrPhone(raw)
                         if (normalized == null) {
@@ -372,7 +363,6 @@ private fun MethodRow(
         }
     }
 }
-
 
 private fun normalizeTrPhone(input: String): String? {
     val digits = input.filter(Char::isDigit)

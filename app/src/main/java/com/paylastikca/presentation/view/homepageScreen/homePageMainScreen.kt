@@ -1,87 +1,78 @@
 package com.paylastikca.presentation.view.homepageScreen
 
-import androidx.compose.runtime.Composable
-
-
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import com.paylastikca.app.R
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.animation.core.RepeatMode
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.delay
-import com.google.maps.android.compose.*
+import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.paylastikca.app.R
+import com.paylastikca.presentation.view.commonUI.components.layout.FixedPage
+import com.paylastikca.presentation.view.commonUI.components.HomeMap
+import com.paylastikca.presentation.view.commonUI.components.layout.PageScaffold
+import com.paylastikca.presentation.view.commonUI.components.platform.rememberRewardedAdLauncher
+import com.paylastikca.ui.UiDimens
 import com.paylastikca.ui.theme.Gray
-
-
-
-
-
-
+import kotlinx.coroutines.delay
 
 @Composable
-fun homePageMainScreen() {
+fun homePageMainScreen(navController: NavController) {
 
-    var showDialog by remember { mutableStateOf(false) } // Rİ
+    val colors = MaterialTheme.colorScheme
 
-    Scaffold(
+    var showDialog by remember { mutableStateOf(false) }
+    val rewardedAdLauncher = rememberRewardedAdLauncher()
+
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = colors.background
+        )
+    }
+
+    PageScaffold(
         containerColor = MaterialTheme.colorScheme.background,
-       // bottomBar = { BottomBar() }
-        bottomBar = {
-            com.paylastikca.presentation.view.commonUI.components.BottomBar()
-        }
+        currentRoute = "homePageMainScreen",
+        navController = navController,
+        bottomBarContainerColor = MaterialTheme.colorScheme.surface
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp)
+
+        FixedPage(
+            padding = innerPadding,
+            horizontalPadding = UiDimens.l
         ) {
 
-
-
-            // address search bar
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .offset(x = -10.dp, y = 0.dp)
-                    .padding(horizontal = 8.dp, vertical = 4.dp,),
+                    .padding(bottom = UiDimens.xs),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
@@ -90,19 +81,18 @@ fun homePageMainScreen() {
                     value = "konya/kadinhankarakayamah.../",
                     onValueChange = { },
                     modifier = Modifier
-
                         .weight(1f)
-                        .height(50.dp),
+                        .defaultMinSize(minHeight = UiDimens.textFieldMinH),
                     leadingIcon = {
                         Image(
                             painter = painterResource(id = R.drawable.mapsicon),
                             contentDescription = "Konum",
-                            modifier = Modifier.size(32.dp),
+                            modifier = Modifier.size(UiDimens.icon32),
                             contentScale = ContentScale.Fit
                         )
                     },
                     singleLine = true,
-                    shape = RoundedCornerShape(8.dp),
+                    shape = RoundedCornerShape(UiDimens.rS),
                     colors = TextFieldDefaults.colors(
                         focusedContainerColor = Color.Transparent,
                         unfocusedContainerColor = Color.Transparent,
@@ -119,26 +109,22 @@ fun homePageMainScreen() {
                     )
                 )
 
+                Spacer(modifier = Modifier.width(UiDimens.s))
 
-                Spacer(modifier = Modifier.width(1.dp))
-
-                // Coin Badge
                 CoinBadge()
             }
 
-
-            Spacer(Modifier.height(6.dp))
-
             Row(
-                modifier = Modifier.fillMaxWidth()
-                    .offset(x = 3.dp, y = -20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = UiDimens.xs, bottom = UiDimens.m),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconTextButton(
                     iconRes = R.drawable.plusicon,
                     text = "Adres Ekle"
                 )
-                Spacer(Modifier.width(24.dp))
+                Spacer(Modifier.width(UiDimens.xl))
                 IconTextButton(
                     iconRes = R.drawable.restarticon,
                     text = "Konumu Doğrula"
@@ -146,107 +132,82 @@ fun homePageMainScreen() {
             }
 
 
-
-            Spacer(Modifier.height(12.dp))
-
-
-
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(459.dp)
-                    .clip(RoundedCornerShape(16.dp))
+                    .weight(1f)
+                    .heightIn(min = UiDimens.mapMinH)
+                    .clip(RoundedCornerShape(UiDimens.rL))
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentAlignment = Alignment.Center
             ) {
-                val cameraPositionState = rememberCameraPositionState {
-                    position = CameraPosition.fromLatLngZoom(
-                        LatLng(37.872, 32.492),
-                        14f
-                    )
-                }
-
-                GoogleMap(
-                    modifier = Modifier.matchParentSize(),
-                    cameraPositionState = cameraPositionState
-                ) {
-                    Marker(
-                        state = MarkerState(position = LatLng(37.872, 32.492)),
-                        title = "Benim Konumum",
-                        icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE)
-                    )
-                }
+                HomeMap(
+                    modifier = Modifier.matchParentSize()
+                )
             }
 
 
+            Spacer(Modifier.height(UiDimens.l))
 
-            Spacer(Modifier.height(16.dp))
-
-            // four button blocks
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(UiDimens.buttonGap)
             ) {
-
-
-
-                AdWatchButton(    //Ri
+                AdWatchButton(
                     modifier = Modifier.weight(1f),
                     onClick = { showDialog = true }
                 )
-
-               // AdWatchButton(modifier = Modifier.weight(1f))  //old
                 GiftWheelButton(modifier = Modifier.weight(1f))
-
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
-
+            Spacer(modifier = Modifier.height(UiDimens.s))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(UiDimens.buttonGap)
             ) {
                 TasksButton(modifier = Modifier.weight(1f))
                 StoreButton(modifier = Modifier.weight(1f))
-
-
             }
 
-
-
-            Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(UiDimens.xs))
         }
     }
 
-
-    //Rİ
     WatchAdsScreen(
         showDialog = showDialog,
         onDismiss = { showDialog = false },
         onWatchAd = {
+            rewardedAdLauncher.show(
+                onReward = {
+                    // TODO: ödül ver (chip artır vs)
+                },
+                onClosed = {
 
+                },
+                onFailed = {
+                    // TODO: hata mesajı/toast (şimdilik boş)
+                }
+            )
         }
-    )
 
+    )
 }
 
-
-//coin badge
 @Composable
 fun CoinBadge() {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(80.dp)
-            .offset(x = 7.dp, y = 0.dp)
+            .size(UiDimens.coinSize)
+            .offset(x = 4.dp, y = 0.dp)
     ) {
         Image(
             painter = painterResource(id = R.drawable.coin_badge),
             contentDescription = "Coin Badge",
             contentScale = ContentScale.Fit,
-            modifier = Modifier.size(150.dp)
+
+            modifier = Modifier.size(UiDimens.coinSize)
         )
         Text(
             text = "13",
@@ -257,56 +218,6 @@ fun CoinBadge() {
         )
     }
 }
-
-
-
-
-/*
-//bottombar menu
-@Composable
- fun BottomBar() {
-
-    var selectedIndex by remember { mutableStateOf(0) }
-
-    NavigationBar(
-        containerColor = Color.White,
-        tonalElevation = 0.dp,
-        modifier = Modifier.height(70.dp),
-        windowInsets = WindowInsets(0)
-    ) {
-        val items = listOf(
-            Pair(R.drawable.homeiconmenu, "Ana Sayfa"),
-            Pair(R.drawable.cooperationiconmenu, "Yardımlaş"),
-            Pair(R.drawable.notificationiconmenu, "Bildirim"),
-            Pair(R.drawable.profileiconmenu, "Profil")
-        )
-
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                selected = selectedIndex == index,
-                onClick = { selectedIndex = index },
-
-
-
-                icon = {
-                    Icon(
-                        painter = painterResource(id = item.first),
-                        contentDescription = item.second,
-                        modifier = Modifier.size(35.dp)
-                    )
-                },
-                label = { Text(" ", fontSize = 10.sp) },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color.White,
-                    unselectedIconColor = Color(0xFFE67E00),
-                    indicatorColor = Color(0xFFE67E00)
-                )
-            )
-        }
-    }
-}
-*/
-
 
 @Composable
 fun IconTextButton(
@@ -321,7 +232,7 @@ fun IconTextButton(
         Image(
             painter = painterResource(id = iconRes),
             contentDescription = text,
-            modifier = Modifier.size(18.dp)
+            modifier = Modifier.size(UiDimens.icon18)
         )
         Spacer(modifier = Modifier.width(6.dp))
         Text(
@@ -332,8 +243,6 @@ fun IconTextButton(
         )
     }
 }
-
-
 
 @Composable
 fun RotatingWheel(modifier: Modifier = Modifier) {
@@ -354,10 +263,9 @@ fun RotatingWheel(modifier: Modifier = Modifier) {
         contentDescription = "Hediye Çarkı",
         modifier = modifier
             .size(70.dp)
-            .offset(x = 15.dp, y =15.dp )
+            .offset(x = 15.dp, y = 15.dp)
             .graphicsLayer {
                 rotationZ = rotation
-
                 transformOrigin = TransformOrigin(0.47f, 0.55f)
             }
     )
@@ -366,17 +274,14 @@ fun RotatingWheel(modifier: Modifier = Modifier) {
 @Composable
 fun GiftWheelButton(modifier: Modifier = Modifier) {
     Box(
-        modifier = modifier
-            .width(175.dp)
-            .height(68.dp),
+        modifier = modifier.height(UiDimens.buttonH),
         contentAlignment = Alignment.Center
     ) {
 
         Box(
             modifier = Modifier
                 .matchParentSize()
-                .clip(RoundedCornerShape(12.dp))
-
+                .clip(RoundedCornerShape(UiDimens.rM))
                 .background(MaterialTheme.colorScheme.tertiary),
             contentAlignment = Alignment.Center
         ) {
@@ -390,7 +295,6 @@ fun GiftWheelButton(modifier: Modifier = Modifier) {
             )
         }
 
-        // spinning wheel
         RotatingWheel(
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -400,11 +304,10 @@ fun GiftWheelButton(modifier: Modifier = Modifier) {
     }
 }
 
-
 @Composable
-fun AdWatchButton(modifier: Modifier = Modifier,
-                  onClick: () -> Unit  //Rİ
-
+fun AdWatchButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "shimmer")
     val shimmerX by infiniteTransition.animateFloat(
@@ -419,23 +322,24 @@ fun AdWatchButton(modifier: Modifier = Modifier,
 
     Box(
         modifier = modifier
-            .width(175.dp)
-            .height(68.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .height(UiDimens.buttonH)
+            .clip(RoundedCornerShape(UiDimens.rM))
             .background(MaterialTheme.colorScheme.primary)
-            .clickable { onClick() }, //Rİ
+            .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize().padding(8.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
         ) {
 
             Box(
                 modifier = Modifier
-                    .size(45.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    .size(UiDimens.icon45)
+                    .clip(RoundedCornerShape(UiDimens.rS))
                     .clipToBounds(),
                 contentAlignment = Alignment.Center
             ) {
@@ -446,10 +350,10 @@ fun AdWatchButton(modifier: Modifier = Modifier,
                     modifier = Modifier.fillMaxSize()
                 )
 
-
-                Canvas(modifier = Modifier.fillMaxSize(0.5f)
-                    .align(Alignment.Center)
-
+                Canvas(
+                    modifier = Modifier
+                        .fillMaxSize(0.5f)
+                        .align(Alignment.Center)
                 ) {
                     val gradient = Brush.linearGradient(
                         colorStops = arrayOf(
@@ -462,7 +366,6 @@ fun AdWatchButton(modifier: Modifier = Modifier,
                         start = Offset(shimmerX, 0f),
                         end = Offset(shimmerX + 220f, size.height)
                     )
-
                     drawRect(brush = gradient, size = size)
                 }
             }
@@ -480,35 +383,32 @@ fun AdWatchButton(modifier: Modifier = Modifier,
     }
 }
 
-
-
-
 @Composable
 fun TasksButton(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .width(175.dp)
-            .height(68.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .height(UiDimens.buttonH)
+            .clip(RoundedCornerShape(UiDimens.rM))
             .background(MaterialTheme.colorScheme.inverseSurface),
         contentAlignment = Alignment.Center
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize().padding(8.dp)
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp)
         ) {
 
             Image(
                 painter = painterResource(id = R.drawable.taskicon),
                 contentDescription = "Görevler",
                 modifier = Modifier
-                    .size(32.dp)
+                    .size(UiDimens.icon32)
                     .offset(x = (-2).dp, y = 0.dp)
             )
 
             Spacer(modifier = Modifier.width(8.dp))
-
 
             Text(
                 text = "Görevler",
@@ -526,7 +426,6 @@ fun StoreButton(modifier: Modifier = Modifier) {
 
     val rotation = remember { Animatable(0f) }
 
-
     LaunchedEffect(Unit) {
         while (true) {
             rotation.animateTo(
@@ -540,9 +439,8 @@ fun StoreButton(modifier: Modifier = Modifier) {
 
     Box(
         modifier = modifier
-            .width(175.dp)
-            .height(68.dp)
-            .clip(RoundedCornerShape(12.dp))
+            .height(UiDimens.buttonH)
+            .clip(RoundedCornerShape(UiDimens.rM))
             .background(MaterialTheme.colorScheme.inverseSurface),
         contentAlignment = Alignment.Center
     ) {
@@ -558,7 +456,7 @@ fun StoreButton(modifier: Modifier = Modifier) {
                 painter = painterResource(id = R.drawable.storeicon),
                 contentDescription = "Mağaza",
                 modifier = Modifier
-                    .size(50.dp)
+                    .size(UiDimens.icon50)
                     .offset(x = (-2).dp, y = 0.dp)
                     .graphicsLayer {
                         rotationY = rotation.value
@@ -568,36 +466,13 @@ fun StoreButton(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.width(8.dp))
 
-
             Text(
                 text = "Mağaza",
-
                 color = MaterialTheme.colorScheme.inverseOnSurface,
                 fontWeight = FontWeight.Black,
                 fontSize = 18.sp,
-                textAlign = TextAlign.Center,
-
+                textAlign = TextAlign.Center
             )
         }
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

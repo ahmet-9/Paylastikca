@@ -7,61 +7,63 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavController
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.paylastikca.app.R
-
-import com.paylastikca.presentation.view.commonUI.components.PageHeader
+import com.paylastikca.presentation.view.commonUI.components.layout.PageScaffold
+import com.paylastikca.presentation.view.commonUI.components.layout.ScrollPage
+import com.paylastikca.presentation.view.commonUI.components.layout.rememberAdaptive
+import com.paylastikca.presentation.view.commonUI.components.navigation.PageHeader
+import com.paylastikca.presentation.view.commonUI.components.platform.rememberPurchaseLauncher
+import com.paylastikca.presentation.view.commonUI.components.platform.rememberSystemBarsController
 
 private val ShopAccentPurpleBorder = Color(0xFF5D4FFF)
 
 @Composable
 fun shoppingCentreScreen(navController: NavController) {
-
-    val systemUiController = rememberSystemUiController()
     val colors = MaterialTheme.colorScheme
 
-
-
+    val systemBars = rememberSystemBarsController()
     SideEffect {
-        systemUiController.setSystemBarsColor(
+        systemBars.setSystemBarsColor(
             color = colors.inverseSurface,
             darkIcons = false
         )
     }
 
-    Scaffold(
+    val purchaseLauncher = rememberPurchaseLauncher()
+
+    PageScaffold(
         containerColor = colors.inverseSurface
     ) { innerPadding ->
+
+        val adaptive = rememberAdaptive()
 
         Box(
             modifier = Modifier
@@ -69,27 +71,36 @@ fun shoppingCentreScreen(navController: NavController) {
                 .padding(innerPadding)
                 .background(colors.inverseSurface)
         ) {
+
             ShoppingCentreHeader(onBackClick = { navController.popBackStack() })
-            Column(
-                modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState())
+
+
+            ScrollPage(
+                padding = PaddingValues(top = 0.dp),
+                horizontalPadding = adaptive.pageHorizontalPadding,
+                maxContentWidth = adaptive.maxContentWidth
             ) {
 
+                Spacer(modifier = Modifier.height(56.dp))
 
                 StoreHeader(balance = 10)
 
-
-
-                CoinPacksGrid()
-
+                CoinPacksGrid(
+                    onBuy = { productId ->
+                        purchaseLauncher.buy(
+                            productId = productId,
+                            onSuccess = { /* TODO: coin ekle */ },
+                            onFailed = { /* TODO: hata */ }
+                        )
+                    }
+                )
             }
-
         }
     }
 }
 
 @Composable
 fun ShoppingCentreHeader(onBackClick: () -> Unit) {
-
     val colors = MaterialTheme.colorScheme
 
     Box(
@@ -98,13 +109,11 @@ fun ShoppingCentreHeader(onBackClick: () -> Unit) {
             .background(colors.inverseSurface)
             .padding(top = 8.dp)
     ) {
-
         PageHeader(
             title = "",
             onBackClick = onBackClick,
             modifier = Modifier.fillMaxWidth()
         )
-
 
         Icon(
             imageVector = Icons.Default.ArrowBack,
@@ -120,18 +129,13 @@ fun ShoppingCentreHeader(onBackClick: () -> Unit) {
 
 @Composable
 fun StoreHeader(balance: Int) {
-
     val colors = MaterialTheme.colorScheme
-
-
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp)
     ) {
-
-
         Image(
             painter = painterResource(id = R.drawable.shoppingcentrescreen_p),
             contentDescription = null,
@@ -143,7 +147,6 @@ fun StoreHeader(balance: Int) {
         )
         Image(
             painter = painterResource(id = R.drawable.shoppingcentrescreen_smallp),
-
             contentDescription = null,
             modifier = Modifier
                 .size(160.dp)
@@ -152,14 +155,10 @@ fun StoreHeader(balance: Int) {
                 .alpha(0.10f)
         )
 
-
         Column(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-
             Image(
                 painter = painterResource(id = R.drawable.shoppingcentrescreen_logo),
                 contentDescription = null,
@@ -179,7 +178,6 @@ fun StoreHeader(balance: Int) {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-
             Row(
                 modifier = Modifier
                     .background(colors.inverseSurface, RoundedCornerShape(14.dp))
@@ -191,7 +189,6 @@ fun StoreHeader(balance: Int) {
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 Image(
                     painter = painterResource(id = R.drawable.shoppingcentrescreen_coinbadge),
                     contentDescription = null,
@@ -211,24 +208,19 @@ fun StoreHeader(balance: Int) {
     }
 }
 
-
 @Composable
 fun CoinPackCard(
     amount: Int,
     priceText: String,
     coinRes: Int,
     pBadgeRes: Int,
+    productId: String,
+    onBuy: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
     val colors = MaterialTheme.colorScheme
 
-    Box(
-        modifier = modifier
-            .height(230.dp)
-    ) {
-
-
+    Box(modifier = modifier.height(230.dp)) {
         Column(
             modifier = Modifier
                 .matchParentSize()
@@ -240,7 +232,6 @@ fun CoinPackCard(
                     shape = RoundedCornerShape(18.dp)
                 )
         ) {
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -254,7 +245,6 @@ fun CoinPackCard(
                     modifier = Modifier.size(130.dp)
                 )
             }
-
 
             Column(
                 modifier = Modifier
@@ -303,13 +293,13 @@ fun CoinPackCard(
             }
         }
 
-
         Box(
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .offset(y = (-10).dp)
                 .clip(RoundedCornerShape(8.dp))
                 .background(colors.error)
+                .clickable { onBuy(productId) }
                 .padding(horizontal = 20.dp, vertical = 4.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -323,17 +313,16 @@ fun CoinPackCard(
     }
 }
 
-
-
 @Composable
-fun CoinPacksGrid() {
+fun CoinPacksGrid(
+    onBuy: (String) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(26.dp)
     ) {
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -343,6 +332,8 @@ fun CoinPacksGrid() {
                 priceText = "₺ 19,99",
                 coinRes = R.drawable.shoppingcentrescreen_collectivebadge,
                 pBadgeRes = R.drawable.shoppingcentrescreen_coinbadge,
+                productId = "coin_pack_5",
+                onBuy = onBuy,
                 modifier = Modifier.weight(1f)
             )
             CoinPackCard(
@@ -350,6 +341,8 @@ fun CoinPacksGrid() {
                 priceText = "₺ 49,99",
                 coinRes = R.drawable.shoppingcentrescreen_collectivebadge,
                 pBadgeRes = R.drawable.shoppingcentrescreen_coinbadge,
+                productId = "coin_pack_15",
+                onBuy = onBuy,
                 modifier = Modifier.weight(1f)
             )
         }
@@ -363,6 +356,8 @@ fun CoinPacksGrid() {
                 priceText = "₺ 74,99",
                 coinRes = R.drawable.shoppingcentrescreen_collectivebadge,
                 pBadgeRes = R.drawable.shoppingcentrescreen_coinbadge,
+                productId = "coin_pack_25",
+                onBuy = onBuy,
                 modifier = Modifier.weight(1f)
             )
             CoinPackCard(
@@ -370,9 +365,12 @@ fun CoinPacksGrid() {
                 priceText = "₺ 94,99",
                 coinRes = R.drawable.shoppingcentrescreen_collectivebadge,
                 pBadgeRes = R.drawable.shoppingcentrescreen_coinbadge,
+                productId = "coin_pack_40",
+                onBuy = onBuy,
                 modifier = Modifier.weight(1f)
             )
         }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -382,6 +380,8 @@ fun CoinPacksGrid() {
                 priceText = "₺ 199,99",
                 coinRes = R.drawable.shoppingcentrescreen_collectivebadge,
                 pBadgeRes = R.drawable.shoppingcentrescreen_coinbadge,
+                productId = "coin_pack_100",
+                onBuy = onBuy,
                 modifier = Modifier.weight(1f)
             )
             CoinPackCard(
@@ -389,14 +389,10 @@ fun CoinPacksGrid() {
                 priceText = "₺ 265,99",
                 coinRes = R.drawable.shoppingcentrescreen_collectivebadge,
                 pBadgeRes = R.drawable.shoppingcentrescreen_coinbadge,
+                productId = "coin_pack_200",
+                onBuy = onBuy,
                 modifier = Modifier.weight(1f)
             )
         }
     }
 }
-
-
-
-
-
-

@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,10 +17,8 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
@@ -40,64 +37,56 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.app.R
-import com.paylastikca.presentation.view.commonUI.components.BottomBar
-import com.paylastikca.ui.theme.BRİGHTOrange
-
-
-
+import com.paylastikca.presentation.view.commonUI.components.layout.PageScaffold
+import com.paylastikca.presentation.view.commonUI.components.layout.ScrollPage
+import com.paylastikca.presentation.view.commonUI.components.layout.rememberAdaptive
 
 private val KPI_HEIGHT = 92.dp
 
 @Composable
-fun profileMainScreen() {
+fun profileMainScreen(navController: NavController) {
 
     val colors = MaterialTheme.colorScheme
 
-    val appOrange = colors.primary
     val screenBg = colors.surfaceVariant
     val cardBg = colors.surface
     val muted = colors.onSurfaceVariant
     val border = colors.outlineVariant
+    val appOrange = colors.primary
 
+    val adaptive = rememberAdaptive()
 
     val systemUiController = rememberSystemUiController()
     SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = screenBg
-        )
+        systemUiController.setSystemBarsColor(color = screenBg)
     }
 
+    PageScaffold(
+        containerColor = screenBg,
+        currentRoute = "profileMainScreen",
+        navController = navController,
+        bottomBarContainerColor = screenBg
+    ) { innerPadding ->
 
-
-    Scaffold(
-        containerColor = colors.surfaceVariant,
-        bottomBar = { BottomBar(colors.surfaceVariant) },
-        contentWindowInsets = WindowInsets(0)
-    ) { padding ->
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = 90.dp)
-                .padding(horizontal = 16.dp, vertical = 14.dp)
+        ScrollPage(
+            padding = innerPadding,
+            horizontalPadding = adaptive.pageHorizontalPadding,
+            maxContentWidth = adaptive.maxContentWidth
         ) {
 
             Card(
@@ -156,7 +145,7 @@ fun profileMainScreen() {
                             modifier = Modifier
                                 .clip(RoundedCornerShape(12.dp))
                                 .background(colors.surfaceVariant)
-                                .clickable { }
+                                .clickable { /* TODO: profileEdit */ }
                                 .padding(horizontal = 10.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -176,10 +165,6 @@ fun profileMainScreen() {
                         }
                     }
 
-                    Spacer(Modifier.height(12.dp))
-
-
-
                     Spacer(Modifier.height(14.dp))
                     Divider(color = border, thickness = 1.dp)
                     Spacer(Modifier.height(12.dp))
@@ -192,8 +177,7 @@ fun profileMainScreen() {
                             title = "Puan",
                             value = "4.2/5",
                             rating = 4.2f,
-                            modifier = Modifier.weight(1f),
-
+                            modifier = Modifier.weight(1f)
                         )
 
                         KpiChipRozet(
@@ -216,27 +200,39 @@ fun profileMainScreen() {
 
             SectionTitle("Hesap")
             SectionCard {
-                ProfileRowItem(Icons.Filled.WorkspacePremium, "Rozetler") { }
+                ProfileRowItem(Icons.Filled.WorkspacePremium, "Rozetler") {
+                    // TODO: badgesScreen
+                }
                 Divider(color = border)
-                ProfileRowItem(Icons.Filled.Lock, "Gizlilik ve güvenlik") { }
+                ProfileRowItem(Icons.Filled.Lock, "Gizlilik ve güvenlik") {
+                    // TODO: PrivacySecurityMainScreen
+                }
                 Divider(color = border)
-                ProfileRowItem(Icons.Filled.Phone, "İletişim bilgileri") { }
+                ProfileRowItem(Icons.Filled.Phone, "İletişim bilgileri") {
+                    // TODO: contactInformation
+                }
             }
 
             Spacer(Modifier.height(14.dp))
 
             SectionTitle("Uygulama")
             SectionCard {
-                ProfileRowItem(Icons.Filled.Notifications, "Bildirimler") { }
+                ProfileRowItem(Icons.Filled.Notifications, "Bildirimler") {
+                    // TODO: notificationSettingsScreen
+                }
                 Divider(color = border)
-                ProfileRowItem(Icons.Filled.Settings, "Uygulama Tercihleri") { }
+                ProfileRowItem(Icons.Filled.Settings, "Uygulama Tercihleri") {
+                    // TODO: applicationPreferences
+                }
             }
 
             Spacer(Modifier.height(14.dp))
 
             SectionTitle("Destek")
             SectionCard {
-                ProfileRowItem(Icons.Filled.HelpOutline, "Yardım ve bilgilendirme") { }
+                ProfileRowItem(Icons.Filled.HelpOutline, "Yardım ve bilgilendirme") {
+                    // TODO: helpAndInformation
+                }
             }
         }
     }
@@ -251,8 +247,7 @@ private fun RowScope.KpiChipPuan(
     rating: Float,
     modifier: Modifier = Modifier
 ) {
-
-    val colors =MaterialTheme.colorScheme
+    val colors = MaterialTheme.colorScheme
 
     Column(
         modifier = modifier
@@ -275,7 +270,6 @@ private fun RowScope.KpiChipPuan(
             overflow = TextOverflow.Ellipsis
         )
 
-
         Spacer(Modifier.weight(1f))
 
         RatingStarsSmall(rating = rating)
@@ -288,7 +282,6 @@ private fun RowScope.KpiChipRozet(
     badgeText: String,
     modifier: Modifier = Modifier
 ) {
-
     val colors = MaterialTheme.colorScheme
 
     Box(
@@ -298,17 +291,11 @@ private fun RowScope.KpiChipRozet(
             .background(colors.surfaceVariant)
             .padding(horizontal = 12.dp, vertical = 10.dp)
     ) {
-
-
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = title,
-                fontSize = 11.sp,
-                color = colors.onSurfaceVariant
-            )
+            Text(text = title, fontSize = 11.sp, color = colors.onSurfaceVariant)
 
             Spacer(Modifier.weight(1f))
 
@@ -322,18 +309,16 @@ private fun RowScope.KpiChipRozet(
             )
         }
 
-
         Image(
             painter = painterResource(id = R.drawable.lvl_one),
             contentDescription = "rozet logo",
             modifier = Modifier
                 .align(Alignment.Center)
-                .offset(y = (0).dp)
+                .offset(y = 0.dp)
                 .size(65.dp)
         )
     }
 }
-
 
 @Composable
 private fun RowScope.KpiChipPaylasim(
@@ -342,7 +327,6 @@ private fun RowScope.KpiChipPaylasim(
     subtitle: String,
     modifier: Modifier = Modifier
 ) {
-
     val colors = MaterialTheme.colorScheme
 
     Column(
@@ -364,7 +348,6 @@ private fun RowScope.KpiChipPaylasim(
             color = colors.onSurface
         )
 
-
         Spacer(Modifier.weight(1f))
 
         Text(
@@ -373,7 +356,7 @@ private fun RowScope.KpiChipPaylasim(
             color = colors.onSurfaceVariant,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -382,7 +365,6 @@ private fun RowScope.KpiChipPaylasim(
 
 @Composable
 private fun RatingStarsSmall(rating: Float) {
-
     val colors = MaterialTheme.colorScheme
     val r = rating.coerceIn(0f, 5f)
 
@@ -412,7 +394,6 @@ private fun RatingStarsSmall(rating: Float) {
 
 @Composable
 private fun SectionTitle(text: String) {
-
     val colors = MaterialTheme.colorScheme
 
     Text(
@@ -444,7 +425,6 @@ private fun ProfileRowItem(
     title: String,
     onClick: () -> Unit
 ) {
-
     val colors = MaterialTheme.colorScheme
 
     Row(
@@ -461,7 +441,12 @@ private fun ProfileRowItem(
                 .background(colors.primaryContainer),
             contentAlignment = Alignment.Center
         ) {
-            Icon(icon, contentDescription = null, tint = colors.primary, modifier = Modifier.size(18.dp))
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = colors.primary,
+                modifier = Modifier.size(18.dp)
+            )
         }
 
         Spacer(Modifier.width(12.dp))

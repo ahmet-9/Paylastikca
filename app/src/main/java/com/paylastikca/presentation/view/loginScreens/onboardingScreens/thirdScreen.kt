@@ -2,13 +2,14 @@ package com.paylastikca.presentation.view.loginScreens.onboardingScreens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -19,7 +20,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -28,89 +29,108 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.app.R
+import com.paylastikca.presentation.view.commonUI.components.layout.FixedPage
+import com.paylastikca.presentation.view.commonUI.components.layout.PageScaffold
+import com.paylastikca.presentation.view.commonUI.components.layout.rememberAdaptive
 import com.paylastikca.ui.theme.BRİGHTOrange
 
 @Composable
-fun thirdScreen(navController: NavController){
+fun thirdScreen(navController: NavController) {
 
     val colors = MaterialTheme.colorScheme
+    val adaptive = rememberAdaptive()
+    val cfg = LocalConfiguration.current
 
     val systemUiController = rememberSystemUiController()
     SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = BRİGHTOrange
-        )
+        systemUiController.setSystemBarsColor(color = BRİGHTOrange)
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(BRİGHTOrange),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    val isShort = cfg.screenHeightDp < 760
 
+    val titleTop = if (isShort) 90.dp else 130.dp
+    val buttonBottom = if (isShort) 24.dp else 40.dp
 
-        Text(
-            text = "Fazla eşyanı paylaş",
-            fontSize = 36.sp,
-            fontWeight = FontWeight.Bold,
-            color = colors.onPrimary,
-            textAlign = TextAlign.Center,
-            lineHeight = 44.sp,
-            modifier = Modifier.padding(top = 130.dp)
-        )
+    PageScaffold(
+        containerColor = BRİGHTOrange,
+        applySafeInsets = true,
+        removeTopInset = true
+    ) { innerPadding ->
 
-
-        Text(
-            text = "İhtiyacın olmayan eşyaları paylaş,\n" +
-                    "topluluğa katkı sağla.",
-            fontSize = 22.sp,
-            color = colors.onPrimary,
-            textAlign = TextAlign.Center,
-            lineHeight = 24.sp,
-            modifier = Modifier.padding(top = 20.dp, bottom = 40.dp)
-        )
-
-
-        Image(
-            painter = painterResource(id = R.drawable.onboardingthirdscreenimage),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth(0.75f)
-                .padding(top = 10.dp)
-            .clip(RoundedCornerShape(40.dp))
-        )
-
-        OnboardingIndicator(
-            pageCount = 5,
-            currentPage = 2,
-            modifier = Modifier
-                .padding(top = 139.dp, bottom = 6.dp)
-        )
-
-        Spacer(modifier = Modifier.weight(1f))
-
-
-
-
-        Button(
-            onClick = { navController.navigate("fourthScreen") },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colors.onPrimary
-            ),
-            shape = RoundedCornerShape(30.dp),
-            modifier = Modifier
-                .padding(bottom = 40.dp)
-                .width(280.dp)
-                .height(50.dp)
+        FixedPage(
+            padding = innerPadding,
+            horizontalPadding = adaptive.pageHorizontalPadding,
+            maxContentWidth = adaptive.maxContentWidth
         ) {
-            Text(
-                text = "Geç",
-                color = colors.onPrimaryContainer,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(BRİGHTOrange)
+            ) {
+
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Text(
+                        text = "Fazla eşyanı paylaş",
+                        fontSize = 36.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.onPrimary,
+                        textAlign = TextAlign.Center,
+                        lineHeight = 44.sp,
+                        modifier = Modifier.padding(top = titleTop)
+                    )
+
+                    Text(
+                        text = "İhtiyacın olmayan eşyaları paylaş,\ntopluluğa katkı sağla.",
+                        fontSize = 22.sp,
+                        color = colors.onPrimary,
+                        textAlign = TextAlign.Center,
+                        lineHeight = 24.sp,
+                        modifier = Modifier.padding(top = 20.dp, bottom = 40.dp)
+                    )
+
+                    Image(
+                        painter = painterResource(id = R.drawable.onboardingthirdscreenimage),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxWidth(0.75f)
+                            .padding(top = 10.dp)
+                            .clip(RoundedCornerShape(40.dp))
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+                }
+
+                OnboardingIndicator(
+                    pageCount = 5,
+                    currentPage = 2,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = buttonBottom + 64.dp)
+                )
+
+                Button(
+                    onClick = { navController.navigate("fourthScreen") },
+                    colors = ButtonDefaults.buttonColors(containerColor = colors.onPrimary),
+                    shape = RoundedCornerShape(30.dp),
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = buttonBottom)
+                        .widthIn(min = 280.dp, max = 420.dp)
+                        .height(50.dp)
+                ) {
+                    Text(
+                        text = "Geç",
+                        color = colors.onPrimaryContainer,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
         }
     }
-
 }

@@ -1,4 +1,3 @@
-
 package com.paylastikca.presentation.view.notificationsScreen
 
 import androidx.compose.foundation.background
@@ -9,62 +8,79 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-
 import androidx.compose.material.icons.filled.Notifications
-
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-
+import com.paylastikca.presentation.view.commonUI.components.layout.PageScaffold
+import com.paylastikca.presentation.view.commonUI.components.layout.rememberAdaptive
 
 // ---------- SCREEN ----------
 @Composable
-fun notificationMainScreen() {
+fun notificationMainScreen(navController: NavController) {
     val notifications = fakeNotifications(30)
     val colors = MaterialTheme.colorScheme
+    val adaptive = rememberAdaptive()
 
     val systemUiController = rememberSystemUiController()
     SideEffect {
-        systemUiController.setSystemBarsColor(
-            color = colors.surfaceVariant
-        )
+        systemUiController.setSystemBarsColor(color = colors.surfaceVariant)
     }
 
-
-    Scaffold(
+    PageScaffold(
         containerColor = colors.surfaceVariant,
-        bottomBar = {
-            com.paylastikca.presentation.view.commonUI.components.BottomBar(colors.surfaceVariant)
-        }
-    ) { padding ->
+        currentRoute = "notificationMainScreen",
+        navController = navController,
+        bottomBarContainerColor = colors.surfaceVariant,
+        applySafeInsets = true,
+        removeTopInset = true,
 
-        Column(
+    ) { innerPadding ->
+
+
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(innerPadding)
+                .padding(horizontal = adaptive.pageHorizontalPadding),
+            contentAlignment = if (adaptive.maxContentWidth != null)
+                Alignment.TopCenter
+            else
+                Alignment.TopStart
         ) {
-
-            NotificationsTopBar()
-
-            Spacer(Modifier.height(12.dp))
+            val contentModifier = if (adaptive.maxContentWidth != null) {
+                Modifier
+                    .fillMaxWidth()
+                    .widthIn(max = adaptive.maxContentWidth)
+            } else {
+                Modifier.fillMaxWidth()
+            }
 
             LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                modifier = contentModifier.fillMaxSize(),
+                contentPadding = PaddingValues(vertical = 12.dp),
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
-                items(notifications, key = { it.id }) { item ->
-                    NotificationCard(item = item, onClick = { /* TODO: detay / deep link */ })
+                item {
+                    NotificationsTopBar()
+                    Spacer(Modifier.height(12.dp))
                 }
 
-                item { Spacer(Modifier.height(72.dp)) }
+                items(notifications, key = { it.id }) { item ->
+                    NotificationCard(
+                        item = item,
+                        onClick = { /* TODO: detay / deep link */ }
+                    )
+                }
+
+
             }
         }
     }
@@ -73,13 +89,11 @@ fun notificationMainScreen() {
 // ---------- TOP BAR ----------
 @Composable
 private fun NotificationsTopBar() {
-
     val colors = MaterialTheme.colorScheme
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-
             .padding(top = 18.dp, bottom = 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -97,8 +111,6 @@ private fun NotificationsTopBar() {
                 .height(3.dp)
                 .background(colors.outline, RoundedCornerShape(100))
         )
-
-
     }
 }
 
@@ -108,9 +120,7 @@ private fun NotificationCard(
     item: UiNotification,
     onClick: () -> Unit
 ) {
-
     val colors = MaterialTheme.colorScheme
-
     val shape = RoundedCornerShape(16.dp)
 
     Surface(
@@ -127,7 +137,6 @@ private fun NotificationCard(
                 .padding(horizontal = 14.dp, vertical = 14.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             Box(
                 modifier = Modifier
                     .size(46.dp)
@@ -173,8 +182,6 @@ private fun NotificationCard(
     }
 }
 
-
-
 // ---------- MODEL + SAMPLE DATA ----------
 private data class UiNotification(
     val id: String,
@@ -193,12 +200,3 @@ private fun fakeNotifications(count: Int): List<UiNotification> {
         )
     }
 }
-
-
-
-
-
-
-
-
-

@@ -43,7 +43,10 @@ fun MailSend(
 
                 OutlinedTextField(
                     value = email,
-                    onValueChange = onEmailChange,
+                    onValueChange = { input ->
+                        val filtered = input.filterNot { it.isWhitespace() }
+                        onEmailChange(filtered)
+                    },
                     label = { Text("E-posta adresi") },
                     singleLine = true,
                     shape = RoundedCornerShape(16.dp),
@@ -79,12 +82,8 @@ fun MailSend(
                     OutlinedButton(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colors.surface,
-                            contentColor = colors.primary
-                        ),
                         border = BorderStroke(1.dp, colors.primary)
-                    ) { Text("İptal") }
+                    ) { Text("İptal", color = colors.primary) }
 
                     Button(
                         onClick = onSend,

@@ -3,10 +3,12 @@ package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.T
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,7 +29,10 @@ fun NumberSend(
         Card(
             shape = RoundedCornerShape(14.dp),
             colors = CardDefaults.cardColors(containerColor = colors.surface),
-            modifier = Modifier.fillMaxWidth(0.9f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .widthIn(max = 420.dp)
+                .padding(horizontal = 16.dp)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
@@ -44,11 +49,17 @@ fun NumberSend(
                 OutlinedTextField(
                     value = phone,
                     onValueChange = { input ->
-                        val filtered = input.filter { it.isDigit() || it == '+' }
+                        val filtered = input
+                            .filter { it.isDigit() || it == '+' }
+                            .let { s ->
+                                if (s.startsWith("+")) "+" + s.drop(1).filter(Char::isDigit)
+                                else s.filter(Char::isDigit)
+                            }
                         onPhoneChange(filtered)
                     },
                     label = { Text("Telefon numarası") },
                     singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
@@ -82,8 +93,7 @@ fun NumberSend(
                     OutlinedButton(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = colors.surface,
+                        colors = ButtonDefaults.outlinedButtonColors(
                             contentColor = colors.primary
                         ),
                         border = BorderStroke(1.dp, colors.primary)

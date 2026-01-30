@@ -38,7 +38,7 @@ import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.Tw
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationNoActive
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationChooseMethod
 
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.VerificationCompleted
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationCompleted
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.SelectLanguage
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.applicationPreferencesMAİN
 import com.paylastikca.presentation.view.profileScreen.badgesScreen
@@ -92,7 +92,8 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "VerificationCompleted",
+        startDestination = "VerificationChooseMethod" +
+                "",
         modifier = Modifier.padding(innerPadding)
     ) {
 
@@ -108,7 +109,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 composable("giftwheelScreen") { GiftWheelScreen()  }
                 //----
 
-        composable("homePageMainScreen") { homePageMainScreen()  }
+        composable("homePageMainScreen") { homePageMainScreen(navController)  }
         composable("shoppingCentreScreen") { shoppingCentreScreen(navController = navController)  }
         composable("tasksScreen") { tasksScreen(navController = navController)  }
 
@@ -130,7 +131,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
         //notificationsScreen
 
-       composable("notificationMainScreen") { notificationMainScreen()  }
+       composable("notificationMainScreen") { notificationMainScreen(navController)  }
 
 
 
@@ -175,7 +176,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
         composable("badgesScreen") { badgesScreen(navController )  }
         composable("notificationSettingsScreen") { notificationSettingsScreen()  }
         composable("profileEditScreen") { profileEditScreen()  }
-        composable("profileMainScreen") { profileMainScreen()  }
+        composable("profileMainScreen") { profileMainScreen(navController)  }
 
 
         //sharingScreen
@@ -231,7 +232,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                      //----
 
 
-        composable("SharingMAİNScreen") { SharingMAİNScreen()  }
+        composable("SharingMAİNScreen") { SharingMAİNScreen(navController)  }
 
 
 

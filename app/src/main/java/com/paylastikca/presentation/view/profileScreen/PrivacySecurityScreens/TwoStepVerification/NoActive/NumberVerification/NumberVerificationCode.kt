@@ -2,6 +2,7 @@ package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.T
 
 import androidx.compose.runtime.Composable
 import com.paylastikca.presentation.view.commonUI.components.verification.core.VerificationCodeDialog
+import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.formatTrPhonePretty
 
 @Composable
 fun NumberVerificationCode(
@@ -14,9 +15,11 @@ fun NumberVerificationCode(
     onConfirm: () -> Unit,
     onResend: () -> Unit
 ) {
+    val pretty = formatTrPhonePretty(phone)
+
     VerificationCodeDialog(
         title = "Telefon Doğrulaması\nBekleniyor",
-        boldText = phone,
+        boldText = pretty,
         messageAfterBold = " numarasına doğrulama kodu SMS olarak gönderildi. Lütfen kodu giriniz.",
         code = code,
         secondsLeft = secondsLeft,

@@ -1,6 +1,7 @@
 package com.paylastikca.presentation.view.profileScreen.contactInformationScreens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import com.paylastikca.presentation.view.commonUI.components.verification.core.VerificationCodeDialog
 
 @Composable
@@ -14,7 +15,7 @@ fun updateNumberVerificationCode(
     onConfirm: () -> Unit,
     onResend: () -> Unit
 ) {
-    val pretty = formatTrPhonePretty(phone)
+    val pretty = remember(phone) { formatTrPhonePretty(phone) }
 
     VerificationCodeDialog(
         title = "Telefon Doğrulaması\nBekleniyor",

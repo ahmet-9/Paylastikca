@@ -8,10 +8,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 
 import androidx.compose.ui.Alignment
@@ -21,86 +19,93 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.paylastikca.app.R
-import com.paylastikca.presentation.view.commonUI.components.PageHeader
+import com.paylastikca.presentation.view.commonUI.components.navigation.PageHeader
+
+
+
+
+import com.paylastikca.presentation.view.commonUI.components.layout.PageScaffold
+import com.paylastikca.presentation.view.commonUI.components.layout.ScrollPage
+import com.paylastikca.presentation.view.commonUI.components.platform.rememberClipboardHelper
+import com.paylastikca.presentation.view.commonUI.components.platform.rememberShareHelper
+import com.paylastikca.ui.UiDimens
+
+import com.paylastikca.presentation.view.commonUI.components.layout.rememberAdaptive
+
 
 
 
 @Composable
 fun tasksScreen(navController: NavController) {
 
-    val scrollState = rememberScrollState()
     val colors = MaterialTheme.colorScheme
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.background)
-            .verticalScroll(scrollState)
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    PageScaffold(
+        containerColor = colors.background
 
-        PageHeader(
-            title = "Görevler",
-            modifier = Modifier
-                .padding(top = 24.dp, start = 0.dp)
-                .fillMaxWidth(),
-            onBackClick = { navController.popBackStack() }
-        )
+    ) { innerPadding ->
 
+        val adaptive = rememberAdaptive()
 
+        ScrollPage(
+            padding = innerPadding,
+            horizontalPadding = adaptive.pageHorizontalPadding,
+            maxContentWidth = adaptive.maxContentWidth
+        ) {
 
-        Spacer(modifier = Modifier.height(10.dp))
-        InviteFriendCard()
-        Spacer(modifier = Modifier.height(20.dp))
+            PageHeader(
+                title = "Görevler",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = UiDimens.xl),
+                onBackClick = { navController.popBackStack() }
+            )
 
+            Spacer(modifier = Modifier.height(UiDimens.m))
 
-        Divider(
-            color = colors.outlineVariant,
-            thickness = 1.dp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 20.dp)
+            InviteFriendCard(inviteLink = "https://www.paylastik")
 
-        )
-        SevenDayLoginCard()
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(UiDimens.xl))
 
+            Divider(
+                color = colors.outlineVariant,
+                thickness = 1.dp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = UiDimens.xl)
+            )
 
-        Divider(
-            color = colors.outlineVariant,
-            thickness = 1.dp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 20.dp)
+            SevenDayLoginCard()
 
-        )
-        BadgeUpgradeCard()
-        Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(UiDimens.xl))
 
+            Divider(
+                color = colors.outlineVariant,
+                thickness = 1.dp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = UiDimens.xl)
+            )
 
-        Divider(
-            color = colors.outlineVariant,
-            thickness = 1.dp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 20.dp)
+            BadgeUpgradeCard()
 
-        )
-        HelpTaskCard()
+            Spacer(modifier = Modifier.height(UiDimens.xl))
 
+            Divider(
+                color = colors.outlineVariant,
+                thickness = 1.dp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = UiDimens.xl)
+            )
 
-
-
-
-
-
-    }//fin
+            HelpTaskCard()
+        }
+    }
 }//fin
 
 
@@ -108,9 +113,13 @@ fun tasksScreen(navController: NavController) {
 
 
 @Composable
-fun InviteFriendCard() {
+fun InviteFriendCard(inviteLink: String) {
 
     val colors = MaterialTheme.colorScheme
+
+    val clipboard = rememberClipboardHelper()
+    val share = rememberShareHelper()
+
 
     Column(
         modifier = Modifier
@@ -192,7 +201,7 @@ fun InviteFriendCard() {
                 ) {
 
                     Text(
-                        text = "https://www.paylastik",
+                        text = inviteLink,
                         fontSize = 14.sp,
                         color = colors.onPrimaryContainer,
                         modifier = Modifier
@@ -203,7 +212,7 @@ fun InviteFriendCard() {
 
 
                     Button(
-                        onClick = {  },
+                        onClick = { clipboard.copy(inviteLink) },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = colors.primary, contentColor = colors.onPrimary
                         ),
@@ -230,7 +239,7 @@ fun InviteFriendCard() {
 
 
                 IconButton(
-                    onClick = {  },
+                    onClick = { share.shareText(inviteLink) },
                     modifier = Modifier.size(40.dp)
                 ) {
                     Icon(

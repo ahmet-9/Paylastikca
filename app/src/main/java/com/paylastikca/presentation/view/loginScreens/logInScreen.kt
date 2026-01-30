@@ -1,10 +1,12 @@
 package com.paylastikca.presentation.view.loginScreens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,12 +22,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,7 +43,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -52,58 +51,59 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.isImeVisible
 import com.paylastikca.app.R
 import com.paylastikca.ui.theme.authBlue
 import com.paylastikca.ui.theme.authBlueDisabled
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun logInScreen(
-
     onSignUpClick: () -> Unit = {},
     onSignInClick: () -> Unit = {},
     onGoogleClick: () -> Unit = {}
-){
-
+) {
     val colors = MaterialTheme.colorScheme
-
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
     var passwordVisible by remember { mutableStateOf(false) }
 
+    val isImeVisible = WindowInsets.isImeVisible
 
+    Scaffold(containerColor = colors.background) { padding ->
 
-
-
-
-    Scaffold(
-        containerColor = colors.background
-    ) { padding ->
-        Box(
+        BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
                 .background(colors.background)
         ) {
+            val isShort = maxHeight < 700.dp
+            val topOffset = if (isShort) (-20).dp else (-60).dp
+            val imageHeight = if (isShort) 240.dp else 310.dp
+            val imageOffsetY = if (isShort) 35.dp else 85.dp
+            val spacerAfterTitle = if (isShort) 20.dp else 40.dp
+
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .offset(y = (-60).dp)
+                    .offset(y = topOffset)
                     .padding(horizontal = 24.dp)
                     .verticalScroll(rememberScrollState()),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
 
                 Image(
                     painter = painterResource(id = R.drawable.signuploginpasswordscreenimage),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth(0.75f)
-                       .height(310.dp)
-                        .offset(y = 85.dp) ,
-                   contentScale = ContentScale.Fit
+                        .height(imageHeight)
+                        .offset(y = imageOffsetY),
+                    contentScale = ContentScale.Fit
                 )
 
                 Text(
@@ -114,13 +114,7 @@ fun logInScreen(
                     color = colors.onBackground
                 )
 
-
-
-                Spacer(modifier = Modifier.height(40.dp))
-
-
-
-
+                Spacer(modifier = Modifier.height(spacerAfterTitle))
 
                 OutlinedTextField(
                     value = email,
@@ -143,11 +137,9 @@ fun logInScreen(
                         cursorColor = colors.primary,
                         focusedLabelColor = colors.primary
                     )
-
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
-
 
                 OutlinedTextField(
                     value = password,
@@ -170,7 +162,6 @@ fun logInScreen(
                         cursorColor = colors.primary,
                         focusedLabelColor = colors.primary
                     ),
-
                     visualTransformation = if (passwordVisible) {
                         VisualTransformation.None
                     } else {
@@ -179,7 +170,10 @@ fun logInScreen(
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
-                                imageVector = if (passwordVisible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
+                                imageVector = if (passwordVisible)
+                                    Icons.Filled.VisibilityOff
+                                else
+                                    Icons.Filled.Visibility,
                                 contentDescription = null,
                                 tint = colors.onSurfaceVariant
                             )
@@ -187,11 +181,7 @@ fun logInScreen(
                     }
                 )
 
-
-
                 Spacer(modifier = Modifier.height(32.dp))
-
-
 
                 Button(
                     onClick = { onSignUpClick() },
@@ -209,10 +199,6 @@ fun logInScreen(
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
-
-
-
-
 
                 OutlinedButton(
                     onClick = { onGoogleClick() },
@@ -240,36 +226,40 @@ fun logInScreen(
                     Text(text = "Google ile devam et", fontSize = 15.sp, color = colors.onSurface)
                 }
 
-
                 Spacer(modifier = Modifier.height(32.dp))
 
 
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = "Şifreni mi unuttun?",
-                        fontSize = 15.sp,
-                        color = colors.onSurfaceVariant,
-                        fontWeight = FontWeight.SemiBold,
-                        textDecoration = TextDecoration.None,
-                        modifier = Modifier.clickable { onSignInClick() }.padding(start = 30.dp)
-                    )
-                    Text(
-                        text = "Üye ol",
-                        fontSize = 16.sp,
-                        color = authBlue,
-
-                        fontWeight = FontWeight.SemiBold,
-                        textDecoration = TextDecoration.None,
-                        modifier = Modifier.clickable { onSignInClick() }.padding(end = 35.dp)
-                    )
+                AnimatedVisibility(visible = !isImeVisible) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = "Şifreni mi unuttun?",
+                            fontSize = 15.sp,
+                            color = colors.onSurfaceVariant,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                                .clickable { onSignInClick() }
+                                .padding(start = 30.dp),
+                            textDecoration = TextDecoration.None
+                        )
+                        Text(
+                            text = "Üye ol",
+                            fontSize = 16.sp,
+                            color = authBlue,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier
+                                .clickable { onSignInClick() }
+                                .padding(end = 35.dp),
+                            textDecoration = TextDecoration.None
+                        )
+                    }
                 }
+
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
-
 }
-

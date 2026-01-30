@@ -1,10 +1,23 @@
-package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification
+package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GppGood
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,20 +31,20 @@ import com.paylastikca.ui.theme.authBlue
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VerificationCompleted(
-
     onDone: () -> Unit = {}
 ) {
-    Scaffold(
-        containerColor = MaterialTheme.colorScheme.background,
+    val colors = MaterialTheme.colorScheme
+    val buttonColor = authBlue
 
+    Scaffold(
+        containerColor = colors.background
     ) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = 24.dp,)
-                .offset(y = (-140).dp)
-                ,
+                .padding(horizontal = 24.dp)
+                .offset(y = (-140).dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(Modifier.weight(1f))
@@ -39,7 +52,7 @@ fun VerificationCompleted(
             Icon(
                 imageVector = Icons.Filled.GppGood,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.tertiary,
+                tint = colors.tertiary,
                 modifier = Modifier.size(210.dp)
             )
 
@@ -49,21 +62,12 @@ fun VerificationCompleted(
                 text = "İki adımlı doğrulama\netkinleştirildi !",
                 fontSize = 34.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground,
+                color = colors.onBackground,
                 textAlign = TextAlign.Center,
-                lineHeight = 35.sp,
-
-
+                lineHeight = 35.sp
             )
 
             Spacer(Modifier.height(36.dp))
-
-
-
-
-
-
-            val buttonColor = authBlue
 
             Button(
                 onClick = onDone,
@@ -77,10 +81,11 @@ fun VerificationCompleted(
                     contentColor = Color.White
                 )
             ) {
-                Text(text = "Bitti",
+                Text(
+                    text = "Bitti",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.ExtraBold
-                    )
+                )
             }
 
             Spacer(Modifier.weight(1.2f))

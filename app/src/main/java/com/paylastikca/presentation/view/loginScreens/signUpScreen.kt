@@ -1,8 +1,6 @@
 package com.paylastikca.presentation.view.loginScreens
 
 import androidx.compose.foundation.Image
-import androidx.compose.runtime.Composable
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,26 +8,25 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.paylastikca.app.R
 import com.paylastikca.ui.theme.authBlue
 import com.paylastikca.ui.theme.authBlueDisabled
@@ -39,8 +36,7 @@ fun signUpScreen(
     onSignUpClick: () -> Unit = {},
     onSignInClick: () -> Unit = {},
     onGoogleClick: () -> Unit = {}
-){
-
+) {
     val colors = MaterialTheme.colorScheme
 
     var fullName by remember { mutableStateOf("") }
@@ -51,29 +47,34 @@ fun signUpScreen(
     var passwordRepeatVisible by remember { mutableStateOf(false) }
     var termsAccepted by remember { mutableStateOf(false) }
 
-
     val isLengthValid = password.length >= 8
     val containsLetter = password.any { it.isLetter() }
     val containsDigit = password.any { it.isDigit() }
     val isPasswordValid = isLengthValid && containsLetter && containsDigit
+    val isRepeatOk = passwordRepeat.isNotEmpty() && passwordRepeat == password
 
     Scaffold(
         containerColor = colors.background
     ) { padding ->
-        Box(
+
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
                 .background(colors.background)
         ) {
+
+
             Column(
                 modifier = Modifier
+                    .weight(1f)
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .verticalScroll(rememberScrollState()),
+                    .verticalScroll(rememberScrollState())
+                    .padding(horizontal = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
+                Spacer(modifier = Modifier.height(10.dp))
 
                 Image(
                     painter = painterResource(id = R.drawable.signuploginpasswordscreenimage),
@@ -98,7 +99,7 @@ fun signUpScreen(
                     color = colors.onSurfaceVariant
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(20.dp))
 
                 OutlinedTextField(
                     value = fullName,
@@ -150,7 +151,6 @@ fun signUpScreen(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-
                 OutlinedTextField(
                     value = password,
                     onValueChange = { password = it },
@@ -172,11 +172,7 @@ fun signUpScreen(
                         cursorColor = colors.primary,
                         focusedLabelColor = colors.primary
                     ),
-                    visualTransformation = if (passwordVisible) {
-                        VisualTransformation.None
-                    } else {
-                        PasswordVisualTransformation()
-                    },
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
                             Icon(
@@ -191,7 +187,6 @@ fun signUpScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
 
-
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -199,15 +194,12 @@ fun signUpScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     PasswordRequirementItem("En az 8 karakter", isLengthValid)
                     PasswordRequirementItem("En az 1 harf", containsLetter)
                     PasswordRequirementItem("En az 1 rakam", containsDigit)
-
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
-
 
                 OutlinedTextField(
                     value = passwordRepeat,
@@ -230,41 +222,29 @@ fun signUpScreen(
                         cursorColor = colors.primary,
                         focusedLabelColor = colors.primary
                     ),
-                    visualTransformation = if (passwordRepeatVisible) {
-                        VisualTransformation.None
-                    } else {
-                        PasswordVisualTransformation()
-                    },
+                    visualTransformation = if (passwordRepeatVisible) VisualTransformation.None else PasswordVisualTransformation(),
                     trailingIcon = {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                        when {
-
-                            passwordRepeat.isEmpty() -> {}
-
-
-                            passwordRepeat == password ->
+                            if (isRepeatOk) {
                                 Icon(
                                     imageVector = Icons.Default.Check,
                                     contentDescription = null,
                                     tint = colors.tertiary
                                 )
-
-
-                            else -> {}
+                                Spacer(modifier = Modifier.width(6.dp))
+                            }
+                            IconButton(onClick = { passwordRepeatVisible = !passwordRepeatVisible }) {
+                                Icon(
+                                    imageVector = if (passwordRepeatVisible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
+                                    contentDescription = null,
+                                    tint = colors.onSurfaceVariant
+                                )
+                            }
                         }
-
-                        IconButton(onClick = { passwordRepeatVisible = !passwordRepeatVisible }) {
-                            Icon(
-                                imageVector = if (passwordRepeatVisible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                                contentDescription = null,
-                                tint = colors.onSurfaceVariant
-                            )
-                        }
-                    }
                     }
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -282,9 +262,7 @@ fun signUpScreen(
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 13.sp,
                                 textDecoration = TextDecoration.Underline,
-                                modifier = Modifier.clickable {
-
-                                }
+                                modifier = Modifier.clickable { }
                             )
 
                             Text(text = " ve ", fontSize = 13.sp, color = colors.onSurface)
@@ -295,9 +273,7 @@ fun signUpScreen(
                                 fontSize = 13.sp,
                                 fontWeight = FontWeight.SemiBold,
                                 textDecoration = TextDecoration.Underline,
-                                modifier = Modifier.clickable {
-
-                                }
+                                modifier = Modifier.clickable { }
                             )
                         }
 
@@ -305,13 +281,11 @@ fun signUpScreen(
                             text = "kabul ediyorum",
                             fontSize = 13.sp,
                             color = colors.onSurface
-
                         )
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
-
+                Spacer(modifier = Modifier.height(14.dp))
 
                 Button(
                     onClick = { onSignUpClick() },
@@ -367,32 +341,38 @@ fun signUpScreen(
                     Text(text = "Google ile devam et", fontSize = 15.sp, color = colors.onSurface)
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(18.dp))
+            }
 
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "Zaten hesabın var mı? ", fontSize = 13.sp, color = colors.onSurfaceVariant)
-                    Text(
-                        text = "Giriş yap",
-                        fontSize = 16.sp,
-                        color = authBlue,
-                        fontWeight = FontWeight.SemiBold,
-                        textDecoration = TextDecoration.None,
-                        modifier = Modifier.clickable { onSignInClick() }
-                    )
-                }
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 18.dp, top = 10.dp)
+            ) {
+                Text(
+                    text = "Zaten hesabın var mı? ",
+                    fontSize = 13.sp,
+                    color = colors.onSurfaceVariant
+                )
+                Text(
+                    text = "Giriş yap",
+                    fontSize = 16.sp,
+                    color = authBlue,
+                    fontWeight = FontWeight.SemiBold,
+                    textDecoration = TextDecoration.None,
+                    modifier = Modifier.clickable { onSignInClick() }
+                )
             }
         }
     }
 }
 
-
 @Composable
 fun PasswordRequirementItem(text: String, isValid: Boolean) {
-
     val colors = MaterialTheme.colorScheme
 
     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -409,4 +389,3 @@ fun PasswordRequirementItem(text: String, isValid: Boolean) {
         )
     }
 }
-

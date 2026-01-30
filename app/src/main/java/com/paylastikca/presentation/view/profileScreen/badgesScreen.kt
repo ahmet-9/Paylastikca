@@ -7,17 +7,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,49 +31,56 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.paylastikca.app.R
-import com.paylastikca.presentation.view.commonUI.components.PageHeader
-
-
-
-
-
+import com.paylastikca.presentation.view.commonUI.components.navigation.PageHeader
+import com.paylastikca.presentation.view.commonUI.components.layout.PageScaffold
+import com.paylastikca.presentation.view.commonUI.components.layout.ScrollPage
+import com.paylastikca.presentation.view.commonUI.components.layout.rememberAdaptive
 
 @Composable
 fun badgesScreen(
-navController : NavController
+    navController: NavController
 ) {
-
     val colors = MaterialTheme.colorScheme
+    val adaptive = rememberAdaptive()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colors.background)
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    PageScaffold(
+        containerColor = colors.background,
+        currentRoute = null,
+        navController = null,
+        applySafeInsets = true,
+        removeTopInset = true
+    ) { innerPadding ->
 
-        PageHeader(
-            title = "Rozetler",
-            modifier = Modifier
-                .padding(top = 24.dp, start = 0.dp)
-                .fillMaxWidth(),
-            onBackClick = { navController.popBackStack() }
-        )
+        ScrollPage(
+            padding = innerPadding,
+            horizontalPadding = adaptive.pageHorizontalPadding,
+            maxContentWidth = adaptive.maxContentWidth
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(colors.background),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                PageHeader(
+                    title = "Rozetler",
+                    modifier = Modifier
+                        .padding(top = 24.dp)
+                        .fillMaxWidth(),
+                    onBackClick = { navController.popBackStack() }
+                )
 
-        HelpBadgesCard()
+                HelpBadgesCard()
+
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+        }
     }
-
-
 }
 
 @Composable
 fun HelpBadgesCard() {
-
     val colors = MaterialTheme.colorScheme
-
-
 
     Column(
         modifier = Modifier
@@ -85,41 +89,27 @@ fun HelpBadgesCard() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
-
-
-
         Spacer(modifier = Modifier.height(20.dp))
-
-
-
-
-
 
         BadgesCardState(
             title = "İlk Adım",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_one,
             badgeIconSize = 125,
             badgeIconOffsetY = 32,
-                    isActive = true,
+            isActive = true,
             isCompleted = true
         )
-
 
         Spacer(modifier = Modifier.height(10.dp))
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(20.dp))
 
-
-
-
         BadgesCardState(
             title = "Yardımcı",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_two,
@@ -129,19 +119,13 @@ fun HelpBadgesCard() {
             isCompleted = false
         )
 
-
         Spacer(modifier = Modifier.height(10.dp))
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(20.dp))
 
-
-
-
-
         BadgesCardState(
             title = "Güvenilir",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_three,
@@ -151,21 +135,13 @@ fun HelpBadgesCard() {
             isCompleted = false
         )
 
-
-
-
-
         Spacer(modifier = Modifier.height(10.dp))
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(10.dp))
 
-
-
-
         BadgesCardState(
             title = "Kahraman",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_four,
@@ -175,18 +151,13 @@ fun HelpBadgesCard() {
             isCompleted = false
         )
 
-
         Spacer(modifier = Modifier.height(10.dp))
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(20.dp))
 
-
-
-
         BadgesCardState(
             title = "Lider",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_five,
@@ -196,18 +167,13 @@ fun HelpBadgesCard() {
             isCompleted = false
         )
 
-
         Spacer(modifier = Modifier.height(10.dp))
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(20.dp))
 
-
-
-
         BadgesCardState(
             title = "Usta",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_six,
@@ -217,20 +183,13 @@ fun HelpBadgesCard() {
             isCompleted = false
         )
 
-
-
-
         Spacer(modifier = Modifier.height(10.dp))
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(20.dp))
 
-
-
-
         BadgesCardState(
             title = "Efsane",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_seven,
@@ -240,17 +199,13 @@ fun HelpBadgesCard() {
             isCompleted = false
         )
 
-
         Spacer(modifier = Modifier.height(10.dp))
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(20.dp))
 
-
-
         BadgesCardState(
             title = "Elçi",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_eight,
@@ -260,28 +215,19 @@ fun HelpBadgesCard() {
             isCompleted = false
         )
 
-
         Spacer(modifier = Modifier.height(10.dp))
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(20.dp))
 
-
-
-
-
-
-
-
         BadgesCardState(
             title = "Önder",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_nine,
             badgeIconSize = 125,
             badgeIconOffsetY = 32,
-                    isActive = false,
+            isActive = false,
             isCompleted = false
         )
 
@@ -289,17 +235,9 @@ fun HelpBadgesCard() {
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(20.dp))
 
-
-
-
-
-
-
-
         BadgesCardState(
             title = "Altın",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_ten,
@@ -313,17 +251,9 @@ fun HelpBadgesCard() {
         BadgeDotsDividerVertical(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(30.dp))
 
-
-
-
-
-
-
-
         BadgesCardState(
             title = "Ruhlu",
-            subtitleText ="“Kaliteli ve sorunsuz etkileşimlerle \n" +
-                    " seviye atlarsın.”",
+            subtitleText = "“Kaliteli ve sorunsuz etkileşimlerle \n seviye atlarsın.”",
             rewardText = "50 ÇİP HEDİYE!",
             progressText = "",
             badgeIconRes = R.drawable.lvl_eleven,
@@ -332,9 +262,6 @@ fun HelpBadgesCard() {
             isActive = false,
             isCompleted = false
         )
-
-
-
     }
 }
 
@@ -350,9 +277,7 @@ fun BadgesCardState(
     badgeIconSize: Int = 92,
     badgeIconOffsetY: Int = 0
 ) {
-
     val colors = MaterialTheme.colorScheme
-
 
     val orange = colors.primary
     val lightGray = colors.outlineVariant
@@ -361,13 +286,11 @@ fun BadgesCardState(
     val titleColor = if (isActive) colors.onSurface else disabledText
     val rewardColor = if (isActive) colors.onSurface else disabledText
 
-
     val barColor = if (isActive) orange else lightGray
     val alphaValue = if (isActive) 1f else 0.5f
 
     val iconDp = badgeIconSize.dp
     val iconRadius = iconDp / 2
-
 
     Box(
         modifier = Modifier
@@ -376,8 +299,6 @@ fun BadgesCardState(
             .alpha(alphaValue),
         contentAlignment = Alignment.TopCenter
     ) {
-
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -391,7 +312,6 @@ fun BadgesCardState(
                 ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 text = title,
                 fontSize = 22.sp,
@@ -409,6 +329,7 @@ fun BadgesCardState(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
+
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
@@ -452,7 +373,6 @@ fun BadgesCardState(
                         modifier = Modifier.size(22.dp)
                     )
                 }
-
             }
 
             Spacer(modifier = Modifier.height(6.dp))
@@ -463,7 +383,6 @@ fun BadgesCardState(
                 color = titleColor
             )
         }
-
 
         if (badgeIconRes != null) {
             Image(
@@ -503,9 +422,3 @@ fun BadgeDotsDividerVertical(
         }
     }
 }
-
-
-
-
-
-

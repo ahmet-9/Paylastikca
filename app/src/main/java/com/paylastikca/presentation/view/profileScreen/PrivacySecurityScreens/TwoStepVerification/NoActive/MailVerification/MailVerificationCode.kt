@@ -14,9 +14,13 @@ fun MailVerificationCode(
     onConfirm: () -> Unit,
     onResend: () -> Unit
 ) {
+    val safeEmail = email.trim().let { e ->
+        if (e.length <= 28) e else e.take(12) + "…" + e.takeLast(12)
+    }
+
     VerificationCodeDialog(
         title = "E-mail Doğrulaması\nBekleniyor",
-        boldText = email,
+        boldText = safeEmail,
         messageAfterBold = " adresine doğrulama kodu gönderildi. Lütfen kodu giriniz.",
         code = code,
         secondsLeft = secondsLeft,
