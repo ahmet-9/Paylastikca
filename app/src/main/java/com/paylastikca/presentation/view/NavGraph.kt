@@ -35,6 +35,7 @@ import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.de
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.deleteAccountVerificationCode
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.Active.VerificationActive
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.Active.VerificationActiveRemove
+import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.Active.VerificationRemoveChooseMethod
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationNoActive
 import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationChooseMethod
 
@@ -92,7 +93,7 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFou
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "VerificationChooseMethod" +
+        startDestination = "VerificationActive" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
@@ -160,13 +161,35 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 //---
 
                 //PrivacySecurityScreens
-                composable("changePassword") { changePassword()  }
+        composable("verificationRemoveChooseMethod") {
+            VerificationRemoveChooseMethod(
+                registeredEmail = "ornek@example.com",   // TODO: gerçek kullanıcı email
+                registeredPhone = "+905551234567",       // TODO: gerçek kullanıcı telefon
+                onBack = { navController.popBackStack() },
+                onRemoveVerifiedSuccess = {
+                    // TODO: burada gerçekten 2FA disable API çağıracaksın
+                    navController.popBackStack() // istersen Active'e dön
+                }
+            )
+        }
+
+        composable("changePassword") { changePassword()  }
                 composable("deleteAccount") { deleteAccount()  }
                 composable("deleteAccountVerificationCode") { deleteAccountVerificationCode()  }
                 composable("PrivacySecurityMainScreen") { PrivacySecurityMainScreen()  }
-                composable("VerificationActive") { VerificationActive()  }
-                composable("VerificationActiveRemove") { VerificationActiveRemove()  }
-                composable("VerificationNoActive") { VerificationNoActive()  }
+                composable("VerificationActive") { VerificationActive(navController)  }
+        composable("verificationActiveRemove") {
+            VerificationActiveRemove(
+                onCancel = { navController.popBackStack() },
+                onConfirmRemove = {
+                    navController.popBackStack() // popup route'unu kapat
+                    navController.navigate("verificationRemoveChooseMethod")
+                }
+            )
+        }
+
+
+        composable("VerificationNoActive") { VerificationNoActive()  }
                 composable("VerificationChooseMethod") { VerificationChooseMethod()  }
                // composable("twoStepVerificationNoActiveChooseMethodMailSend") { twoStepVerificationNoActiveChooseMethodMailSend()  }
               //  composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCode") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCode()  }
