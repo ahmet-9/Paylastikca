@@ -1,11 +1,12 @@
-package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.MailVerification
+package com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.NoActive.NumberVerification
 
 import androidx.compose.runtime.Composable
 import com.paylastikca.presentation.view.commonUI.components.verification.core.VerificationCodeDialog
+import com.paylastikca.presentation.view.profileScreen.contactInformationScreens.formatTrPhonePretty
 
 @Composable
-fun MailVerificationCode(
-    email: String,
+fun NumberVerificationCode(
+    phone: String,
     code: String,
     secondsLeft: Int,
     errorMessage: String?,
@@ -14,14 +15,12 @@ fun MailVerificationCode(
     onConfirm: () -> Unit,
     onResend: () -> Unit
 ) {
-    val safeEmail = email.trim().let { e ->
-        if (e.length <= 28) e else e.take(12) + "…" + e.takeLast(12)
-    }
+    val pretty = formatTrPhonePretty(phone)
 
     VerificationCodeDialog(
-        title = "E-mail Doğrulaması\nBekleniyor",
-        boldText = safeEmail,
-        messageAfterBold = " adresine doğrulama kodu gönderildi. Lütfen kodu giriniz.",
+        title = "Telefon Doğrulaması\nBekleniyor",
+        boldText = pretty,
+        messageAfterBold = " numarasına doğrulama kodu SMS olarak gönderildi. Lütfen kodu giriniz.",
         code = code,
         secondsLeft = secondsLeft,
         errorMessage = errorMessage,

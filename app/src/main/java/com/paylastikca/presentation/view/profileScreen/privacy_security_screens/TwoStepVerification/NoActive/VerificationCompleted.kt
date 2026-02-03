@@ -1,4 +1,4 @@
-package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive
+package com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.NoActive
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

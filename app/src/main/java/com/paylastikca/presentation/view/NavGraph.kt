@@ -29,17 +29,16 @@ import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.helpAndSSS
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.privacyPolicy
 import com.paylastikca.presentation.view.profileScreen.HelpandInformationScreens.termsOfUse
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.PrivacySecurityMainScreen
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.changePassword
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.deleteAccount
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.deleteAccountVerificationCode
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.Active.VerificationActive
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.Active.VerificationActiveRemove
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.Active.VerificationRemoveChooseMethod
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationNoActive
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationChooseMethod
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.PrivacySecurityMainScreen
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.deleteAccount
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.deleteAccountVerificationCode
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.Active.VerificationActive
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.Active.VerificationActiveRemove
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.Active.VerificationRemoveChooseMethod
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.NoActive.VerificationNoActive
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.NoActive.VerificationChooseMethod
 
-import com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.VerificationCompleted
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.NoActive.VerificationCompleted
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.SelectLanguage
 import com.paylastikca.presentation.view.profileScreen.applicationPreferencesScreens.applicationPreferencesMAİN
 import com.paylastikca.presentation.view.profileScreen.badgesScreen
@@ -87,13 +86,15 @@ import com.paylastikca.presentation.view.sharingScreen.swap.swapMyListSwapDiscov
 import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenNoResultsFound
 import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenNoResultsFoundSwapMyListSwapDiscovery
 import com.paylastikca.presentation.view.sharingScreen.swap.swapScreenResultsFound
+import com.paylastikca.presentation.view.profileScreen.privacy_security_screens.ChangePassword
+
 
 
 @Composable
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "VerificationActive" +
+        startDestination = "ChangePassword" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
@@ -173,8 +174,16 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
             )
         }
 
-        composable("changePassword") { changePassword()  }
-                composable("deleteAccount") { deleteAccount()  }
+        composable("changePassword") {
+            ChangePassword(
+                onBack = { navController.popBackStack() },
+                registeredEmail = "ornek@example.com",
+                registeredPhone = "+905551234567",
+                onPasswordChanged = { navController.popBackStack() }
+            )
+        }
+
+        composable("deleteAccount") { deleteAccount()  }
                 composable("deleteAccountVerificationCode") { deleteAccountVerificationCode()  }
                 composable("PrivacySecurityMainScreen") { PrivacySecurityMainScreen()  }
                 composable("VerificationActive") { VerificationActive(navController)  }

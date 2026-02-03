@@ -1,12 +1,14 @@
-package com.paylastikca.presentation.view.profileScreen.PrivacySecurityScreens.TwoStepVerification.NoActive.MailVerification
+package com.paylastikca.presentation.view.profileScreen.privacy_security_screens.TwoStepVerification.NoActive.NumberVerification
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -14,10 +16,10 @@ import androidx.compose.ui.window.Dialog
 import com.paylastikca.presentation.view.commonUI.components.verification.core.ErrorBanner
 
 @Composable
-fun MailSend(
-    email: String,
+fun NumberSend(
+    phone: String,
     errorMessage: String?,
-    onEmailChange: (String) -> Unit,
+    onPhoneChange: (String) -> Unit,
     onDismiss: () -> Unit,
     onSend: () -> Unit
 ) {
@@ -27,14 +29,17 @@ fun MailSend(
         Card(
             shape = RoundedCornerShape(14.dp),
             colors = CardDefaults.cardColors(containerColor = colors.surface),
-            modifier = Modifier.fillMaxWidth(0.9f)
+            modifier = Modifier
+                .fillMaxWidth()
+                .widthIn(max = 420.dp)
+                .padding(horizontal = 16.dp)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "E-mail ile Doğrulama",
+                    text = "SMS ile Doğrulama",
                     fontSize = 20.sp,
                     color = colors.onSurface
                 )
@@ -42,13 +47,19 @@ fun MailSend(
                 Spacer(Modifier.height(12.dp))
 
                 OutlinedTextField(
-                    value = email,
+                    value = phone,
                     onValueChange = { input ->
-                        val filtered = input.filterNot { it.isWhitespace() }
-                        onEmailChange(filtered)
+                        val filtered = input
+                            .filter { it.isDigit() || it == '+' }
+                            .let { s ->
+                                if (s.startsWith("+")) "+" + s.drop(1).filter(Char::isDigit)
+                                else s.filter(Char::isDigit)
+                            }
+                        onPhoneChange(filtered)
                     },
-                    label = { Text("E-posta adresi") },
+                    label = { Text("Telefon numarası") },
                     singleLine = true,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.fillMaxWidth(),
                     colors = OutlinedTextFieldDefaults.colors(
@@ -67,7 +78,7 @@ fun MailSend(
                 Spacer(Modifier.height(10.dp))
 
                 Text(
-                    text = "Devam'a bastıktan sonra doğrulama kodu e-posta adresinize gönderilecektir.",
+                    text = "Devam'a bastıktan sonra doğrulama kodu SMS olarak gönderilecektir.",
                     style = MaterialTheme.typography.bodySmall,
                     color = colors.onSurfaceVariant,
                     textAlign = TextAlign.Center
@@ -82,8 +93,11 @@ fun MailSend(
                     OutlinedButton(
                         onClick = onDismiss,
                         modifier = Modifier.weight(1f),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = colors.primary
+                        ),
                         border = BorderStroke(1.dp, colors.primary)
-                    ) { Text("İptal", color = colors.primary) }
+                    ) { Text("İptal") }
 
                     Button(
                         onClick = onSend,
