@@ -30,7 +30,6 @@ import com.paylastikca.presentation.view.profilescreens.help_and_information_scr
 import com.paylastikca.presentation.view.profilescreens.help_and_information_screens.PrivacyPolicy
 import com.paylastikca.presentation.view.profilescreens.help_and_information_screens.TermsOfUse
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.PrivacySecurityMainScreen
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.DeleteAccount
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.DeleteAccountVerificationCode
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationActive
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationActiveRemove
@@ -87,14 +86,14 @@ import com.paylastikca.presentation.view.sharingscreens.swap.SwapScreenNoResults
 import com.paylastikca.presentation.view.sharingscreens.swap.SwapScreenNoResultsFoundSwapMyListSwapDiscovery
 import com.paylastikca.presentation.view.sharingscreens.swap.SwapScreenResultsFound
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.ChangePassword
-
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.DeleteAccount
 
 
 @Composable
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "VerificationCompleted" +
+        startDestination = "DeleteAccount" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
@@ -183,8 +182,17 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
             )
         }
 
-        composable("DeleteAccount") { DeleteAccount()  }
-                composable("DeleteAccountVerificationCode") { DeleteAccountVerificationCode()  }
+        composable("DeleteAccount") {
+            DeleteAccount(
+                onBack = { navController.popBackStack() },
+                onAccountDeleted = { /* TODO */ }
+            )
+        }
+
+
+
+
+        composable("DeleteAccountVerificationCode") { DeleteAccountVerificationCode()  }
                 composable("PrivacySecurityMainScreen") { PrivacySecurityMainScreen()  }
                 composable("VerificationActive") { VerificationActive(navController)  }
         composable("VerificationActiveRemove") {
