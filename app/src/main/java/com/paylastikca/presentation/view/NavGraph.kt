@@ -41,9 +41,9 @@ import com.paylastikca.presentation.view.profilescreens.privacy_security_screens
 import com.paylastikca.presentation.view.profilescreens.application_preferences_screens.SelectLanguage
 import com.paylastikca.presentation.view.profilescreens.application_preferences_screens.ApplicationPreferencesMain
 import com.paylastikca.presentation.view.profilescreens.BadgessScreen
+import com.paylastikca.presentation.view.profilescreens.NotificationSettingsScreen
 import com.paylastikca.presentation.view.profilescreens.contact_information_screens.ContactInformationMain
 
-import com.paylastikca.presentation.view.profilescreens.NotificationSettingsScreen
 import com.paylastikca.presentation.view.profilescreens.ProfileEditScreen
 import com.paylastikca.presentation.view.profilescreens.ProfileMainScreen
 import com.paylastikca.presentation.view.sharingscreens.SharingMainScreen
@@ -93,7 +93,7 @@ import com.paylastikca.presentation.view.profilescreens.privacy_security_screens
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "DeleteAccount" +
+        startDestination = "NotificationSettingsScreen" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {

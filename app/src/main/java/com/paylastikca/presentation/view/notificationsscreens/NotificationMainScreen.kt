@@ -74,7 +74,7 @@ fun NotificationMainScreen(navController: NavController) {
                 }
 
                 items(notifications, key = { it.id }) { item ->
-                    NotificationCard(
+                   NotificationCard(
                         item = item,
                         onClick = { /* TODO: detay / deep link */ }
                     )
