@@ -93,7 +93,7 @@ import com.paylastikca.presentation.view.profilescreens.privacy_security_screens
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "NotificationSettingsScreen" +
+        startDestination = "ApplicationPreferencesMain" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
@@ -138,9 +138,38 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
         //profileScreen
                 //applicationPreferencesScreens
-                composable("ApplicationPreferencesMain") { ApplicationPreferencesMain()  }
-                composable("SelectLanguage") { SelectLanguage()  }
-                 //----
+                composable("ApplicationPreferencesMain") { ApplicationPreferencesMain(navController)  }
+        composable(
+            route = "selectLanguage/{currentCode}",
+            arguments = listOf(
+                androidx.navigation.navArgument("currentCode") {
+                    type = androidx.navigation.NavType.StringType
+                }
+            )
+        ) { backStackEntry ->
+
+            val currentCode = backStackEntry.arguments?.getString("currentCode") ?: "tr"
+
+            SelectLanguage(
+                currentLanguageCode = currentCode,
+                onLanguageSelected = { lang ->
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("selectedLanguageCode", lang.code)
+
+                    navController.previousBackStackEntry
+                        ?.savedStateHandle
+                        ?.set("selectedLanguageLabel", lang.label)
+
+                    navController.popBackStack()
+                }
+                ,
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+
+        //----
 
                 //contactInformationScreens
                 composable("ContactInformationMain") { ContactInformationMain()  }
