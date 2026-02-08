@@ -10,7 +10,8 @@ import com.paylastikca.ui.UiDimens
 data class AdaptiveUi(
     val isTablet: Boolean,
     val pageHorizontalPadding: Dp,
-    val maxContentWidth: Dp?
+    val maxContentWidth: Dp?,
+    val scale: Float
 )
 
 @Composable
@@ -24,7 +25,8 @@ fun rememberAdaptive(): AdaptiveUi {
 
             pageHorizontalPadding = if (isTablet) UiDimens.xl else UiDimens.l,
 
-            maxContentWidth = if (isTablet) 600.dp else null
+            maxContentWidth = if (isTablet) 600.dp else null,
+            scale = if (isTablet) 1.50f else 1.0f
         )
     }
 }

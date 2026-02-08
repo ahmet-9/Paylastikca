@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.paylastikca.presentation.view.common_ui.components.layout.FixedPage
 import com.paylastikca.presentation.view.common_ui.components.layout.PageScaffold
 import com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive
@@ -27,6 +28,7 @@ fun SelectLanguage(
 ) {
     val colors = MaterialTheme.colorScheme
     val adaptive = rememberAdaptive()
+    val s = adaptive.scale
 
     var query by remember { mutableStateOf("") }
 
@@ -49,7 +51,10 @@ fun SelectLanguage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = adaptive.pageHorizontalPadding),
-                onBackClick = onBack
+
+
+                onBackClick = onBack,
+                scale = adaptive.scale
             )
         },
         removeTopInset = false
@@ -66,11 +71,19 @@ fun SelectLanguage(
                 onValueChange = { query = it },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .heightIn(min = (52f * s).dp)
                     .padding(bottom = UiDimens.m),
-                placeholder = { Text("Ara") },
+                placeholder = { Text(
+                    text = "Ara",
+                    fontSize = (16f * s).sp
+                ) },
                 leadingIcon = {
-                    Icon(Icons.Default.Search, contentDescription = null)
+                    Icon(Icons.Default.Search, contentDescription = null,
+                        modifier = Modifier.size((20f * s).dp))
                 },
+                textStyle = LocalTextStyle.current.copy(
+                    fontSize = (16f * s).sp
+                ),
                 singleLine = true
             )
 
@@ -79,6 +92,7 @@ fun SelectLanguage(
                     LanguageRow(
                         language = lang,
                         selected = lang.code == currentLanguageCode,
+                        scale = s,
                         onClick = {
                             onLanguageSelected(lang)
 
@@ -94,6 +108,7 @@ fun SelectLanguage(
 private fun LanguageRow(
     language: LanguageOption,
     selected: Boolean,
+    scale: Float,
     onClick: () -> Unit
 ) {
     val colors = MaterialTheme.colorScheme
@@ -102,7 +117,7 @@ private fun LanguageRow(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .heightIn(min = 52.dp)
+            .heightIn(min = (52f * scale).dp)
             .padding(horizontal = UiDimens.s),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -110,6 +125,7 @@ private fun LanguageRow(
             text = language.label,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal,
+            fontSize = (18f * scale).sp,
             color = colors.onSurface,
             modifier = Modifier.weight(1f)
         )
