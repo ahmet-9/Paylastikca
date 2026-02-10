@@ -59,7 +59,7 @@ fun HomeMainScreen(navController: NavController) {
 
     PageScaffold(
         containerColor = MaterialTheme.colorScheme.background,
-        currentRoute = "homePageMainScreen",
+        currentRoute = "HomeMainScreen",
         navController = navController,
         bottomBarContainerColor = MaterialTheme.colorScheme.surface
     ) { innerPadding ->

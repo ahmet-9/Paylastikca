@@ -36,7 +36,7 @@ fun NotificationMainScreen(navController: NavController) {
 
     PageScaffold(
         containerColor = colors.surfaceVariant,
-        currentRoute = "notificationMainScreen",
+        currentRoute = "NotificationMainScreen",
         navController = navController,
         bottomBarContainerColor = colors.surfaceVariant,
         applySafeInsets = true,

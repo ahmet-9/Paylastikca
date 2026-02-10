@@ -40,10 +40,10 @@ fun BottomBar(
     val colors = MaterialTheme.colorScheme
 
     val items = listOf(
-        BottomBarItem(R.drawable.homeiconmenu, "homePageMainScreen", "homePageMainScreen"),
-        BottomBarItem(R.drawable.cooperationiconmenu, "SharingMAİNScreen", "SharingMAİNScreen"),
-        BottomBarItem(R.drawable.notificationiconmenu, "notificationMainScreen", "notificationMainScreen"),
-        BottomBarItem(R.drawable.profileiconmenu, "profileMainScreen", "profileMainScreen")
+        BottomBarItem(R.drawable.homeiconmenu, "HomeMainScreen", "HomeMainScreen"),
+        BottomBarItem(R.drawable.cooperationiconmenu, "SharingMainScreen", "SharingMainScreen"),
+        BottomBarItem(R.drawable.notificationiconmenu, "NotificationMainScreen", "NotificationMainScreen"),
+        BottomBarItem(R.drawable.profileiconmenu, "ProfileMainScreen", "ProfileMainScreen")
     )
 
     NavigationBar(

@@ -93,7 +93,7 @@ import com.paylastikca.presentation.view.profilescreens.privacy_security_screens
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "HelpandInformationMainScreens" +
+        startDestination = "SharingMainScreen" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {

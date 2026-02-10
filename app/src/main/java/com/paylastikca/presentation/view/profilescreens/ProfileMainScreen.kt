@@ -79,7 +79,7 @@ fun ProfileMainScreen(navController: NavController) {
 
     PageScaffold(
         containerColor = screenBg,
-        currentRoute = "profileMainScreen",
+        currentRoute = "ProfileMainScreen",
         navController = navController,
         bottomBarContainerColor = screenBg
     ) { innerPadding ->
