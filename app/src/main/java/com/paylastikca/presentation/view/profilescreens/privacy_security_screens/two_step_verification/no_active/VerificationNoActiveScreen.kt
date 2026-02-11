@@ -19,7 +19,7 @@ import com.paylastikca.presentation.view.common_ui.components.navigation.BackBut
 import com.paylastikca.ui.theme.authBlue
 
 @Composable
-fun VerificationNoActive(
+fun VerificationNoActiveScreen(
     onBack: () -> Unit = {},
     onActivateClick: () -> Unit = {}
 ) {

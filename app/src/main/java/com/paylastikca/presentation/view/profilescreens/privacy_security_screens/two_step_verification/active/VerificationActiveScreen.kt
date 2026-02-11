@@ -36,7 +36,7 @@ import androidx.compose.runtime.setValue
 
 
 @Composable
-fun VerificationActive(
+fun VerificationActiveScreen(
     navController: NavController,
 
 ) {

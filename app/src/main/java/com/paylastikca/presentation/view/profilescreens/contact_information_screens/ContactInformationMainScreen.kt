@@ -49,7 +49,7 @@ private enum class ModalType { NONE, UPDATE_EMAIL, VERIFY_EMAIL, UPDATE_PHONE, V
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactInformationMain(
+fun ContactInformationMainScreen(
     onBack: () -> Unit = {}
 ) {
 

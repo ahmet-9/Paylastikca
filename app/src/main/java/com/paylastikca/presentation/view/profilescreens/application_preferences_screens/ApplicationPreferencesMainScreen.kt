@@ -29,7 +29,7 @@ enum class ThemePreference {
 }
 
 @Composable
-fun ApplicationPreferencesMain(
+fun ApplicationPreferencesMainScreen(
     navController: NavController,
     onBack: () -> Unit = {},
     initialTheme: ThemePreference = ThemePreference.LIGHT,

@@ -76,7 +76,7 @@ private sealed interface DeleteAccountModal {
 }
 
 @Composable
-fun DeleteAccount(
+fun DeleteAccountScreen(
     onBack: () -> Unit,
     registeredEmail: String = "ornek@example.com",
     registeredPhone: String = "+905551234567",

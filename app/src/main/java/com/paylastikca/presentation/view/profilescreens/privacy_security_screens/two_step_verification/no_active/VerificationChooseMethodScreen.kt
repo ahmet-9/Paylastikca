@@ -1,4 +1,4 @@
-package com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active
+package com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -20,47 +20,55 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.paylastikca.presentation.view.common_ui.components.navigation.BackButton
 import com.paylastikca.presentation.view.common_ui.components.verification.core.CountdownEffect
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.mail_verification.MailSend
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.mail_verification.MailVerificationCode
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.number_verification.NumberSend
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.number_verification.NumberVerificationCode
 
-private enum class RemoveMethod { SMS, EMAIL }
+private enum class TwoStepMethod { SMS, EMAIL }
 
-private sealed interface RemoveModal {
-    data object None : RemoveModal
+private sealed interface TwoStepModal {
+    data object None : TwoStepModal
+
+    data class MailSend(
+        val email: String = "",
+        val errorMessage: String? = null
+    ) : TwoStepModal
 
     data class MailVerify(
         val email: String,
         val code: String = "",
         val secondsLeft: Int = 59,
         val errorMessage: String? = null
-    ) : RemoveModal
+    ) : TwoStepModal
+
+    data class NumberSend(
+        val phone: String = "",
+        val errorMessage: String? = null
+    ) : TwoStepModal
 
     data class NumberVerify(
         val phone: String,
         val code: String = "",
         val secondsLeft: Int = 59,
         val errorMessage: String? = null
-    ) : RemoveModal
+    ) : TwoStepModal
 }
 
-
-
 @Composable
-fun VerificationRemoveChooseMethod(
-    registeredEmail: String,
-    registeredPhone: String,
+fun VerificationChooseMethodScreen(
     onBack: () -> Unit = {},
-    onRemoveVerifiedSuccess: () -> Unit = {}
+    onVerifiedSuccess: () -> Unit = {}
 ) {
     val colors = MaterialTheme.colorScheme
 
-    var selected by remember { mutableStateOf(RemoveMethod.SMS) }
-    var modal by remember { mutableStateOf<RemoveModal>(RemoveModal.None) }
+    var selected by remember { mutableStateOf(TwoStepMethod.SMS) }
+    var modal by remember { mutableStateOf<TwoStepModal>(TwoStepModal.None) }
 
-    val isVerifyActive = modal is RemoveModal.MailVerify || modal is RemoveModal.NumberVerify
+    val isVerifyActive = modal is TwoStepModal.MailVerify || modal is TwoStepModal.NumberVerify
     val secondsLeft = when (val m = modal) {
-        is RemoveModal.MailVerify -> m.secondsLeft
-        is RemoveModal.NumberVerify -> m.secondsLeft
+        is TwoStepModal.MailVerify -> m.secondsLeft
+        is TwoStepModal.NumberVerify -> m.secondsLeft
         else -> 0
     }
 
@@ -69,19 +77,19 @@ fun VerificationRemoveChooseMethod(
         secondsLeft = secondsLeft,
         onTick = { newS ->
             modal = when (val m = modal) {
-                is RemoveModal.MailVerify -> m.copy(secondsLeft = newS)
-                is RemoveModal.NumberVerify -> m.copy(secondsLeft = newS)
+                is TwoStepModal.MailVerify -> m.copy(secondsLeft = newS)
+                is TwoStepModal.NumberVerify -> m.copy(secondsLeft = newS)
                 else -> m
             }
         },
         onTimeout = {
             modal = when (val m = modal) {
-                is RemoveModal.MailVerify ->
+                is TwoStepModal.MailVerify ->
                     if (m.code.length < 6 && m.errorMessage.isNullOrBlank())
                         m.copy(errorMessage = "Tanımlanan sürede kodu girmediniz.")
                     else m
 
-                is RemoveModal.NumberVerify ->
+                is TwoStepModal.NumberVerify ->
                     if (m.code.length < 6 && m.errorMessage.isNullOrBlank())
                         m.copy(errorMessage = "Tanımlanan sürede kodu girmediniz.")
                     else m
@@ -91,13 +99,15 @@ fun VerificationRemoveChooseMethod(
         }
     )
 
+
     Scaffold(
         containerColor = colors.background,
         contentColor = colors.onBackground,
         topBar = {
             BackButton(
+
                 modifier = Modifier.padding(start = 7.dp, end = 7.dp),
-                title = "Doğrulama",
+                title = "İki adımlı doğrulama",
                 onBackClick = onBack
             )
         }
@@ -108,6 +118,7 @@ fun VerificationRemoveChooseMethod(
                 .fillMaxSize()
                 .padding(padding)
         ) {
+
             Spacer(Modifier.height(18.dp))
 
             Column(
@@ -118,13 +129,13 @@ fun VerificationRemoveChooseMethod(
                     modifier = Modifier.size(40.dp),
                     shape = CircleShape,
                     color = Color.Transparent,
-                    border = BorderStroke(3.dp, colors.outline)
+                    border = BorderStroke(3.dp, MaterialTheme.colorScheme.outline)
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Text(
                             text = "i",
                             fontSize = 28.sp,
-                            color = colors.outline
+                            color = MaterialTheme.colorScheme.outline
                         )
                     }
                 }
@@ -132,7 +143,9 @@ fun VerificationRemoveChooseMethod(
                 Spacer(Modifier.height(6.dp))
 
                 Text(
-                    text = "İki adımlı doğrulamayı kaldırmak için\nSMS veya e-posta ile doğrulama yapmanız gerekir.",
+                    text = "Hesap güvenliğiniz için doğrulama gereklidir.\n" +
+                            "Dilerseniz SMS veya e-posta yoluyla doğrulama\n" +
+                            "yapabilirsiniz.",
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyMedium,
                     color = colors.onSurfaceVariant,
@@ -150,16 +163,16 @@ fun VerificationRemoveChooseMethod(
             ) {
                 MethodRow(
                     title = "SMS",
-                    selected = selected == RemoveMethod.SMS,
+                    selected = selected == TwoStepMethod.SMS,
                     leadingIcon = { Icon(Icons.Outlined.Sms, contentDescription = null) },
-                    onClick = { selected = RemoveMethod.SMS }
+                    onClick = { selected = TwoStepMethod.SMS }
                 )
 
                 MethodRow(
                     title = "E-mail",
-                    selected = selected == RemoveMethod.EMAIL,
+                    selected = selected == TwoStepMethod.EMAIL,
                     leadingIcon = { Icon(Icons.Outlined.Email, contentDescription = null) },
-                    onClick = { selected = RemoveMethod.EMAIL }
+                    onClick = { selected = TwoStepMethod.EMAIL }
                 )
             }
 
@@ -168,32 +181,8 @@ fun VerificationRemoveChooseMethod(
             Button(
                 onClick = {
                     when (selected) {
-                        RemoveMethod.SMS -> {
-                            val phone = registeredPhone.trim()
-                            if (phone.isBlank()) {
-
-                                modal = RemoveModal.NumberVerify(
-                                    phone = "",
-                                    secondsLeft = 59,
-                                    errorMessage = "Kayıtlı telefon numarası bulunamadı."
-                                )
-                            } else {
-                                modal = RemoveModal.NumberVerify(phone = phone, secondsLeft = 59)
-                            }
-                        }
-
-                        RemoveMethod.EMAIL -> {
-                            val email = registeredEmail.trim()
-                            if (email.isBlank()) {
-                                modal = RemoveModal.MailVerify(
-                                    email = "",
-                                    secondsLeft = 59,
-                                    errorMessage = "Kayıtlı e-posta bulunamadı."
-                                )
-                            } else {
-                                modal = RemoveModal.MailVerify(email = email, secondsLeft = 59)
-                            }
-                        }
+                        TwoStepMethod.SMS -> modal = TwoStepModal.NumberSend()
+                        TwoStepMethod.EMAIL -> modal = TwoStepModal.MailSend()
                     }
                 },
                 modifier = Modifier
@@ -212,11 +201,31 @@ fun VerificationRemoveChooseMethod(
             }
         }
 
-        // ---- OTP Dialog ----
         when (val m = modal) {
-            RemoveModal.None -> Unit
+            TwoStepModal.None -> Unit
 
-            is RemoveModal.MailVerify -> {
+            is TwoStepModal.MailSend -> {
+                MailSend(
+                    email = m.email,
+                    errorMessage = m.errorMessage,
+                    onEmailChange = { modal = m.copy(email = it, errorMessage = null) },
+                    onDismiss = { modal = TwoStepModal.None },
+                    onSend = {
+                        val trimmed = m.email.trim()
+                        if (trimmed.isBlank()) {
+                            modal = m.copy(errorMessage = "E-posta boş olamaz.")
+                            return@MailSend
+                        }
+                        if (!trimmed.contains("@") || !trimmed.contains(".")) {
+                            modal = m.copy(errorMessage = "Geçersiz e-posta.")
+                            return@MailSend
+                        }
+                        modal = TwoStepModal.MailVerify(email = trimmed, secondsLeft = 59)
+                    }
+                )
+            }
+
+            is TwoStepModal.MailVerify -> {
                 MailVerificationCode(
                     email = m.email,
                     code = m.code,
@@ -226,14 +235,13 @@ fun VerificationRemoveChooseMethod(
                         val filtered = input.filter(Char::isDigit).take(6)
                         modal = m.copy(code = filtered, errorMessage = null)
                     },
-                    onDismiss = { modal = RemoveModal.None },
+                    onDismiss = { modal = TwoStepModal.None },
                     onConfirm = {
-                        // TODO: API doğrulama -> kaldırma onayı
                         if (m.code != "123456") {
                             modal = m.copy(errorMessage = "Hatalı kod. Lütfen yeniden deneyin.")
                         } else {
-                            modal = RemoveModal.None
-                            onRemoveVerifiedSuccess()
+                            modal = TwoStepModal.None
+                            onVerifiedSuccess()
                         }
                     },
                     onResend = {
@@ -242,7 +250,31 @@ fun VerificationRemoveChooseMethod(
                 )
             }
 
-            is RemoveModal.NumberVerify -> {
+            is TwoStepModal.NumberSend -> {
+                NumberSend(
+                    phone = m.phone,
+                    errorMessage = m.errorMessage,
+                    onPhoneChange = { modal = m.copy(phone = it, errorMessage = null) },
+                    onDismiss = { modal = TwoStepModal.None },
+                    onSend = {
+                        val raw = m.phone.trim()
+                        if (raw.isBlank()) {
+                            modal = m.copy(errorMessage = "Telefon numarası boş olamaz.")
+                            return@NumberSend
+                        }
+
+                        val normalized = normalizeTrPhone(raw)
+                        if (normalized == null) {
+                            modal = m.copy(errorMessage = "Geçersiz numara.")
+                            return@NumberSend
+                        }
+
+                        modal = TwoStepModal.NumberVerify(phone = normalized, secondsLeft = 59)
+                    }
+                )
+            }
+
+            is TwoStepModal.NumberVerify -> {
                 NumberVerificationCode(
                     phone = m.phone,
                     code = m.code,
@@ -252,14 +284,13 @@ fun VerificationRemoveChooseMethod(
                         val filtered = input.filter(Char::isDigit).take(6)
                         modal = m.copy(code = filtered, errorMessage = null)
                     },
-                    onDismiss = { modal = RemoveModal.None },
+                    onDismiss = { modal = TwoStepModal.None },
                     onConfirm = {
-
                         if (m.code != "123456") {
                             modal = m.copy(errorMessage = "Hatalı kod. Lütfen yeniden deneyin.")
                         } else {
-                            modal = RemoveModal.None
-                            onRemoveVerifiedSuccess()
+                            modal = TwoStepModal.None
+                            onVerifiedSuccess()
                         }
                     },
                     onResend = {
@@ -329,5 +360,17 @@ private fun MethodRow(
                 ) {}
             }
         }
+    }
+}
+
+private fun normalizeTrPhone(input: String): String? {
+    val digits = input.filter(Char::isDigit)
+
+    return when {
+        digits.length == 11 && digits.startsWith("05") -> "+90" + digits.drop(1)
+        digits.length == 10 && digits.startsWith("5") -> "+90$digits"
+        digits.length == 12 && digits.startsWith("90") && digits[2] == '5' -> "+$digits"
+        digits.length == 13 && digits.startsWith("905") -> "+$digits"
+        else -> null
     }
 }

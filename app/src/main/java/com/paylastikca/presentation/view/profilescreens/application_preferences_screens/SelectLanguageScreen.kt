@@ -21,7 +21,7 @@ import com.paylastikca.presentation.view.common_ui.components.platform.rememberS
 import com.paylastikca.ui.UiDimens
 
 @Composable
-fun SelectLanguage(
+fun SelectLanguageScreen(
     currentLanguageCode: String,
     onLanguageSelected: (LanguageOption) -> Unit,
     onBack: () -> Unit

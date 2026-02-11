@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.paylastikca.ui.theme.authBlue
 
 @Composable
-fun VerificationCompleted(
+fun VerificationCompletedScreen(
     onDone: () -> Unit = {}
 ) {
     val colors = MaterialTheme.colorScheme

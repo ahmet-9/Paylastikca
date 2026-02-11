@@ -29,7 +29,7 @@ import com.paylastikca.ui.UiDimens
 import com.paylastikca.ui.theme.authBlue
 
 @Composable
-fun VerificationActiveRemove(
+fun VerificationActiveRemoveScreen(
     onCancel: () -> Unit = {},
     onConfirmRemove: () -> Unit = {}
 ) {

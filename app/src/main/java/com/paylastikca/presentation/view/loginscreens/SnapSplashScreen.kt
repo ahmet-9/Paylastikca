@@ -22,7 +22,7 @@ import com.paylastikca.app.R
 import com.paylastikca.ui.theme.BRİGHTOrange
 
 @Composable
-fun SnapSplash() {
+fun SnapSplashScreen() {
 
     val colors = MaterialTheme.colorScheme
     val cfg = LocalConfiguration.current

@@ -21,7 +21,7 @@ import com.paylastikca.presentation.view.loginscreens.onboardingscreens.FourthSc
 import com.paylastikca.presentation.view.loginscreens.onboardingscreens.SecondScreen
 import com.paylastikca.presentation.view.loginscreens.onboardingscreens.ThirdScreen
 import com.paylastikca.presentation.view.loginscreens.SignUpScreen
-import com.paylastikca.presentation.view.loginscreens.SnapSplash
+import com.paylastikca.presentation.view.loginscreens.SnapSplashScreen
 import com.paylastikca.presentation.view.notificationsscreens.NotificationMainScreen
 import com.paylastikca.presentation.view.profilescreens.help_and_information_screens.HelpandInformationMainScreens
 import com.paylastikca.presentation.view.profilescreens.help_and_information_screens.AboutUs
@@ -30,19 +30,17 @@ import com.paylastikca.presentation.view.profilescreens.help_and_information_scr
 import com.paylastikca.presentation.view.profilescreens.help_and_information_screens.PrivacyPolicy
 import com.paylastikca.presentation.view.profilescreens.help_and_information_screens.TermsOfUse
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.PrivacySecurityMainScreen
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.DeleteAccountVerificationCode
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationActive
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationActiveRemove
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationRemoveChooseMethod
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.VerificationNoActive
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.VerificationChooseMethod
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationActiveScreen
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationActiveRemoveScreen
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.VerificationNoActiveScreen
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.VerificationChooseMethodScreen
 
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.VerificationCompleted
-import com.paylastikca.presentation.view.profilescreens.application_preferences_screens.SelectLanguage
-import com.paylastikca.presentation.view.profilescreens.application_preferences_screens.ApplicationPreferencesMain
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.no_active.VerificationCompletedScreen
+import com.paylastikca.presentation.view.profilescreens.application_preferences_screens.SelectLanguageScreen
+import com.paylastikca.presentation.view.profilescreens.application_preferences_screens.ApplicationPreferencesMainScreen
 import com.paylastikca.presentation.view.profilescreens.BadgessScreen
 import com.paylastikca.presentation.view.profilescreens.NotificationSettingsScreen
-import com.paylastikca.presentation.view.profilescreens.contact_information_screens.ContactInformationMain
+import com.paylastikca.presentation.view.profilescreens.contact_information_screens.ContactInformationMainScreen
 
 import com.paylastikca.presentation.view.profilescreens.ProfileEditScreen
 import com.paylastikca.presentation.view.profilescreens.ProfileMainScreen
@@ -80,8 +78,9 @@ import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_disc
 import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_discovery.SwapProductDetailScreen
 import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_discovery.SwapNoResultsFoundScreen
 import com.paylastikca.presentation.view.sharingscreens.swap.submit_swap.SwapResultsFoundScreen
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.ChangePassword
-import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.DeleteAccount
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.ChangePasswordScreen
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.DeleteAccountScreen
+import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationRemoveChooseMethodScreen
 import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpActiveListScreen
 import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.RequestGoToContactScreen
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestSearchScreen
@@ -93,7 +92,7 @@ import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_disc
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "SharingMainScreen" +
+        startDestination = "DeleteAccountScreen" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
@@ -128,7 +127,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
         composable("ForgotYourPasswordScreen") { ForgotYourPasswordScreen()  }
         composable("LogInScreen") { LogInScreen()  }
         composable("SignUpScreen") { SignUpScreen()  }
-        composable("SnapSplash") { SnapSplash()  }
+        composable("SnapSplashScreen") { SnapSplashScreen()  }
 
         //notificationsScreen
 
@@ -138,7 +137,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
         //profileScreen
                 //applicationPreferencesScreens
-                composable("ApplicationPreferencesMain") { ApplicationPreferencesMain(navController)  }
+                composable("ApplicationPreferencesMainScreen") { ApplicationPreferencesMainScreen(navController)  }
         composable(
             route = "selectLanguage/{currentCode}",
             arguments = listOf(
@@ -150,7 +149,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
             val currentCode = backStackEntry.arguments?.getString("currentCode") ?: "tr"
 
-            SelectLanguage(
+            SelectLanguageScreen(
                 currentLanguageCode = currentCode,
                 onLanguageSelected = { lang ->
                     navController.previousBackStackEntry
@@ -172,7 +171,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
         //----
 
                 //contactInformationScreens
-                composable("ContactInformationMain") { ContactInformationMain()  }
+                composable("ContactInformationMainScreen") { ContactInformationMainScreen()  }
               //  composable("dateOfBirth") { dateOfBirth()  }
                 //composable("updateEmail") { updateEmail()  }
                 //composable("updateEmailVerificationCode") { updateEmailVerificationCode()  }
@@ -190,8 +189,8 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                 //---
 
                 //PrivacySecurityScreens
-        composable("VerificationRemoveChooseMethod") {
-            VerificationRemoveChooseMethod(
+        composable("VerificationRemoveChooseMethodScreen") {
+            VerificationRemoveChooseMethodScreen(
                 registeredEmail = "ornek@example.com",   // TODO: gerçek kullanıcı email
                 registeredPhone = "+905551234567",       // TODO: gerçek kullanıcı telefon
                 onBack = { navController.popBackStack() },
@@ -202,8 +201,8 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
             )
         }
 
-        composable("ChangePassword") {
-            ChangePassword(
+        composable("ChangePasswordScreen") {
+            ChangePasswordScreen(
                 onBack = { navController.popBackStack() },
                 registeredEmail = "ornek@example.com",
                 registeredPhone = "+905551234567",
@@ -211,8 +210,8 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
             )
         }
 
-        composable("DeleteAccount") {
-            DeleteAccount(
+        composable("DeleteAccountScreen") {
+            DeleteAccountScreen(
                 onBack = { navController.popBackStack() },
                 onAccountDeleted = { /* TODO */ }
             )
@@ -221,25 +220,24 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
 
 
-        composable("DeleteAccountVerificationCode") { DeleteAccountVerificationCode()  }
                 composable("PrivacySecurityMainScreen") { PrivacySecurityMainScreen()  }
-                composable("VerificationActive") { VerificationActive(navController)  }
-        composable("VerificationActiveRemove") {
-            VerificationActiveRemove(
+                composable("VerificationActiveScreen") { VerificationActiveScreen(navController)  }
+        composable("VerificationActiveRemoveScreen") {
+            VerificationActiveRemoveScreen(
                 onCancel = { navController.popBackStack() },
                 onConfirmRemove = {
                     navController.popBackStack() // popup route'unu kapat
-                    navController.navigate("VerificationRemoveChooseMethod")
+                    navController.navigate("VerificationRemoveChooseMethodScreen")
                 }
             )
         }
 
 
-        composable("VerificationNoActive") { VerificationNoActive()  }
-                composable("VerificationChooseMethod") { VerificationChooseMethod()  }
+        composable("VerificationNoActiveScreen") { VerificationNoActiveScreen()  }
+                composable("VerificationChooseMethodScreen") { VerificationChooseMethodScreen()  }
                // composable("twoStepVerificationNoActiveChooseMethodMailSend") { twoStepVerificationNoActiveChooseMethodMailSend()  }
               //  composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCode") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCode()  }
-                composable("VerificationCompleted") { VerificationCompleted()  }
+                composable("VerificationCompletedScreen") { VerificationCompletedScreen()  }
                 //-----
 
         composable("BadgessScreen") { BadgessScreen(navController )  }

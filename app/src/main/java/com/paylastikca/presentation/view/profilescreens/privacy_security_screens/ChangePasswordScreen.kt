@@ -59,7 +59,7 @@ private sealed interface ChangePassModal {
 }
 
 @Composable
-fun ChangePassword(
+fun ChangePasswordScreen(
     onBack: () -> Unit = {},
     registeredEmail: String = "ornek@example.com",
     registeredPhone: String = "+905551234567",
