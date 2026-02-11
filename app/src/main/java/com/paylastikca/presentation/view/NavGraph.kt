@@ -47,46 +47,46 @@ import com.paylastikca.presentation.view.profilescreens.contact_information_scre
 import com.paylastikca.presentation.view.profilescreens.ProfileEditScreen
 import com.paylastikca.presentation.view.profilescreens.ProfileMainScreen
 import com.paylastikca.presentation.view.sharingscreens.SharingMainScreen
-import com.paylastikca.presentation.view.sharingscreens.chat.DmBox
-import com.paylastikca.presentation.view.sharingscreens.chat.DmBoxChat
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMyListActive
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMyListActiveDelete
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMyListActiveDeleteHelpDelete
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMainScreen
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMyListActiveSeeRequest
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMyListActiveSeeRequestGoToContact
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMyListOutdated
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMyListOutdatedGivePoints
-import com.paylastikca.presentation.view.sharingscreens.help.HelpMyListOutdatedGivePointsPointsSend
-import com.paylastikca.presentation.view.sharingscreens.help.HelpScreen
-import com.paylastikca.presentation.view.sharingscreens.help.ThankYouScreen
-import com.paylastikca.presentation.view.sharingscreens.request.RequestMainScreen
-import com.paylastikca.presentation.view.sharingscreens.request.RequestMyListActive
-import com.paylastikca.presentation.view.sharingscreens.request.RequestMyListActiveDelete
-import com.paylastikca.presentation.view.sharingscreens.request.RequestMyListActiveDeleteRequestDelete
-import com.paylastikca.presentation.view.sharingscreens.request.RequestMyListOutdated
-import com.paylastikca.presentation.view.sharingscreens.request.RequestMyListOutdatedGivePoints
-import com.paylastikca.presentation.view.sharingscreens.request.RequestMyListOutdatedGivePointsPointsSend
-import com.paylastikca.presentation.view.sharingscreens.request.RequestScreenProductDetails
-import com.paylastikca.presentation.view.sharingscreens.request.RequestScreenProductDetailsPhotoZoom
-import com.paylastikca.presentation.view.sharingscreens.request.RequestScreenProductDetailsRequestSend
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListActiveDeleteSwapDelete
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMainScreen
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListActive
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListActiveDelete
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListActiveSeeRequest
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListActiveSeeRequestGoToContact
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListActiveSeeRequestPhotoZoom
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListOutdated
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListOutdatedGivePoints
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListOutdatedGivePointsPointsSend
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListSwapDiscovey
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapMyListSwapDiscoveyPhotoZoom
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapScreenNoResultsFound
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapScreenNoResultsFoundSwapMyListSwapDiscovery
-import com.paylastikca.presentation.view.sharingscreens.swap.SwapScreenResultsFound
+import com.paylastikca.presentation.view.sharingscreens.chat.DmBoxScreen
+import com.paylastikca.presentation.view.sharingscreens.chat.DmBoxChatScreen
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.DeleteHelpScreen
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpDeletionCompletedScreen
+import com.paylastikca.presentation.view.sharingscreens.help.submit_help.SubmitHelpScreen
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpSeeRequestScreen
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpGoToContactScreen
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.help_history.HelpHistoryListScreen
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.help_history.HelpGivePointsScreen
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.help_history.HelpPointsGivenCompletedScreen
+import com.paylastikca.presentation.view.sharingscreens.help.submit_help.HelpThankYouScreen
+import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestResultListScreen
+import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.RequestActiveListScreen
+import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.DeleteRequestScreen
+import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.RequestDeletionCompletedScreen
+import com.paylastikca.presentation.view.sharingscreens.request.request_list.request_history.RequestHistoryListScreen
+import com.paylastikca.presentation.view.sharingscreens.request.request_list.request_history.RequestGivePointsScreen
+import com.paylastikca.presentation.view.sharingscreens.request.request_list.request_history.RequestPointsGivenCompletedScreen
+import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestProductDetailScreen
+import com.paylastikca.presentation.view.sharingscreens.request.submit_request.SendProductRequestScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.SwapDeletionCompletedScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.submit_swap.SubmitSwapScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.SwapActiveListScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.DeleteSwapScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.SwapSeeRequestScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.SwapGoToContactScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.history_swap.SwapHistoryListScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.history_swap.SwapGivePointsScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.history_swap.SwapPointsGivenCompletedScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_discovery.SwapDiscoveryListScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_discovery.SwapProductDetailScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_discovery.SwapNoResultsFoundScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.submit_swap.SwapResultsFoundScreen
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.ChangePassword
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.DeleteAccount
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpActiveListScreen
+import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.RequestGoToContactScreen
+import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestSearchScreen
+import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestSubmissionSuccessScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_discovery.SwapSentRequestsScreen
 
 
 @Composable
@@ -250,53 +250,54 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
         //sharingScreen
                   //chat
-                   composable("DmBox") { DmBox()  }
-                   composable("DmBoxChat") { DmBoxChat()  }
+                   composable("DmBoxScreen") { DmBoxScreen()  }
+                   composable("DmBoxChatScreen") { DmBoxChatScreen()  }
                   //---
 
                   //help
-                   composable("HelpMainScreen") { HelpMainScreen()  }
-                   composable("HelpMyListActive") { HelpMyListActive()  }
-                   composable("HelpMyListActiveDelete") { HelpMyListActiveDelete()  }
-                   composable("HelpMyListActiveDeleteHelpDelete") { HelpMyListActiveDeleteHelpDelete()  }
-                   composable("HelpMyListActiveSeeRequest") { HelpMyListActiveSeeRequest()  }
-                   composable("HelpMyListActiveSeeRequestGoToContact") { HelpMyListActiveSeeRequestGoToContact()  }
-                   composable("HelpMyListOutdated") { HelpMyListOutdated()  }
-                   composable("HelpMyListOutdatedGivePoints") { HelpMyListOutdatedGivePoints()  }
-                   composable("HelpMyListOutdatedGivePointsPointsSend") { HelpMyListOutdatedGivePointsPointsSend()  }
-                   composable("HelpScreen") { HelpScreen()  }
-                   composable("ThankYouScreen") { ThankYouScreen()  }
+                   composable("SubmitHelpScreen") { SubmitHelpScreen()  }
+                   composable("HelpActiveListScreen") { HelpActiveListScreen()  }
+                   composable("DeleteHelpScreen") { DeleteHelpScreen()  }
+                   composable("HelpDeletionCompletedScreen") { HelpDeletionCompletedScreen()  }
+                   composable("HelpSeeRequestScreen") { HelpSeeRequestScreen()  }
+                   composable("HelpGoToContactScreen") { HelpGoToContactScreen()  }
+                   composable("HelpHistoryListScreen") { HelpHistoryListScreen()  }
+                   composable("HelpGivePointsScreen") { HelpGivePointsScreen()  }
+                   composable("HelpPointsGivenCompletedScreen") { HelpPointsGivenCompletedScreen()  }
+                   composable("HelpThankYouScreen") { HelpThankYouScreen()  }
                   //--
 
                    //request
-                   composable("RequestMainScreen") { RequestMainScreen()  }
-                   composable("RequestMyListActive") { RequestMyListActive()  }
-                   composable("RequestMyListActiveDelete") { RequestMyListActiveDelete()  }
-                   composable("RequestMyListActiveDeleteRequestDelete") { RequestMyListActiveDeleteRequestDelete()  }
-                   composable("RequestMyListOutdated") { RequestMyListOutdated()  }
-                   composable("RequestMyListOutdatedGivePoints") { RequestMyListOutdatedGivePoints()  }
-                   composable("RequestMyListOutdatedGivePointsPointsSend") { RequestMyListOutdatedGivePointsPointsSend()  }
-                   composable("RequestScreenProductDetails") { RequestScreenProductDetails()  }
-                   composable("RequestScreenProductDetailsPhotoZoom") { RequestScreenProductDetailsPhotoZoom()  }
-                   composable("RequestScreenProductDetailsRequestSend") { RequestScreenProductDetailsRequestSend()  }
+                   composable("RequestSearchScreen") { RequestSearchScreen()  }
+                   composable("RequestResultListScreen") { RequestResultListScreen()  }
+                   composable("RequestActiveListScreen") { RequestActiveListScreen() }
+                   composable("DeleteRequestScreen") { DeleteRequestScreen()  }
+                   composable("RequestDeletionCompletedScreen") { RequestDeletionCompletedScreen()  }
+                   composable("RequestHistoryListScreen") { RequestHistoryListScreen()  }
+                   composable("RequestGivePointsScreen") { RequestGivePointsScreen()  }
+                   composable("RequestPointsGivenCompletedScreen") { RequestPointsGivenCompletedScreen()  }
+                   composable("RequestProductDetailScreen") { RequestProductDetailScreen()  }
+                   composable("SendProductRequestScreen") { SendProductRequestScreen()  }
+                   composable("RequestSubmissionSuccessScreen") { RequestSubmissionSuccessScreen()  }
+                   composable("RequestGoToContactScreen") { RequestGoToContactScreen()  }
+
                    //--
 
                     //swap
-                    composable("SwapMainScreen") { SwapMainScreen()  }
-                    composable("SwapMyListActive") { SwapMyListActive()  }
-                    composable("SwapMyListActiveDelete") { SwapMyListActiveDelete()  }
-                    composable("SwapMyListActiveDeleteSwapDelete") { SwapMyListActiveDeleteSwapDelete()  }
-                    composable("SwapMyListActiveSeeRequest") { SwapMyListActiveSeeRequest()  }
-                    composable("SwapMyListActiveSeeRequestGoToContact") { SwapMyListActiveSeeRequestGoToContact()  }
-                    composable("SwapMyListActiveSeeRequestPhotoZoom") { SwapMyListActiveSeeRequestPhotoZoom()  }
-                    composable("SwapMyListOutdated") { SwapMyListOutdated()  }
-                    composable("SwapMyListOutdatedGivePoints") { SwapMyListOutdatedGivePoints()  }
-                    composable("SwapMyListOutdatedGivePointsPointsSend") { SwapMyListOutdatedGivePointsPointsSend()  }
-                    composable("SwapMyListSwapDiscovey") { SwapMyListSwapDiscovey()  }
-                    composable("SwapMyListSwapDiscoveyPhotoZoom") { SwapMyListSwapDiscoveyPhotoZoom()  }
-                    composable("SwapScreenNoResultsFound") { SwapScreenNoResultsFound()  }
-                    composable("SwapScreenNoResultsFoundSwapMyListSwapDiscovery") { SwapScreenNoResultsFoundSwapMyListSwapDiscovery()  }
-                    composable("SwapScreenResultsFound") { SwapScreenResultsFound()  }
+                    composable("SubmitSwapScreen") { SubmitSwapScreen()  }
+                    composable("SwapActiveListScreen") { SwapActiveListScreen()  }
+                    composable("DeleteSwapScreen") { DeleteSwapScreen()  }
+                    composable("SwapDeletionCompletedScreen") { SwapDeletionCompletedScreen()  }
+                    composable("SwapSeeRequestScreen") { SwapSeeRequestScreen()  }
+                    composable("SwapGoToContactScreen") { SwapGoToContactScreen()  }
+                    composable("SwapHistoryListScreen") { SwapHistoryListScreen()  }
+                    composable("SwapGivePointsScreen") { SwapGivePointsScreen()  }
+                    composable("SwapPointsGivenCompletedScreen") { SwapPointsGivenCompletedScreen()  }
+                    composable("SwapDiscoveryListScreen") { SwapDiscoveryListScreen()  }
+                    composable("SwapProductDetailScreen") { SwapProductDetailScreen()  }
+                    composable("SwapNoResultsFoundScreen") { SwapNoResultsFoundScreen()  }
+                    composable("SwapResultsFoundScreen") { SwapResultsFoundScreen()  }
+                    composable("SwapSentRequestsScreen") { SwapSentRequestsScreen()  }
 
                      //----
 
