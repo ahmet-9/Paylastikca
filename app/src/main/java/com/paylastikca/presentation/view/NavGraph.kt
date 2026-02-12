@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 
 import com.paylastikca.presentation.view.homepage_screens.giftwheel.GiftWheelScreen
 import com.paylastikca.presentation.view.homepage_screens.giftwheel.CongratulationsScreen
@@ -81,6 +83,8 @@ import com.paylastikca.presentation.view.sharingscreens.swap.submit_swap.SwapRes
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.ChangePasswordScreen
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.DeleteAccountScreen
 import com.paylastikca.presentation.view.profilescreens.privacy_security_screens.two_step_verification.active.VerificationRemoveChooseMethodScreen
+import com.paylastikca.presentation.view.sharingscreens.chat.ReportTargetUi
+import com.paylastikca.presentation.view.sharingscreens.chat.ReportUserScreen
 import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpActiveListScreen
 import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.RequestGoToContactScreen
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestSearchScreen
@@ -92,52 +96,49 @@ import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_disc
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "DeleteAccountScreen" +
+        startDestination = "DmBoxScreen" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
 
 
-
-
-
-
-
         //homePageScreens
-                //giftwheel
-                composable("CongratulationsScreen") { CongratulationsScreen()  }
-                composable("GiftWheelScreen") { GiftWheelScreen()  }
-                //----
+        //giftwheel
+        composable("CongratulationsScreen") { CongratulationsScreen() }
+        composable("GiftWheelScreen") { GiftWheelScreen() }
+        //----
 
-        composable("HomeMainScreen") { HomeMainScreen(navController)  }
-        composable("ShoppingCentreScreen") { ShoppingCentreScreen(navController = navController)  }
-        composable("TasksScreen") { TasksScreen(navController = navController)  }
-
+        composable("HomeMainScreen") { HomeMainScreen(navController) }
+        composable("ShoppingCentreScreen") { ShoppingCentreScreen(navController = navController) }
+        composable("TasksScreen") { TasksScreen(navController = navController) }
 
 
         //loginScreens
-                //onboardingScreens
-                composable("FifthScreen") { FifthScreen(navController)  }
-                composable("FirstScreen") { FirstScreen(navController)  }
-                composable("FourthScreen") { FourthScreen(navController)  }
-                composable("SecondScreen") { SecondScreen(navController)  }
-                composable("ThirdScreen") { ThirdScreen(navController)  }
-                //------
+        //onboardingScreens
+        composable("FifthScreen") { FifthScreen(navController) }
+        composable("FirstScreen") { FirstScreen(navController) }
+        composable("FourthScreen") { FourthScreen(navController) }
+        composable("SecondScreen") { SecondScreen(navController) }
+        composable("ThirdScreen") { ThirdScreen(navController) }
+        //------
 
-        composable("ForgotYourPasswordScreen") { ForgotYourPasswordScreen()  }
-        composable("LogInScreen") { LogInScreen()  }
-        composable("SignUpScreen") { SignUpScreen()  }
-        composable("SnapSplashScreen") { SnapSplashScreen()  }
+        composable("ForgotYourPasswordScreen") { ForgotYourPasswordScreen() }
+        composable("LogInScreen") { LogInScreen() }
+        composable("SignUpScreen") { SignUpScreen() }
+        composable("SnapSplashScreen") { SnapSplashScreen() }
 
         //notificationsScreen
 
-       composable("NotificationMainScreen") { NotificationMainScreen(navController)  }
-
+        composable("NotificationMainScreen") { NotificationMainScreen(navController) }
 
 
         //profileScreen
-                //applicationPreferencesScreens
-                composable("ApplicationPreferencesMainScreen") { ApplicationPreferencesMainScreen(navController)  }
+        //applicationPreferencesScreens
+        composable("ApplicationPreferencesMainScreen") {
+            ApplicationPreferencesMainScreen(
+                navController
+            )
+        }
         composable(
             route = "selectLanguage/{currentCode}",
             arguments = listOf(
@@ -161,8 +162,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                         ?.set("selectedLanguageLabel", lang.label)
 
                     navController.popBackStack()
-                }
-                ,
+                },
                 onBack = { navController.popBackStack() }
             )
         }
@@ -170,25 +170,25 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
         //----
 
-                //contactInformationScreens
-                composable("ContactInformationMainScreen") { ContactInformationMainScreen()  }
-              //  composable("dateOfBirth") { dateOfBirth()  }
-                //composable("updateEmail") { updateEmail()  }
-                //composable("updateEmailVerificationCode") { updateEmailVerificationCode()  }
+        //contactInformationScreens
+        composable("ContactInformationMainScreen") { ContactInformationMainScreen() }
+        //  composable("dateOfBirth") { dateOfBirth()  }
+        //composable("updateEmail") { updateEmail()  }
+        //composable("updateEmailVerificationCode") { updateEmailVerificationCode()  }
 //composable("updateNumber") { updateNumber()  }
-               // composable("updateNumberVerificationCode") { updateNumberVerificationCode()  }
-                //--
+        // composable("updateNumberVerificationCode") { updateNumberVerificationCode()  }
+        //--
 
-                //HelpandInformationScreens
-                composable("AboutUs") { AboutUs()  }
-                composable("ContactUs") { ContactUs()  }
-                composable("HelpandInformationMainScreens") { HelpandInformationMainScreens()  }
-                composable("HelpAndSss") { HelpAndSss()  }
-                composable("PrivacyPolicy") { PrivacyPolicy()  }
-                composable("TermsOfUse") { TermsOfUse()  }
-                //---
+        //HelpandInformationScreens
+        composable("AboutUs") { AboutUs() }
+        composable("ContactUs") { ContactUs() }
+        composable("HelpandInformationMainScreens") { HelpandInformationMainScreens() }
+        composable("HelpAndSss") { HelpAndSss() }
+        composable("PrivacyPolicy") { PrivacyPolicy() }
+        composable("TermsOfUse") { TermsOfUse() }
+        //---
 
-                //PrivacySecurityScreens
+        //PrivacySecurityScreens
         composable("VerificationRemoveChooseMethodScreen") {
             VerificationRemoveChooseMethodScreen(
                 registeredEmail = "ornek@example.com",   // TODO: gerçek kullanıcı email
@@ -220,8 +220,8 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
 
 
 
-                composable("PrivacySecurityMainScreen") { PrivacySecurityMainScreen()  }
-                composable("VerificationActiveScreen") { VerificationActiveScreen(navController)  }
+        composable("PrivacySecurityMainScreen") { PrivacySecurityMainScreen() }
+        composable("VerificationActiveScreen") { VerificationActiveScreen(navController) }
         composable("VerificationActiveRemoveScreen") {
             VerificationActiveRemoveScreen(
                 onCancel = { navController.popBackStack() },
@@ -233,24 +233,56 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
         }
 
 
-        composable("VerificationNoActiveScreen") { VerificationNoActiveScreen()  }
-                composable("VerificationChooseMethodScreen") { VerificationChooseMethodScreen()  }
-               // composable("twoStepVerificationNoActiveChooseMethodMailSend") { twoStepVerificationNoActiveChooseMethodMailSend()  }
-              //  composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCode") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCode()  }
-                composable("VerificationCompletedScreen") { VerificationCompletedScreen()  }
-                //-----
+        composable("VerificationNoActiveScreen") { VerificationNoActiveScreen() }
+        composable("VerificationChooseMethodScreen") { VerificationChooseMethodScreen() }
+        // composable("twoStepVerificationNoActiveChooseMethodMailSend") { twoStepVerificationNoActiveChooseMethodMailSend()  }
+        //  composable("twoStepVerificationNoActiveChooseMethodMailSendVerificationCode") { twoStepVerificationNoActiveChooseMethodMailSendVerificationCode()  }
+        composable("VerificationCompletedScreen") { VerificationCompletedScreen() }
+        //-----
 
-        composable("BadgessScreen") { BadgessScreen(navController )  }
-        composable("NotificationSettingsScreen") { NotificationSettingsScreen()  }
-        composable("ProfileEditScreen") { ProfileEditScreen()  }
-        composable("ProfileMainScreen") { ProfileMainScreen(navController)  }
+        composable("BadgessScreen") { BadgessScreen(navController) }
+        composable("NotificationSettingsScreen") { NotificationSettingsScreen() }
+        composable("ProfileEditScreen") { ProfileEditScreen() }
+        composable("ProfileMainScreen") { ProfileMainScreen(navController) }
 
 
         //sharingScreen
-                  //chat
-                   composable("DmBoxScreen") { DmBoxScreen()  }
-                   composable("DmBoxChatScreen") { DmBoxChatScreen()  }
-                  //---
+        //chat
+        composable(route = "DmBoxScreen") {
+            DmBoxScreen(navController)
+        }
+
+        composable(
+            route = "DmBoxChatScreen/{chatId}",
+            arguments = listOf(
+                navArgument("chatId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val chatId = backStackEntry.arguments?.getString("chatId").orEmpty()
+            DmBoxChatScreen(navController = navController, chatId = chatId)
+        }
+
+        composable(
+            route = "ReportUserScreen/{userId}",
+            arguments = listOf(navArgument("userId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId").orEmpty()
+
+            ReportUserScreen(
+                navController = navController,
+                target = ReportTargetUi(
+                    userId = userId,
+                    name = "Ahmet Badem",
+                    subtitle = "Sohbet üzerinden"
+                )
+            )
+        }
+
+
+
+
+
+        //---
 
                   //help
                    composable("SubmitHelpScreen") { SubmitHelpScreen()  }
