@@ -36,10 +36,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.app.R
 import com.paylastikca.presentation.view.common_ui.components.layout.FixedPage
 import com.paylastikca.presentation.view.common_ui.components.layout.PageScaffold
+import com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive
+import com.paylastikca.presentation.view.common_ui.components.layout.scaled
 import com.paylastikca.presentation.view.common_ui.components.platform.rememberRewardedAdLauncher
+import com.paylastikca.presentation.view.common_ui.components.templates.LocationVerifyHeader
 import com.paylastikca.presentation.view.homepage_screens.components.HomeMap
 import com.paylastikca.ui.UiDimens
-import com.paylastikca.ui.theme.Gray
 import kotlinx.coroutines.delay
 
 @Composable
@@ -56,6 +58,9 @@ fun HomeMainScreen(navController: NavController) {
             color = colors.background
         )
     }
+   val adaptive = rememberAdaptive()
+    val scale = adaptive.scale
+
 
     PageScaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -69,67 +74,14 @@ fun HomeMainScreen(navController: NavController) {
             horizontalPadding = UiDimens.l
         ) {
 
-            Row(
+            LocationVerifyHeader(
+                addressText = "konya/kadinhanı/karakayamah/hatip sok.../",
+                scale = scale,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = UiDimens.xs),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-
-                OutlinedTextField(
-                    value = "konya/kadinhankarakayamah.../",
-                    onValueChange = { },
-                    modifier = Modifier
-                        .weight(1f)
-                        .defaultMinSize(minHeight = UiDimens.textFieldMinH),
-                    leadingIcon = {
-                        Image(
-                            painter = painterResource(id = R.drawable.mapsicon),
-                            contentDescription = "Konum",
-                            modifier = Modifier.size(UiDimens.icon32),
-                            contentScale = ContentScale.Fit
-                        )
-                    },
-                    singleLine = true,
-                    shape = RoundedCornerShape(UiDimens.rS),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Gray,
-                        unfocusedIndicatorColor = MaterialTheme.colorScheme.outline,
-                        disabledIndicatorColor = MaterialTheme.colorScheme.outlineVariant,
-                        cursorColor = MaterialTheme.colorScheme.primary
-                    ),
-                    textStyle = LocalTextStyle.current.copy(
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp,
-                        lineHeight = 18.sp
-                    )
-                )
-
-                Spacer(modifier = Modifier.width(UiDimens.s))
-
-                CoinBadge()
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = UiDimens.xs, bottom = UiDimens.m),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconTextButton(
-                    iconRes = R.drawable.plusicon,
-                    text = "Adres Ekle"
-                )
-                Spacer(Modifier.width(UiDimens.xl))
-                IconTextButton(
-                    iconRes = R.drawable.restarticon,
-                    text = "Konumu Doğrula"
-                )
-            }
+                    .padding(bottom = UiDimens.xs.scaled(scale)),
+                coinBadge = { CoinBadge() }
+            )
 
 
             Box(
@@ -195,54 +147,43 @@ fun HomeMainScreen(navController: NavController) {
 }
 
 @Composable
-fun CoinBadge() {
+fun CoinBadge(
+    coinCount: String = "13",
+) {
+    val colors = MaterialTheme.colorScheme
+
+    // ✅ otomatik adaptif scale (tabletse büyür, telefonsa aynı kalır)
+    val adaptive = com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive()
+    val scale = adaptive.scale
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
-            .size(UiDimens.coinSize)
-            .offset(x = 4.dp, y = 0.dp)
+            .size(UiDimens.coinSize.scaled(scale))
+            .offset(x = 4.dp.scaled(scale), y = 0.dp)
     ) {
         Image(
             painter = painterResource(id = R.drawable.coin_badge),
             contentDescription = "Coin Badge",
             contentScale = ContentScale.Fit,
-
-            modifier = Modifier.size(UiDimens.coinSize)
+            modifier = Modifier.size(UiDimens.coinSize.scaled(scale))
         )
+
         Text(
-            text = "13",
-            color = MaterialTheme.colorScheme.onSurface,
-            fontSize = 11.sp,
+            text = coinCount,
+            color = colors.onSurface,
+            fontSize = 13.sp.scaled(scale),
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.offset(x = 12.dp, y = 1.dp)
+            modifier = Modifier.offset(
+                x = 12.dp.scaled(scale),
+                y = 1.dp.scaled(scale)
+            )
         )
     }
 }
 
-@Composable
-fun IconTextButton(
-    iconRes: Int,
-    text: String,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-    ) {
-        Image(
-            painter = painterResource(id = iconRes),
-            contentDescription = text,
-            modifier = Modifier.size(UiDimens.icon18)
-        )
-        Spacer(modifier = Modifier.width(6.dp))
-        Text(
-            text = text,
-            fontSize = 14.sp,
-            color = MaterialTheme.colorScheme.onBackground,
-            fontWeight = FontWeight.Normal
-        )
-    }
-}
+
+
 
 @Composable
 fun RotatingWheel(modifier: Modifier = Modifier) {

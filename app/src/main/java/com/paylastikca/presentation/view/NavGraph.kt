@@ -96,7 +96,7 @@ import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_disc
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "DmBoxScreen" +
+        startDestination = "SubmitHelpScreen" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
@@ -285,16 +285,16 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
         //---
 
                   //help
-                   composable("SubmitHelpScreen") { SubmitHelpScreen()  }
-                   composable("HelpActiveListScreen") { HelpActiveListScreen()  }
-                   composable("DeleteHelpScreen") { DeleteHelpScreen()  }
-                   composable("HelpDeletionCompletedScreen") { HelpDeletionCompletedScreen()  }
-                   composable("HelpSeeRequestScreen") { HelpSeeRequestScreen()  }
-                   composable("HelpGoToContactScreen") { HelpGoToContactScreen()  }
-                   composable("HelpHistoryListScreen") { HelpHistoryListScreen()  }
-                   composable("HelpGivePointsScreen") { HelpGivePointsScreen()  }
-                   composable("HelpPointsGivenCompletedScreen") { HelpPointsGivenCompletedScreen()  }
-                   composable("HelpThankYouScreen") { HelpThankYouScreen()  }
+                   composable("SubmitHelpScreen") { SubmitHelpScreen(navController)  }
+                   composable("HelpActiveListScreen") { HelpActiveListScreen(navController)  }
+                   composable("DeleteHelpScreen") { DeleteHelpScreen(navController)  }
+                   composable("HelpDeletionCompletedScreen") { HelpDeletionCompletedScreen(navController)  }
+                   composable("HelpSeeRequestScreen") { HelpSeeRequestScreen(navController)  }
+                   composable("HelpGoToContactScreen") { HelpGoToContactScreen(navController)  }
+                   composable("HelpHistoryListScreen") { HelpHistoryListScreen(navController)  }
+                   composable("HelpGivePointsScreen") { HelpGivePointsScreen(navController)  }
+                   composable("HelpPointsGivenCompletedScreen") { HelpPointsGivenCompletedScreen(navController)  }
+                   composable("HelpThankYouScreen") { HelpThankYouScreen(navController)  }
                   //--
 
                    //request

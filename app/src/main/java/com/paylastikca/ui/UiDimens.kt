@@ -24,7 +24,7 @@ object UiDimens {
 
 
     // Sizes
-    val coinSize = 80.dp
+    val coinSize = 90.dp
     val icon18 = 18.dp
     val icon32 = 32.dp
     val icon45 = 45.dp
