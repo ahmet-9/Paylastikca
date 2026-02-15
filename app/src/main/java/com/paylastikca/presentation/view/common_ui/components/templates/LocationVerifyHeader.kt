@@ -11,7 +11,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -71,7 +70,6 @@ fun LocationVerifyHeader(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        // 1) FULL WIDTH input
         OutlinedTextField(
             value = addressText,
             onValueChange = { },
@@ -110,7 +108,6 @@ fun LocationVerifyHeader(
 
         Spacer(Modifier.height(UiDimens.xs.scaled(scale)))
 
-        // 2) Alt satır: ORTALI (solda verify, sağda coin)
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
@@ -181,7 +178,6 @@ private fun VerifyLocationButton(
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        // Sol icon: loading’de döner
         if (state.value == VerifyUiState.Success) {
             Icon(
                 imageVector = Icons.Default.Check,

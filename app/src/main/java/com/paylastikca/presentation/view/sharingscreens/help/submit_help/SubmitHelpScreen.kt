@@ -1,6 +1,5 @@
 package com.paylastikca.presentation.view.sharingscreens.help.submit_help
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -67,7 +66,6 @@ fun SubmitHelpScreen(navController: NavController) {
                 scale = scale
             )
 
-            // ✅ TEMPLATE HEADER (adres + doğrula butonu + coinbadge)
             LocationVerifyHeader(
                 addressText = "konya/kadinhanı/karakayamah/hatip sok.../",
                 scale = scale,
@@ -80,7 +78,6 @@ fun SubmitHelpScreen(navController: NavController) {
 
             Spacer(Modifier.height(UiDimens.l.scaled(scale)))
 
-            // Foto ekleme kutusu (placeholder)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -100,7 +97,6 @@ fun SubmitHelpScreen(navController: NavController) {
 
             Spacer(Modifier.height(UiDimens.l.scaled(scale)))
 
-            // Başlık
             Text(
                 text = "Başlık",
                 fontSize = 13.sp.scaled(scale),
@@ -128,7 +124,6 @@ fun SubmitHelpScreen(navController: NavController) {
 
             Spacer(Modifier.height(UiDimens.m.scaled(scale)))
 
-            // Açıklama
             Text(
                 text = "Açıklama",
                 fontSize = 13.sp.scaled(scale),
@@ -168,7 +163,6 @@ fun SubmitHelpScreen(navController: NavController) {
 
             Spacer(Modifier.height(UiDimens.m.scaled(scale)))
 
-            // Kategori
             Text(
                 text = "Kategori",
                 fontSize = 13.sp.scaled(scale),
