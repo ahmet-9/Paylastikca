@@ -68,7 +68,6 @@ import com.paylastikca.presentation.view.sharingscreens.request.request_list.req
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestProductDetailScreen
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.SendProductRequestScreen
 import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.SwapDeletionCompletedScreen
-import com.paylastikca.presentation.view.sharingscreens.swap.submit_swap.SubmitSwapScreen
 import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.SwapActiveListScreen
 import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.DeleteSwapScreen
 import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_active.SwapSeeRequestScreen
@@ -89,6 +88,7 @@ import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_he
 import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.RequestGoToContactScreen
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestSearchScreen
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestSubmissionSuccessScreen
+import com.paylastikca.presentation.view.sharingscreens.swap.submit_swap.SubmitSwapScreen
 import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_discovery.SwapSentRequestsScreen
 
 
@@ -96,7 +96,7 @@ import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_disc
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "SubmitHelpScreen" +
+        startDestination = "SwapResultsFoundScreen" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
@@ -326,7 +326,8 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                     composable("SwapDiscoveryListScreen") { SwapDiscoveryListScreen()  }
                     composable("SwapProductDetailScreen") { SwapProductDetailScreen()  }
                     composable("SwapNoResultsFoundScreen") { SwapNoResultsFoundScreen()  }
-                    composable("SwapResultsFoundScreen") { SwapResultsFoundScreen()  }
+                    composable("SwapResultsFoundScreen") { SwapResultsFoundScreen(    onHome = { /* TODO later */ },
+                        onMyHelps = { /* TODO later */ })  }
                     composable("SwapSentRequestsScreen") { SwapSentRequestsScreen()  }
 
                      //----
