@@ -326,8 +326,7 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                     composable("SwapDiscoveryListScreen") { SwapDiscoveryListScreen()  }
                     composable("SwapProductDetailScreen") { SwapProductDetailScreen()  }
                     composable("SwapNoResultsFoundScreen") { SwapNoResultsFoundScreen()  }
-                    composable("SwapResultsFoundScreen") { SwapResultsFoundScreen(    onHome = { /* TODO later */ },
-                        onMyHelps = { /* TODO later */ })  }
+                    composable("SwapResultsFoundScreen") { SwapResultsFoundScreen(  ) }
                     composable("SwapSentRequestsScreen") { SwapSentRequestsScreen()  }
 
                      //----
