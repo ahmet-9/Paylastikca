@@ -1,11 +1,20 @@
-package com.paylastikca.presentation.view.common_ui.components.templates
+package com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,10 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.paylastikca.presentation.view.common_ui.components.layout.scaled
 
-/**
- * BU DOSYA: "Liste + 2 sekme" şablonu.
- * Help/Request/Swap hepsi bunu kullanacak.
- */
+
 @Composable
 fun TabbedListTemplate(
     title: String,
@@ -27,18 +33,24 @@ fun TabbedListTemplate(
     rightTab: String,
     selectedTabIndex: Int,
     onTabChange: (Int) -> Unit,
-    scale: Float,
+    scale: Float = 1f,
     content: @Composable ColumnScope.() -> Unit
 ) {
+    val titleBottomSpace = 6.dp.scaled(scale)
+    val tabsBottomSpace = 28.dp.scaled(scale)
+
     Column(modifier = Modifier.fillMaxWidth()) {
 
-        Text(
-            text = title,
-            fontSize = 18.sp.scaled(scale),
-            fontWeight = FontWeight.Black,
-            color = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(bottom = 12.dp.scaled(scale))
-        )
+        if (title.isNotBlank()) {
+            Text(
+                text = title,
+                fontSize = 18.sp.scaled(scale),
+                fontWeight = FontWeight.Black,
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.padding(bottom = titleBottomSpace)
+            )
+        }
+
         SegmentedTabs(
             leftText = leftTab,
             rightText = rightTab,
@@ -47,8 +59,7 @@ fun TabbedListTemplate(
             scale = scale
         )
 
-
-        Spacer(Modifier.height(14.dp.scaled(scale)))
+        Spacer(Modifier.height(tabsBottomSpace))
 
         content()
     }
@@ -64,15 +75,23 @@ private fun SegmentedTabs(
 ) {
     val colors = MaterialTheme.colorScheme
 
+    val rowH = 44.dp.scaled(scale)
+
+    val outerRadius = 50.dp.scaled(scale)
+    val outerShape = RoundedCornerShape(outerRadius)
+
+    val innerRadius = 50.dp.scaled(scale)
+
+    val unselectedRadius = 10.dp.scaled(scale)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(44.dp.scaled(scale))
-            .clip(RoundedCornerShape(50))
-            .border(1.dp, colors.primary, RoundedCornerShape(50))
+            .height(rowH)
+            .clip(outerShape)
+            .border(1.dp, colors.primary, outerShape)
     ) {
 
-        // LEFT
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -80,14 +99,12 @@ private fun SegmentedTabs(
                 .clip(
                     if (selectedIndex == 0)
                         RoundedCornerShape(
-                            topStart = 50.dp,
-                            bottomStart = 50.dp,
+                            topStart = innerRadius,
+                            bottomStart = innerRadius,
                             topEnd = 0.dp,
                             bottomEnd = 0.dp
                         )
-                    else RoundedCornerShape(
-                        10.dp
-                    )
+                    else RoundedCornerShape(unselectedRadius)
                 )
                 .background(if (selectedIndex == 0) colors.primary else Color.Transparent)
                 .clickable { onSelect(0) },
@@ -101,7 +118,6 @@ private fun SegmentedTabs(
             )
         }
 
-        // RIGHT
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -109,12 +125,12 @@ private fun SegmentedTabs(
                 .clip(
                     if (selectedIndex == 1)
                         RoundedCornerShape(
-                            topEnd = 50.dp,
-                            bottomEnd = 50.dp,
+                            topEnd = innerRadius,
+                            bottomEnd = innerRadius,
                             topStart = 0.dp,
                             bottomStart = 0.dp
                         )
-                    else RoundedCornerShape(10.dp)
+                    else RoundedCornerShape(unselectedRadius)
                 )
                 .background(if (selectedIndex == 1) colors.primary else Color.Transparent)
                 .clickable { onSelect(1) },
@@ -127,31 +143,5 @@ private fun SegmentedTabs(
                 color = if (selectedIndex == 1) colors.onPrimary else colors.onSurface
             )
         }
-    }
-}
-
-
-@Composable
-private fun TabButton(
-    text: String,
-    selected: Boolean,
-    scale: Float,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val colors = MaterialTheme.colorScheme
-    Box(
-        modifier = modifier
-            .fillMaxHeight()
-            .background(if (selected) colors.primary else colors.background)
-            .clickable { onClick() },
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = text,
-            fontSize = 12.sp.scaled(scale),
-            fontWeight = FontWeight.Bold,
-            color = if (selected) colors.onPrimary else colors.onSurface
-        )
     }
 }

@@ -96,7 +96,7 @@ import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_disc
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "HelpThankYouScreen" +
+        startDestination = "HelpActiveListScreen" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {

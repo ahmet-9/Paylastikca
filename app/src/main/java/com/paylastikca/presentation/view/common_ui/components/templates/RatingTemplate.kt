@@ -12,6 +12,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.paylastikca.presentation.view.common_ui.components.layout.scaled
+import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.ChipTone
+import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.SharingItemCardTemplate
 
 /**
  * Puan verme ekranı şablonu.
@@ -80,7 +82,7 @@ fun RatingTemplate(
         Spacer(Modifier.height(14.dp.scaled(scale)))
 
         // item card (shared style)
-        SharingItemCard(
+        SharingItemCardTemplate(
             title = itemTitle,
             desc = itemDesc,
             categoryLabel = itemCategoryLabel,
