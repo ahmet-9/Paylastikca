@@ -26,8 +26,8 @@ import com.paylastikca.presentation.view.common_ui.components.layout.ScrollPage
 import com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive
 import com.paylastikca.presentation.view.common_ui.components.layout.scaled
 import com.paylastikca.presentation.view.common_ui.components.navigation.BackButton
-import com.paylastikca.presentation.view.common_ui.components.templates.LocationVerifyHeader
-import com.paylastikca.presentation.view.homepage_screens.CoinBadge
+import com.paylastikca.presentation.view.common_ui.components.templates.app_templates.CoinBadgeBar
+import com.paylastikca.presentation.view.common_ui.components.templates.app_templates.LocationVerifyHeader
 import com.paylastikca.ui.UiDimens
 
 @Composable
@@ -72,7 +72,7 @@ fun SubmitHelpScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = UiDimens.xs.scaled(scale)),
-                coinBadge = { CoinBadge() }
+                coinBadge = { CoinBadgeBar() }
             )
 
 

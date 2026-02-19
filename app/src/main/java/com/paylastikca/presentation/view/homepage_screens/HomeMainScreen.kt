@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,7 +38,8 @@ import com.paylastikca.presentation.view.common_ui.components.layout.PageScaffol
 import com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive
 import com.paylastikca.presentation.view.common_ui.components.layout.scaled
 import com.paylastikca.presentation.view.common_ui.components.platform.rememberRewardedAdLauncher
-import com.paylastikca.presentation.view.common_ui.components.templates.LocationVerifyHeader
+import com.paylastikca.presentation.view.common_ui.components.templates.app_templates.CoinBadgeBar
+import com.paylastikca.presentation.view.common_ui.components.templates.app_templates.LocationVerifyHeader
 import com.paylastikca.presentation.view.homepage_screens.components.HomeMap
 import com.paylastikca.ui.UiDimens
 import kotlinx.coroutines.delay
@@ -80,7 +80,7 @@ fun HomeMainScreen(navController: NavController) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = UiDimens.xs.scaled(scale)),
-                coinBadge = { CoinBadge() }
+                coinBadge = { CoinBadgeBar() }
             )
 
 
@@ -146,41 +146,7 @@ fun HomeMainScreen(navController: NavController) {
     )
 }
 
-@Composable
-fun CoinBadge(
-    coinCount: String = "13",
-) {
-    val colors = MaterialTheme.colorScheme
 
-    // ✅ otomatik adaptif scale (tabletse büyür, telefonsa aynı kalır)
-    val adaptive = com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive()
-    val scale = adaptive.scale
-
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .size(UiDimens.coinSize.scaled(scale))
-            .offset(x = 4.dp.scaled(scale), y = 0.dp)
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.coin_badge),
-            contentDescription = "Coin Badge",
-            contentScale = ContentScale.Fit,
-            modifier = Modifier.size(UiDimens.coinSize.scaled(scale))
-        )
-
-        Text(
-            text = coinCount,
-            color = colors.onSurface,
-            fontSize = 13.sp.scaled(scale),
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.offset(
-                x = 12.dp.scaled(scale),
-                y = 1.dp.scaled(scale)
-            )
-        )
-    }
-}
 
 
 

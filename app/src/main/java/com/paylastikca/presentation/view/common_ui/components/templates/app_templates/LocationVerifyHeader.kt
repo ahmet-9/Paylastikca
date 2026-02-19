@@ -1,4 +1,4 @@
-package com.paylastikca.presentation.view.common_ui.components.templates
+package com.paylastikca.presentation.view.common_ui.components.templates.app_templates
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
