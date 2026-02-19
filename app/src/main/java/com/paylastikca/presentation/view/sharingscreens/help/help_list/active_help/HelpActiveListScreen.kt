@@ -1,10 +1,22 @@
 package com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.runtime.*
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,17 +33,31 @@ import com.paylastikca.ui.UiDimens
 @Composable
 fun HelpActiveListScreen(
     navController: NavController,
-    startTabIndex: Int = 0 // 0: aktif, 1: geçmiş
+    startTabIndex: Int = 0
 ) {
     val colors = MaterialTheme.colorScheme
     val adaptive = rememberAdaptive()
     val scale = adaptive.scale
 
-    var tab by remember { mutableStateOf(startTabIndex.coerceIn(0, 1)) }
+    var tab by rememberSaveable {
+        mutableIntStateOf(startTabIndex.coerceIn(0, 1))
+    }
 
-    // ✅ Artık hem AKTİF hem GEÇMİŞ kartlarda üstte taşan eleman var.
-    // Active chipHeight=32, Past chipHeight~34 => güvenli boşluk:
     val topOverlaySpace = 36.dp.scaled(scale)
+
+    val contentModifier = remember(adaptive.maxContentWidth, adaptive.pageHorizontalPadding) {
+        Modifier
+            .fillMaxWidth()
+            .then(
+                if (adaptive.maxContentWidth != null) {
+                    Modifier
+                        .widthIn(max = adaptive.maxContentWidth)
+                        .padding(horizontal = adaptive.pageHorizontalPadding)
+                } else {
+                    Modifier.padding(horizontal = adaptive.pageHorizontalPadding)
+                }
+            )
+    }
 
     PageScaffold(containerColor = colors.background) { innerPadding ->
 
@@ -40,19 +66,9 @@ fun HelpActiveListScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
+
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .let { base ->
-                        if (adaptive.maxContentWidth != null) {
-                            base
-                                .widthIn(max = adaptive.maxContentWidth)
-                                .padding(horizontal = adaptive.pageHorizontalPadding)
-                        } else {
-                            base.padding(horizontal = adaptive.pageHorizontalPadding)
-                        }
-                    }
-                    .align(Alignment.TopCenter)
+                modifier = contentModifier.align(Alignment.TopCenter)
             ) {
 
                 BackButton(
@@ -70,7 +86,6 @@ fun HelpActiveListScreen(
                     onTabChange = { tab = it },
                     scale = scale
                 ) {
-                    // içerik istemiyoruz
                 }
 
                 LazyColumn(
@@ -78,15 +93,17 @@ fun HelpActiveListScreen(
                         .fillMaxWidth()
                         .weight(1f),
                     contentPadding = PaddingValues(
-                        top = UiDimens.m.scaled(scale),   // ufak nefes (isteğe bağlı)
+                        top = UiDimens.m.scaled(scale),
                         bottom = UiDimens.xl.scaled(scale)
                     ),
                     verticalArrangement = Arrangement.spacedBy(36.dp.scaled(scale))
                 ) {
 
                     if (tab == 0) {
-                        // --- AKTİF ---
-                        items((0 until 20).toList()) { i ->
+                        items(
+                            items = List(20) { it },
+                            key = { it }
+                        ) { i ->
                             val isDemand = i % 2 == 0
 
                             Box(
@@ -112,8 +129,10 @@ fun HelpActiveListScreen(
                         }
 
                     } else {
-                        // --- GEÇMİŞ ---
-                        items((0 until 20).toList()) { i ->
+                        items(
+                            items = List(20) { it },
+                            key = { it }
+                        ) { i ->
                             val canRate = i % 2 == 0
 
                             Box(
@@ -131,7 +150,6 @@ fun HelpActiveListScreen(
                                     onRightButtonClick = if (canRate) ({
                                         navController.navigate("HelpGivePointsScreen")
                                     }) else null,
-                                    // ✅ sadece Değerlendirildi kartında sağ üst check:
                                     showTopRightCheck = !canRate,
                                     showDelete = false,
                                     onDelete = null,

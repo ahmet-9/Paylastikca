@@ -6,7 +6,6 @@ import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_he
 
 @Composable
 fun HelpHistoryListScreen(navController: NavController) {
-    // Aynı liste ekranını kullanıyoruz ama "Yardım Geçmişi" sekmesi açık başlar.
     HelpActiveListScreen(
         navController = navController,
         startTabIndex = 1
