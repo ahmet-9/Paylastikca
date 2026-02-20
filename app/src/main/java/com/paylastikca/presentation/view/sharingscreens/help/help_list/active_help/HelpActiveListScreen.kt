@@ -14,7 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -25,6 +25,8 @@ import com.paylastikca.presentation.view.common_ui.components.layout.PageScaffol
 import com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive
 import com.paylastikca.presentation.view.common_ui.components.layout.scaled
 import com.paylastikca.presentation.view.common_ui.components.navigation.BackButton
+import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.DeleteConfirmationDialogTemplate
+import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.DeleteSuccessDialog
 import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.ChipTone
 import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.SharingItemCardTemplate
 import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.TabbedListTemplate
@@ -43,21 +45,13 @@ fun HelpActiveListScreen(
         mutableIntStateOf(startTabIndex.coerceIn(0, 1))
     }
 
-    val topOverlaySpace = 36.dp.scaled(scale)
+    var showDeleteConfirm by rememberSaveable { mutableStateOf(false) }
+    var showDeleteSuccess by rememberSaveable { mutableStateOf(false) }
 
-    val contentModifier = remember(adaptive.maxContentWidth, adaptive.pageHorizontalPadding) {
-        Modifier
-            .fillMaxWidth()
-            .then(
-                if (adaptive.maxContentWidth != null) {
-                    Modifier
-                        .widthIn(max = adaptive.maxContentWidth)
-                        .padding(horizontal = adaptive.pageHorizontalPadding)
-                } else {
-                    Modifier.padding(horizontal = adaptive.pageHorizontalPadding)
-                }
-            )
-    }
+
+    var pendingDeleteId by rememberSaveable { mutableStateOf<String?>(null) }
+
+    val topOverlaySpace = 36.dp.scaled(scale)
 
     PageScaffold(containerColor = colors.background) { innerPadding ->
 
@@ -68,7 +62,18 @@ fun HelpActiveListScreen(
         ) {
 
             Column(
-                modifier = contentModifier.align(Alignment.TopCenter)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .let { base ->
+                        if (adaptive.maxContentWidth != null) {
+                            base
+                                .widthIn(max = adaptive.maxContentWidth)
+                                .padding(horizontal = adaptive.pageHorizontalPadding)
+                        } else {
+                            base.padding(horizontal = adaptive.pageHorizontalPadding)
+                        }
+                    }
+                    .align(Alignment.TopCenter)
             ) {
 
                 BackButton(
@@ -86,6 +91,7 @@ fun HelpActiveListScreen(
                     onTabChange = { tab = it },
                     scale = scale
                 ) {
+
                 }
 
                 LazyColumn(
@@ -100,10 +106,7 @@ fun HelpActiveListScreen(
                 ) {
 
                     if (tab == 0) {
-                        items(
-                            items = List(20) { it },
-                            key = { it }
-                        ) { i ->
+                        items(List(20) { it }) { i ->
                             val isDemand = i % 2 == 0
 
                             Box(
@@ -122,17 +125,16 @@ fun HelpActiveListScreen(
                                         navController.navigate("HelpSeeRequestScreen")
                                     }) else null,
                                     showDelete = true,
-                                    onDelete = { navController.navigate("DeleteHelpScreen") },
+                                    onDelete = {
+                                        pendingDeleteId = "help_$i"
+                                        showDeleteConfirm = true
+                                    },
                                     scale = scale
                                 )
                             }
                         }
-
                     } else {
-                        items(
-                            items = List(20) { it },
-                            key = { it }
-                        ) { i ->
+                        items(List(20) { it }) { i ->
                             val canRate = i % 2 == 0
 
                             Box(
@@ -159,6 +161,39 @@ fun HelpActiveListScreen(
                         }
                     }
                 }
+            }
+
+            if (showDeleteConfirm) {
+                DeleteConfirmationDialogTemplate(
+                    title = "Yardımı silmek istediğinizden\nemin misiniz!",
+                    message = "sf",
+                    confirmText = "Sil",
+                    cancelText = "Vazgeç",
+                    onCancel = {
+                        showDeleteConfirm = false
+                        pendingDeleteId = null
+                    },
+                    onConfirm = {
+                        showDeleteConfirm = false
+
+
+                        showDeleteSuccess = true
+                    },
+                    scale = scale
+                )
+            }
+
+            if (showDeleteSuccess) {
+                DeleteSuccessDialog(
+                    title = "Yardım Silindi",
+                    message = "",
+                    buttonText = "Tamam",
+                    onButtonClick = {
+                        showDeleteSuccess = false
+                        pendingDeleteId = null
+                    },
+                    scale = scale
+                )
             }
         }
     }

@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import com.paylastikca.presentation.view.common_ui.components.layout.PageScaffold
 import com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive
 import com.paylastikca.presentation.view.common_ui.components.layout.scaled
-import com.paylastikca.presentation.view.common_ui.components.templates.SuccessDialogTemplate
 
 @Composable
 fun HelpGoToContactScreen(navController: NavController) {

@@ -49,10 +49,8 @@ import com.paylastikca.presentation.view.profilescreens.ProfileMainScreen
 import com.paylastikca.presentation.view.sharingscreens.SharingMainScreen
 import com.paylastikca.presentation.view.sharingscreens.chat.DmBoxScreen
 import com.paylastikca.presentation.view.sharingscreens.chat.DmBoxChatScreen
-import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.DeleteHelpScreen
-import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpDeletionCompletedScreen
+
 import com.paylastikca.presentation.view.sharingscreens.help.submit_help.SubmitHelpScreen
-import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpSeeRequestScreen
 import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpGoToContactScreen
 import com.paylastikca.presentation.view.sharingscreens.help.help_list.help_history.HelpHistoryListScreen
 import com.paylastikca.presentation.view.sharingscreens.help.help_list.help_history.HelpGivePointsScreen
@@ -85,6 +83,7 @@ import com.paylastikca.presentation.view.profilescreens.privacy_security_screens
 import com.paylastikca.presentation.view.sharingscreens.chat.ReportTargetUi
 import com.paylastikca.presentation.view.sharingscreens.chat.ReportUserScreen
 import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpActiveListScreen
+import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpSeeRequestScreen
 import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.RequestGoToContactScreen
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestSearchScreen
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestSubmissionSuccessScreen
@@ -96,7 +95,7 @@ import com.paylastikca.presentation.view.sharingscreens.swap.swap_list.swap_disc
 fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
     NavHost(
         navController = navController,
-        startDestination = "SubmitHelpScreen" +
+        startDestination = "HelpActiveListScreen" +
                 "",
         modifier = Modifier.padding(innerPadding)
     ) {
@@ -287,13 +286,13 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                   //help
                    composable("SubmitHelpScreen") { SubmitHelpScreen(navController)  }
                    composable("HelpActiveListScreen") { HelpActiveListScreen(navController)  }
-                   composable("DeleteHelpScreen") { DeleteHelpScreen(navController)  }
-                   composable("HelpDeletionCompletedScreen") { HelpDeletionCompletedScreen(navController)  }
-                   composable("HelpSeeRequestScreen") { HelpSeeRequestScreen(navController)  }
+                 //  composable("DeleteHelpScreen") { DeleteHelpScreen(navController)  }
+                 //  composable("HelpDeletionCompletedScreen") { HelpDeletionCompletedScreen(navController)  }
+                   composable("HelpSeeRequestScreen") { HelpSeeRequestScreen()  }
                    composable("HelpGoToContactScreen") { HelpGoToContactScreen(navController)  }
                    composable("HelpHistoryListScreen") { HelpHistoryListScreen(navController)  }
                    composable("HelpGivePointsScreen") { HelpGivePointsScreen(navController)  }
-                   composable("HelpPointsGivenCompletedScreen") { HelpPointsGivenCompletedScreen(navController)  }
+                   composable("HelpPointsGivenCompletedScreen") { HelpPointsGivenCompletedScreen()  }
                    composable("HelpThankYouScreen") { HelpThankYouScreen(navController)  }
                   //--
 
