@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +31,11 @@ import com.paylastikca.presentation.view.common_ui.components.templates.sharings
 import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.ChipTone
 import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.SharingItemCardTemplate
 import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.TabbedListTemplate
+import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.rating_template.RatingNavKeys
+import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.rating_template.RatingSuccessDialogTemplate
+import com.paylastikca.presentation.view.common_ui.components.templates.sharingscreens_templates.rating_template.RatingTargetType
 import com.paylastikca.ui.UiDimens
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun HelpActiveListScreen(
@@ -50,6 +55,37 @@ fun HelpActiveListScreen(
 
 
     var pendingDeleteId by rememberSaveable { mutableStateOf<String?>(null) }
+    //rating_template
+    var showRatingSuccess by rememberSaveable { mutableStateOf(false) }
+    var lastRating by rememberSaveable { mutableIntStateOf(0) }
+    var lastUser by rememberSaveable { mutableStateOf("") }
+    var lastTarget by rememberSaveable { mutableStateOf("") } // "help"/"request"/"swap"
+
+
+    val entry = navController.currentBackStackEntry
+    LaunchedEffect(entry) {
+        val handle = entry?.savedStateHandle ?: return@LaunchedEffect
+
+        handle.getStateFlow<Int?>(RatingNavKeys.VALUE, null)
+            .collectLatest { value ->
+                if (value != null) {
+
+                    tab = 1
+
+                    lastRating = value
+                    lastUser = handle.get<String>(RatingNavKeys.USER) ?: ""
+                    lastTarget = handle.get<String>(RatingNavKeys.TARGET) ?: ""
+
+                    showRatingSuccess = true
+
+                    handle[RatingNavKeys.VALUE] = null
+                    handle[RatingNavKeys.USER] = null
+                    handle[RatingNavKeys.TARGET] = null
+                }
+            }
+    }
+//rating_template
+
 
     val topOverlaySpace = 36.dp.scaled(scale)
 
@@ -162,6 +198,24 @@ fun HelpActiveListScreen(
                     }
                 }
             }
+            //rating_template
+
+            if (showRatingSuccess) {
+                RatingSuccessDialogTemplate(
+                    targetType = when (lastTarget.lowercase()) {
+                        "help" -> RatingTargetType.Help
+                        "request" -> RatingTargetType.Request
+                        "swap" -> RatingTargetType.Swap
+                        else -> RatingTargetType.Help
+                    },
+                    userName = lastUser.ifBlank { "Kullanıcı" },
+                    rating = lastRating.coerceIn(1, 5),
+                    buttonText = "Tamam",
+                    onButtonClick = { showRatingSuccess = false },
+                    scale = scale
+                )
+            }
+            //rating_template
 
             if (showDeleteConfirm) {
                 DeleteConfirmationDialogTemplate(
@@ -195,6 +249,9 @@ fun HelpActiveListScreen(
                     scale = scale
                 )
             }
+
+
+
         }
     }
 }

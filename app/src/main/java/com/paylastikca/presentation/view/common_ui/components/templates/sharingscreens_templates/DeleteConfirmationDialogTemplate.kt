@@ -52,8 +52,8 @@ private fun DeleteConfirmationDialogTemplate(
         // overlay
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .background(colors.onSurface.copy(alpha = 0.06f)),
+                .fillMaxSize(),
+
             contentAlignment = Alignment.Center
         ) {
             // dialog card container
