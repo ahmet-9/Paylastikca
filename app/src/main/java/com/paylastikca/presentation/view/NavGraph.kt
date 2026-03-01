@@ -51,10 +51,8 @@ import com.paylastikca.presentation.view.sharingscreens.chat.DmBoxScreen
 import com.paylastikca.presentation.view.sharingscreens.chat.DmBoxChatScreen
 
 import com.paylastikca.presentation.view.sharingscreens.help.submit_help.SubmitHelpScreen
-import com.paylastikca.presentation.view.sharingscreens.help.help_list.active_help.HelpGoToContactScreen
 import com.paylastikca.presentation.view.sharingscreens.help.help_list.help_history.HelpHistoryListScreen
 import com.paylastikca.presentation.view.sharingscreens.help.help_list.help_history.HelpGivePointsScreen
-import com.paylastikca.presentation.view.sharingscreens.help.help_list.help_history.HelpPointsGivenCompletedScreen
 import com.paylastikca.presentation.view.sharingscreens.help.submit_help.HelpThankYouScreen
 import com.paylastikca.presentation.view.sharingscreens.request.submit_request.RequestResultListScreen
 import com.paylastikca.presentation.view.sharingscreens.request.request_list.active_request.RequestActiveListScreen
@@ -288,11 +286,10 @@ fun AppNavHost(navController: NavHostController, innerPadding: PaddingValues) {
                    composable("HelpActiveListScreen") { HelpActiveListScreen(navController)  }
                  //  composable("DeleteHelpScreen") { DeleteHelpScreen(navController)  }
                  //  composable("HelpDeletionCompletedScreen") { HelpDeletionCompletedScreen(navController)  }
-                   composable("HelpSeeRequestScreen") { HelpSeeRequestScreen()  }
-                   composable("HelpGoToContactScreen") { HelpGoToContactScreen(navController)  }
+                   composable("HelpSeeRequestScreen") { HelpSeeRequestScreen(navController)  }
                    composable("HelpHistoryListScreen") { HelpHistoryListScreen(navController)  }
                    composable("HelpGivePointsScreen") { HelpGivePointsScreen(navController)  }
-                   composable("HelpPointsGivenCompletedScreen") { HelpPointsGivenCompletedScreen()  }
+                 
                    composable("HelpThankYouScreen") { HelpThankYouScreen(navController)  }
                   //--
 

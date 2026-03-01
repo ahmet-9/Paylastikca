@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.paylastikca.presentation.view.common_ui.components.layout.PageScaffold
 import com.paylastikca.presentation.view.common_ui.components.layout.rememberAdaptive
 import com.paylastikca.presentation.view.common_ui.components.layout.scaled
@@ -49,7 +51,14 @@ fun HelpActiveListScreen(
     var tab by rememberSaveable {
         mutableIntStateOf(startTabIndex.coerceIn(0, 1))
     }
-
+    val systemUiController = rememberSystemUiController()
+    SideEffect {
+        // List screen beyaz istiyorsan:
+        systemUiController.setSystemBarsColor(
+            color = colors.background,
+            darkIcons = true // background açık renkse true
+        )
+    }
     var showDeleteConfirm by rememberSaveable { mutableStateOf(false) }
     var showDeleteSuccess by rememberSaveable { mutableStateOf(false) }
 

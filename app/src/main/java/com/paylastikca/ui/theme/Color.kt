@@ -35,6 +35,10 @@ val lighterLightGray = Color(0xFFE0E0E0)
 val authBlue = Color(0xFF1E63D5)
 val authBlueDisabled = Color(0xFF9BB7EB)
 
+val YellowDark = Color(0xFFE0CE00)
+val YellowMedium = Color(0xFFFFFF44)
+val YellowLight = Color(0xFFFFFFD8)
+
 
 
 
